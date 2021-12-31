@@ -1,0 +1,5 @@
+.panel {
+  background-color: var(--surface-color);
+  padding: 24rem 48rem;
+  border-radius: 18rem;
+}

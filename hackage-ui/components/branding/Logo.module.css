@@ -1,0 +1,15 @@
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  color: #fff;
+  font-weight: bold;
+}
+
+.svg {
+  position: relative;
+  height: 100%;
+  width: auto;
+}
+

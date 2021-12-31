@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+:root {
+  font-size: 1px;
+  --background-color: #ffffff;
+  --background-color-backdrop: rgba(94, 80, 134, 0.8);
+  --surface-color: #888888;
+  --surface-color-backdrop: rgba(94, 80, 134, 0.9);
+  --text-color: rgb(70, 70, 70);
+  --purple-color-1: #453a62;
+  --purple-color-2: #5e5086;
+  --purple-color-3: #8f4e8b;
+  --transition-short: all 220ms ease 0s;
+  --backdrop-filter-blur: blur(12px);
+  --accent-color-green: var(--purple-color-2);
+  --accent-color-red: #853232;
+  --accent-color-yellow: #ff9042;
+  --accent-color-blue: #5084ff;
+  --accent-color-purple: #9d50ff;
+  --max-content-width: 800rem;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Fira Sans",Helvetica,Arial,sans-serif;
+
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-size: 16rem;
+  line-height: 1.4;
+}
+
+a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+ul,
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}

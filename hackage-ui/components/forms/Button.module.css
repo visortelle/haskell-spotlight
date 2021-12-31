@@ -1,0 +1,47 @@
+.regularButton {
+  position: relative;
+  margin: 12px auto 0 auto;
+  padding: 8px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: var(--surface-color);
+  box-shadow: 0 4px 6px rgb(0 0 0 / 27%);
+  border: 1px solid var(--surface-color);
+  color: var(--text-color);
+  user-select: none;
+  transition: var(--transition-short);
+}
+
+.regularButton:hover {
+  cursor: pointer;
+  transition: var(--transition-short);
+  border: 1px solid var(--purple-color-2);
+}
+
+.promoButton {
+  position: relative;
+  margin: 12px auto 0 auto;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--surface-color);
+  box-shadow: 0 4px 6px rgb(0 0 0 / 27%);
+  user-select: none;
+  transition: var(--transition-short);
+  padding: 12px 24px;
+  display: flex;
+  background: var(--purple-color-2);
+  color: var(--background-color);
+  font-size: 18rem;
+  font-weight: bold;
+  border-radius: 24rem;
+  border: 1px solid transparent;
+}
+
+.promoButton:hover {
+  cursor: pointer;
+  border: 1px solid transparent;
+  opacity: 0.8;
+}

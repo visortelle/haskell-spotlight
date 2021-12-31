@@ -1,0 +1,30 @@
+.input {
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.inputInput {
+  position: relative;
+  background-color: #fff;
+  border-radius: 24rem;
+  padding: 8rem 18rem 8rem 18rem;
+  border: none;
+  display: flex;
+  flex: 1 0 auto;
+  font-size: 14px;
+  color: var(--text-color);
+  caret-color: var(--text-color);
+  transition: var(--transition-short);
+  box-shadow: 1rem 3rem 2rem rgb(0 0 0 / 0.27);
+}
+
+.inputInput:focus {
+  transition: var(--transition-short);
+  outline: none;
+}
+
+.inputInput::placeholder {
+  opacity: 0.5;
+  color: var(--text-color);
+}
