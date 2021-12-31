@@ -1,11 +1,15 @@
 import GlobalMenu, { defaultMenuProps } from "../layout/GlobalMenu";
 import s from './Home.module.css';
 import Button from "../forms/Button";
+import PackageIcon from '!!raw-loader!../icons/package.svg';
+import DownloadIcon from '!!raw-loader!../icons/download.svg';
+import Footer from "../layout/Footer";
 
 const Home = () => {
   return (
-    <div>
+    <div className={s.home}>
       <GlobalMenu {...defaultMenuProps} />
+
       <div className={s.greeting}>
         <div className={s.greetingContent}>
           <h1 className={s.greetingHeader}>The Haskell community’s<br /> package registry</h1>
@@ -24,30 +28,20 @@ const Home = () => {
       <div className={s.statsContainer}>
         <Stats downloadsTotal={1234324324} packagesTotal={34534534534} />
       </div>
-      <div className={s.statsContainer}>
-        <Stats downloadsTotal={1234324324} packagesTotal={34534534534} />
-      </div>
-      <div className={s.statsContainer}>
-        <Stats downloadsTotal={1234324324} packagesTotal={34534534534} />
-      </div>
 
-      <div className={s.statsContainer}>
-        <Stats downloadsTotal={1234324324} packagesTotal={34534534534} />
-      </div>
-      <div className={s.statsContainer}>
-        <Stats downloadsTotal={1234324324} packagesTotal={34534534534} />
-      </div>
-      <div className={s.statsContainer}>
-        <Stats downloadsTotal={1234324324} packagesTotal={34534534534} />
-      </div>
-      <div className={s.statsContainer}>
-        <Stats downloadsTotal={1234324324} packagesTotal={34534534534} />
-      </div>
-      <div className={s.statsContainer}>
-        <Stats downloadsTotal={1234324324} packagesTotal={34534534534} />
+      <div className={s.footer}>
+        <Footer />
       </div>
     </div>
   );
+}
+
+type SvgIconProps = {
+  svg: string
+}
+
+const SvgIcon = (props: SvgIconProps) => {
+  return (<div className={s.svgIcon} dangerouslySetInnerHTML={{ __html: props.svg }}></div>);
 }
 
 type StatsProps = {
@@ -59,22 +53,44 @@ const Stats = (props: StatsProps) => {
   return (
     <div className={s.stats}>
       <div className={s.statsText}>
-        Instantly publish your packages and install them.
-        <br />
-        Use the API to interact and find out more information about available packages.
-        <br />
-        Become a contributor and enhance the site with your work.
+        <p className={s.statsTextParagraph}>
+          Some text here.
+          Some text here.
+          Some text here.
+          Some text here.
+        </p>
+        <p className={s.statsTextParagraph}>
+          Some text here.
+          Some text here.
+          Some text here.
+          Some text here.
+        </p>
+        <p className={s.statsTextParagraph}>
+          Some text here.
+          Some text here.
+          Some text here.
+          Some text here.
+        </p>
       </div>
       <div className={s.statsGroups}>
         <div className={s.statsGroup}>
-          <span className={s.statsAmount}>{props.downloadsTotal}</span>
-          <span className={s.statsUnit}>Downloads</span>
+          <div className={s.statsGroupContent}>
+            <span className={s.statsAmount}>{props.downloadsTotal.toLocaleString('en-US')}</span>
+            <span className={s.statsUnit}>Downloads</span>
+          </div>
+          <div className={s.statsGroupIcon}>
+            <SvgIcon svg={DownloadIcon} />
+          </div>
         </div>
         <div className={s.statsGroup}>
-          <span className={s.statsAmount}>{props.packagesTotal}</span>
-          <span className={s.statsUnit}>Packages in stock</span>
+          <div className={s.statsGroupContent}>
+            <span className={s.statsAmount}>{props.packagesTotal.toLocaleString('en-US')}</span>
+            <span className={s.statsUnit}>Packages published</span>
+          </div>
+          <div className={s.statsGroupIcon}>
+            <SvgIcon svg={PackageIcon} />
+          </div>
         </div>
-
       </div>
     </div>
   );

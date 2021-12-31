@@ -1,6 +1,5 @@
 .regularButton {
   position: relative;
-  margin: 12px auto 0 auto;
   padding: 8px 18px;
   display: flex;
   align-items: center;
@@ -23,7 +22,6 @@
 
 .promoButton {
   position: relative;
-  margin: 12px auto 0 auto;
   align-items: center;
   justify-content: center;
   background-color: var(--surface-color);
@@ -33,7 +31,7 @@
   padding: 12px 24px;
   display: flex;
   background: var(--purple-color-2);
-  color: var(--background-color);
+  color: #fff;
   font-size: 18rem;
   font-weight: bold;
   border-radius: 24rem;

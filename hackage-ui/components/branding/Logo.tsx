@@ -4,7 +4,7 @@ const Logo = (props: { fontSize: number }) => {
   return (
     <div
       className={s.logo}
-      style={{ fontSize: `${props.fontSize}rem`, height: `${props.fontSize}rem` }}
+      style={{ fontSize: `${props.fontSize}rem`, height: `${props.fontSize * 1.33}rem` }}
     >
       <svg
         className={s.svg}

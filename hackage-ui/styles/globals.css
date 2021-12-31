@@ -1,10 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
+#__next {
+  min-height: inherit;
+}
+
 :root {
   font-size: 1px;
-  --background-color: #ffffff;
+  --background-color: #f6eedc;
   --background-color-backdrop: rgba(94, 80, 134, 0.8);
-  --surface-color: #888888;
+  --surface-color: #dfd8c7;
   --surface-color-backdrop: rgba(94, 80, 134, 0.9);
   --text-color: rgb(70, 70, 70);
   --purple-color-1: #453a62;
@@ -30,6 +34,7 @@ body {
   color: var(--text-color);
   font-size: 16rem;
   line-height: 1.4;
+  min-height: 100vh;
 }
 
 a {

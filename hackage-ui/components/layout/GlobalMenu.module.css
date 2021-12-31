@@ -21,7 +21,7 @@
 
 .menuAtTop {
   background-color: var(--surface-color-backdrop);
-  box-shadow: 0 0 10px rgb(0 0 0 / 50%);
+  box-shadow: 0 0rem 8rem rgb(0 0 0 / 50%);
   transition: var(--transition-short);
 }
 

@@ -1,3 +1,9 @@
+.home {
+  min-height: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
 .greeting {
   display: flex;
   justify-content: center;
@@ -11,7 +17,7 @@
   width: 100%;
   position: absolute;
   bottom: -4rem;
-  box-shadow: 0 -4rem 8rem rgb(0 0 0 / 27%);
+  box-shadow: 0 0rem 8rem rgb(0 0 0 / 50%);
   height: 4rem;
 }
 
@@ -36,9 +42,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 24rem;
+  padding: 32rem 24rem;
 }
 
+.footer {
+  margin-top: auto;
+}
 
 .statsContainer {
   display: flex;
@@ -46,11 +55,10 @@
   position: relative;
   max-width: var(--max-content-width);
   margin: auto;
-  margin-top: 24rem;
 }
 
 .statsContainer::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   width: 100%;
@@ -61,22 +69,63 @@
 
 .stats {
   display: flex;
+  padding: 32rem 0;
 }
 
 .statsText {
-  padding: 24rem;
+  padding: 0 24rem;
   padding-left: 0;
+}
+
+.statsTextParagraph {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 8rem;
 }
 
 .statsGroup {
   display: flex;
-  flex-direction: column;
-  padding: 24rem 24rem 0 24rem;
+  padding: 0 24rem;
   padding-right: 0;
   text-align: right;
+  margin-bottom: 18rem;
+  justify-content: flex-end;
+}
+
+.statsGroup:last-child {
+  margin-bottom: 0;
+}
+
+.statsGroupContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.statsGroupIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 18rem;
+}
+
+.statsGroupIcon svg {
+  width: 48rem;
+  height: 48rem;
+  fill: var(--text-color);
 }
 
 .statsAmount {
   font-size: 32rem;
   font-weight: bold;
+}
+
+.svgIcon {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.svgIcon svg:focus {
+  outline: none;
 }
