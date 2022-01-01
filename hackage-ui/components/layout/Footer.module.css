@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   margin-top: 72rem;
-  padding: 0 24rem;
+  padding: 8rem 24rem 24rem 0;
   background: var(--surface-color);
   box-shadow: 0 0 10px rgb(0 0 0 / 50%);
   border-top-right-radius: 12rem;
@@ -39,5 +39,8 @@
 }
 
 .footerColumnHeader {
+  font-size: 18rem;
+  color: var(--purple-color-2);
   margin: 0;
+  margin-bottom: 8rem;
 }
