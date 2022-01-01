@@ -3,8 +3,8 @@ import { RefObject, useEffect, useRef } from 'react';
 
 type InputProps = {
   placeholder: string,
-  onFocus: () => void,
-  onBlur: () => void,
+  onFocus?: () => void,
+  onBlur?: () => void,
   onChange: (v: string) => void,
   onInputRef: (ref: RefObject<HTMLInputElement>) => void,
   value: string,
@@ -32,8 +32,8 @@ const Input = ({ value, placeholder, onChange, onFocus, onBlur, onInputRef, focu
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        onFocus={onFocus}
-        onBlur={onBlur}
+        onFocus={onFocus || (() => {})}
+        onBlur={onBlur || (() => {})}
         placeholder={placeholder}
       />
     </div>

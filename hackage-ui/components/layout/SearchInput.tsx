@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { RefObject, useEffect, useState, useCallback} from "react";
+import { RefObject, useEffect, useState, useCallback, useRef } from "react";
 import Input from "../forms/Input";
 import s from './SearchInput.module.css';
 import { useThrottle } from 'react-use';
@@ -45,9 +45,9 @@ const SearchResults = (props: SearchResultsProps) => {
         )}
         {query && pkgs.map(pkg => {
           return (
-            <div key={pkg.name} className={s.searchResult}>
+            <a key={pkg.name} className={s.searchResult} href={`https://hackage.haskell.org/packages/${pkg.name}`}>
               {pkg.name}
-            </div>
+            </a>
           );
         })}
       </div>
@@ -60,9 +60,10 @@ const SearchInput = () => {
   const [isFocused, setIsFocused] = useState(false);
   const [focusedTimes, setFocusedTimes] = useState(0);
   const [isDirty, setIsDirty] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
   const [inputRef, setInputRef] = useState<RefObject<HTMLInputElement>>();
 
-  const handleHotKey = useCallback((event: KeyboardEvent) => {
+  const handleKeyUp = useCallback((event: KeyboardEvent) => {
     if (event.key !== 's') {
       return;
     }
@@ -73,19 +74,31 @@ const SearchInput = () => {
   }, [isFocused, inputRef]);
 
   useEffect(() => {
-    window.addEventListener('keyup', handleHotKey);
+    window.addEventListener('mousedown', (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setIsFocused(false);
+      }
+    });
+    window.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Tab') {
+        setIsFocused(false);
+      }
+    });
+  }, [ref]);
+
+  useEffect(() => {
+    window.addEventListener('keyup', handleKeyUp);
     return () => {
-      window.removeEventListener("keyup", handleHotKey);
+      window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [handleHotKey]);
+  }, [handleKeyUp]);
 
   const showSearchResults =
-    (isDirty && isFocused) ||
-    (focusedTimes > 1) // don't show search results after page load
-
+    isFocused &&
+    (isDirty || focusedTimes > 1); // don't show search results after page load
 
   return (
-    <div className={s.searchInput}>
+    <div className={s.searchInput} ref={ref}>
       <Input
         onChange={(v) => {
           setIsDirty(true);
@@ -95,7 +108,6 @@ const SearchInput = () => {
           setFocusedTimes(focusedTimes + 1);
           setIsFocused(true);
         }}
-        onBlur={() => setIsFocused(false)}
         onInputRef={setInputRef}
         placeholder='Click or type "s" to search...'
         value={query}
