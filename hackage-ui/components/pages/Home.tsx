@@ -70,7 +70,6 @@ const Stats = () => {
   useEffect(() => {
     (async () => {
       const stats = await (await axios('/api/stats')).data;
-      console.log('stats', stats);
       setStats(stats as Stats);
     })()
   }, []);

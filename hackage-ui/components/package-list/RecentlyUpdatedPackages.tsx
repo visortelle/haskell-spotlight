@@ -25,7 +25,6 @@ export async function fetchRecentlyUpdatedPackages(): Promise<Package[]> {
   }
 
   const pkgs: Package[] = tds.map((td) => {
-    console.log('tds', td.innerHTML);
     const nameAndVersion = td.getElementsByTagName('a')[0].innerHTML;
     const version = nameAndVersion.replace(/.*-(?=.+$)/, '');
     const name = nameAndVersion.slice(0, nameAndVersion.length - version.length - 1);

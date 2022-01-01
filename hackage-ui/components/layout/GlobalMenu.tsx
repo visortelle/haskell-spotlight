@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import s from './GlobalMenu.module.css';
 import Logo from '../branding/Logo';
-import Input from '../forms/Input';
+import SearchInput from './SearchInput';
 
 const heightPx = 60;
 
@@ -57,7 +57,7 @@ const GlobalMenu = (props: Props) => {
           </a>
 
           <div className={s.searchInput}>
-            <Input onChange={() => { }} placeholder='Click to search...' value='' focusOnMount />
+            <SearchInput />
           </div>
 
           <ul className={s.menuItems}>
@@ -69,8 +69,6 @@ const GlobalMenu = (props: Props) => {
               );
             })}
           </ul>
-
-
         </div>
       </div>
     </>

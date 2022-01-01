@@ -1,15 +1,28 @@
 import s from './Input.module.css';
-import { useEffect, useRef } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
 
-const Input = ({ value, placeholder, onChange, focusOnMount }: { placeholder: string, value: string, onChange: (v: string) => void, focusOnMount?: boolean }) => {
+type InputProps = {
+  placeholder: string,
+  onFocus: () => void,
+  onBlur: () => void,
+  onChange: (v: string) => void,
+  onInputRef: (ref: RefObject<HTMLInputElement>) => void,
+  value: string,
+  focusOnMount?: boolean
+};
+
+const Input = ({ value, placeholder, onChange, onFocus, onBlur, onInputRef, focusOnMount }: InputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
-
 
   useEffect(() => {
     if (focusOnMount) {
       inputRef?.current?.focus();
     }
   }, [focusOnMount]);
+
+  useEffect(() => {
+    onInputRef(inputRef);
+  }, [onInputRef, inputRef]);
 
   return (
     <div className={s.input}>
@@ -19,6 +32,8 @@ const Input = ({ value, placeholder, onChange, focusOnMount }: { placeholder: st
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        onFocus={onFocus}
+        onBlur={onBlur}
         placeholder={placeholder}
       />
     </div>
