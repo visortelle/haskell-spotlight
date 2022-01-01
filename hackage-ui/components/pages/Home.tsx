@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import axios from 'axios';
 import GlobalMenu, { defaultMenuProps } from "../layout/GlobalMenu";
 import s from './Home.module.css';
 import Button from "../forms/Button";
@@ -30,7 +32,7 @@ const Home = () => {
       </div>
 
       <div className={s.statsContainer}>
-        <Stats downloadsTotal={1234324324} packagesTotal={34534534534} />
+        <Stats />
       </div>
 
       <div className={s.packageLists}>
@@ -57,12 +59,26 @@ const Home = () => {
   );
 }
 
-type StatsProps = {
+type Stats = {
   downloadsTotal: number,
   packagesTotal: number
 }
 
-const Stats = (props: StatsProps) => {
+const Stats = () => {
+  const [stats, setStats] = useState<'loading' | Stats>('loading');
+
+  useEffect(() => {
+    (async () => {
+      const stats = await (await axios('/api/stats')).data;
+      console.log('stats', stats);
+      setStats(stats as Stats);
+    })()
+  }, []);
+
+  if (stats === 'loading') {
+    return null;
+  }
+
   return (
     <div className={s.stats}>
       <div className={s.statsText}>
@@ -88,7 +104,7 @@ const Stats = (props: StatsProps) => {
       <div className={s.statsGroups}>
         <div className={s.statsGroup}>
           <div className={s.statsGroupContent}>
-            <span className={s.statsAmount}>{props.downloadsTotal.toLocaleString('en-US')}</span>
+            <span className={s.statsAmount}>{(stats.downloadsTotal && stats.downloadsTotal.toLocaleString('en-US')) || 'N/A'}</span>
             <span className={s.statsUnit}>Downloads</span>
           </div>
           <div className={s.statsGroupIcon}>
@@ -97,7 +113,7 @@ const Stats = (props: StatsProps) => {
         </div>
         <div className={s.statsGroup}>
           <div className={s.statsGroupContent}>
-            <span className={s.statsAmount}>{props.packagesTotal.toLocaleString('en-US')}</span>
+            <span className={s.statsAmount}>{(stats.packagesTotal && stats.packagesTotal.toLocaleString('en-US') || 'N/A')}</span>
             <span className={s.statsUnit}>Packages published</span>
           </div>
           <div className={s.statsGroupIcon}>
