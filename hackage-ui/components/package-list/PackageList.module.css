@@ -13,6 +13,9 @@
   border-radius: 6rem;
   box-shadow: 0rem 2rem 4rem rgb(0 0 0 / 27%);
   transition: var(--transition-short);
+
+  animation: appear 180ms;
+  animation-timing-function: ease-in-out;
 }
 
 .package:hover {
@@ -22,6 +25,46 @@
 
 .package:last-child {
   margin-bottom: 0;
+}
+
+.loading {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60rem;
+  background-color: var(--surface-color);
+  padding: 9rem;
+  border-radius: 6rem;
+  font-size: 16rem;
+  margin-bottom: 12rem;
+
+  animation: appear 180ms;
+  animation-timing-function: ease-in-out;
+  overflow: hidden;
+}
+
+@keyframes appear {
+  0% { opacity: 0; }
+  100% { opacity: 1 }
+}
+
+.nothingToShow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60rem;
+  background-color: var(--surface-color);
+  border: 1rem solid var(--surface-color);
+  padding: 8rem;
+  border-radius: 6rem;
+  font-size: 16rem;
+
+  animation: appear 150ms;
+  animation-timing-function: ease-in-out;
+}
+.nothingToShow span {
+  opacity: 0.66;
 }
 
 .packageInfo {

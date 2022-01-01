@@ -57,7 +57,7 @@ const GlobalMenu = (props: Props) => {
           </a>
 
           <div className={s.searchInput}>
-            <Input onChange={() => { }} placeholder='Click to search...' value='' />
+            <Input onChange={() => { }} placeholder='Click to search...' value='' focusOnMount />
           </div>
 
           <ul className={s.menuItems}>

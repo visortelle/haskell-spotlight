@@ -81,6 +81,7 @@
   align-items: center;
   position: relative;
   flex-direction: column;
+  margin-bottom: 48rem;
 }
 
 .statsContainer::after {

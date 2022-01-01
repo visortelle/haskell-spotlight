@@ -8,14 +8,21 @@ export type Package = {
 }
 
 export type Props = {
-  pkgs: Package[],
-  getHref: (pkg: Package) => string
+  pkgs: 'loading' | Package[],
+  getHref: (pkg: Package) => string,
+  count: number
 }
 
 const PackageList = (props: Props) => {
   return (
     <div className={s.packageList}>
-      {props.pkgs.map((pkg) => {
+      {props.pkgs === 'loading' && (
+        Array.from(Array(props.count)).map((_, i) => <div key={i} className={`${s.loading} loading-overlay`}></div>)
+      )}
+      {props.pkgs !== 'loading' && props.pkgs.length === 0 && (
+        <div className={`${s.nothingToShow}`}><span>Nothing to show</span></div>
+      )}
+      {props.pkgs !== 'loading' && props.pkgs.length > 0 && props.pkgs.map((pkg) => {
         return (
           <a key={`${pkg.name}@${pkg.version || 'unknown-version'}`} className={s.package} href={props.getHref(pkg)}>
             <div className={s.packageInfo}>
@@ -25,7 +32,7 @@ const PackageList = (props: Props) => {
               )}
             </div>
             <div className={s.openPackageIcon}>
-                <SvgIcon svg={ArrowRightIcon}/>
+              <SvgIcon svg={ArrowRightIcon} />
             </div>
           </a>
         );

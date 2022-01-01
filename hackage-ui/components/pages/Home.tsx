@@ -5,20 +5,9 @@ import PackageIcon from '!!raw-loader!../icons/package.svg';
 import DownloadIcon from '!!raw-loader!../icons/download.svg';
 import Footer from "../layout/Footer";
 import SvgIcon from "../icons/SVGIcon";
-import PackageList, {Package} from "../package-list/PackageList";
-
-const mockPackageList: Package[] = [
-  {name: 'servant', version: '1.4.5'},
-  {name: 'quickcheck very long name asdf adsf sdf sdf sdfasdf asd fasd fasdf asdf asd fasd fasdf asd fasdf ', version: '23.32.4.5'},
-  {name: 'serde'},
-  {name: 'abc asdf asdf asdf asdf asdf asdf asdf asdf asd fasdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf '},
-  {name: 'servant', version: '1.4.5'},
-  {name: 'quickcheck', version: '23.32.4.5'},
-  {name: 'serde'},
-  {name: 'abc'},
-  {name: 'servant', version: '1.4.5'},
-  {name: 'quickcheck', version: '23.32.4.5'},
-];
+import PackageList from "../package-list/PackageList";
+import MostDownloadedPackages from '../package-list/MostDownloadedPackages';
+import RecentlyUpdatedPackages from "../package-list/RecentlyUpdatedPackages";
 
 const Home = () => {
   return (
@@ -46,18 +35,18 @@ const Home = () => {
 
       <div className={s.packageLists}>
         <div className={s.packageList}>
-          <h3 className={s.packageListHeader}>New Packages</h3>
-          <PackageList pkgs={mockPackageList} getHref={() => '#'} />
-        </div>
-
-        <div className={s.packageList}>
           <h3 className={s.packageListHeader}>Most Downloaded</h3>
-          <PackageList pkgs={mockPackageList} getHref={() => '#'} />
+          <MostDownloadedPackages />
         </div>
 
         <div className={s.packageList}>
           <h3 className={s.packageListHeader}>Just Updated</h3>
-          <PackageList pkgs={mockPackageList} getHref={() => '#'} />
+          <RecentlyUpdatedPackages />
+        </div>
+
+        <div className={s.packageList}>
+          <h3 className={s.packageListHeader}>Recently Visited</h3>
+          <PackageList pkgs={[]} getHref={() => '#'} count={0} />
         </div>
       </div>
 
