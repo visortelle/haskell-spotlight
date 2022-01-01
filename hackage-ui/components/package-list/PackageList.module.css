@@ -1,0 +1,60 @@
+.packageList {
+  width: 100%;
+}
+
+.package {
+  display: flex;
+  justify-content: space-between;
+  height: 60rem;
+  background-color: #fff;
+  border: 1rem solid #fff;
+  margin-bottom: 12rem;
+  padding: 8rem 8rem 8rem 18rem;
+  border-radius: 6rem;
+  box-shadow: 0rem 2rem 4rem rgb(0 0 0 / 27%);
+  transition: var(--transition-short);
+}
+
+.package:hover {
+  transition: var(--transition-short);
+  border: 1rem solid var(--purple-color-2);
+}
+
+.package:last-child {
+  margin-bottom: 0;
+}
+
+.packageInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.openPackageIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 8rem;
+  opacity: 0.66;
+}
+
+.openPackageIcon svg {
+  width: 18rem;
+  height: 18rem;
+}
+
+.packageName {
+  white-space: nowrap;
+  font-size: 16rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.packageVersion {
+  opacity: 0.66;
+  font-size: 12rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

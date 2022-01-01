@@ -24,7 +24,7 @@ const GlobalMenu = (props: Props) => {
 
   function handleScroll(): void {
     let scrollY = window.scrollY;
-    if (scrollY > heightPx) {
+    if (scrollY > 4) {
       setAtTop(true);
       return;
     }

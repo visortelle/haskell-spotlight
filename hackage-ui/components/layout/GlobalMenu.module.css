@@ -14,13 +14,11 @@
   justify-content: center;
 
   background-color: var(--purple-color-2);
-  backdrop-filter: var(--backdrop-filter-blur);
   transition: var(--transition-short);
   z-index: 100;
 }
 
 .menuAtTop {
-  background-color: var(--surface-color-backdrop);
   box-shadow: 0 0rem 8rem rgb(0 0 0 / 50%);
   transition: var(--transition-short);
 }

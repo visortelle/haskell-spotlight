@@ -4,6 +4,21 @@ import Button from "../forms/Button";
 import PackageIcon from '!!raw-loader!../icons/package.svg';
 import DownloadIcon from '!!raw-loader!../icons/download.svg';
 import Footer from "../layout/Footer";
+import SvgIcon from "../icons/SVGIcon";
+import PackageList, {Package} from "../package-list/PackageList";
+
+const mockPackageList: Package[] = [
+  {name: 'servant', version: '1.4.5'},
+  {name: 'quickcheck very long name asdf adsf sdf sdf sdfasdf asd fasd fasdf asdf asd fasd fasdf asd fasdf ', version: '23.32.4.5'},
+  {name: 'serde'},
+  {name: 'abc asdf asdf asdf asdf asdf asdf asdf asdf asd fasdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf '},
+  {name: 'servant', version: '1.4.5'},
+  {name: 'quickcheck', version: '23.32.4.5'},
+  {name: 'serde'},
+  {name: 'abc'},
+  {name: 'servant', version: '1.4.5'},
+  {name: 'quickcheck', version: '23.32.4.5'},
+];
 
 const Home = () => {
   return (
@@ -29,19 +44,28 @@ const Home = () => {
         <Stats downloadsTotal={1234324324} packagesTotal={34534534534} />
       </div>
 
+      <div className={s.packageLists}>
+        <div className={s.packageList}>
+          <h3 className={s.packageListHeader}>New Packages</h3>
+          <PackageList pkgs={mockPackageList} getHref={() => '#'} />
+        </div>
+
+        <div className={s.packageList}>
+          <h3 className={s.packageListHeader}>Most Downloaded</h3>
+          <PackageList pkgs={mockPackageList} getHref={() => '#'} />
+        </div>
+
+        <div className={s.packageList}>
+          <h3 className={s.packageListHeader}>Just Updated</h3>
+          <PackageList pkgs={mockPackageList} getHref={() => '#'} />
+        </div>
+      </div>
+
       <div className={s.footer}>
         <Footer />
       </div>
     </div>
   );
-}
-
-type SvgIconProps = {
-  svg: string
-}
-
-const SvgIcon = (props: SvgIconProps) => {
-  return (<div className={s.svgIcon} dangerouslySetInnerHTML={{ __html: props.svg }}></div>);
 }
 
 type StatsProps = {
