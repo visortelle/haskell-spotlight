@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&family=Fira+Sans:wght@400;700&display=swap');
 
 #__next {
   min-height: inherit;
@@ -21,14 +21,14 @@
   --accent-color-yellow: #ff9042;
   --accent-color-blue: #5084ff;
   --accent-color-purple: #9d50ff;
-  --max-content-width: 900rem;
+  --max-content-width: 1000rem;
 }
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: "Fira Sans", Helvetica, Arial, sans-serif;
+  font-family: 'Fira Sans', sans-serif;
 
   background-color: var(--background-color);
   color: var(--text-color);
@@ -54,6 +54,7 @@ li {
 }
 
 code {
+  font-family: 'Fira Mono', monospace;
   background-color: var(--surface-color);
   border-radius: 4rem;
   padding: 2rem 6rem;

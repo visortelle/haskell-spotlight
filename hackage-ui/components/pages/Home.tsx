@@ -23,7 +23,7 @@ const Home = () => {
       </div>
       <div className={s.gettingStarted}>
         <div>
-          <Button onClick={() => { }} text="Install GHCup" type="promoButton" overrides={{ style: { width: '200rem' } }} />
+          <Button onClick={() => { }} text="Install Cabal" type="promoButton" overrides={{ style: { width: '200rem' } }} />
         </div>
         <div style={{ width: '48rem' }}></div>
         <div>

@@ -5,12 +5,14 @@
 .searchResultsContainer {
   position: absolute;
   display: flex;
-  width: 100%;
+  width: calc(100vw - 48rem);
+  left: calc(50% - 18rem);
+  max-width: var(--max-content-width);
   bottom: -8rem;
-  transform: translate(0, 100%);
+  transform: translate(-50%, 100%);
   background-color: #fff;
   border-radius: 12rem;
-  max-height: 400rem;
+  max-height: calc(100vh - 100rem);
   overflow: hidden;
   box-shadow: 1rem 3rem 8rem rgb(0 0 0 / 27%);
 }
@@ -31,15 +33,17 @@
 
 .searchResult:hover {
   cursor: pointer;
-  background-color: var(--background-color);
+  opacity: 0.66;
 }
 
-.searchResult:first-child {
-  margin-top: 18rem;
+.searchResult:first-child,
+.hoogleSearchResult:first-child {
+  padding-top: 12rem;
 }
 
-.searchResult:last-child {
-  margin-bottom: 18rem;
+.searchResult:last-child,
+.hoogleSearchResult:last-child {
+  padding-bottom: 12rem;
 }
 
 .help {
@@ -51,4 +55,53 @@
   font-size: 18rem;
   margin: 0;
   margin-bottom: 8rem;
+}
+
+.hoogleSearchResult {
+  padding: 12rem 8rem;
+  font-size: 14rem;
+}
+
+.hoogleSearchResult:nth-child(even) {
+  background-color: #f5f5f5;
+  position: relative;
+}
+.hoogleSearchResult:nth-child(odd) {
+  background-color: #e5e5e5;
+  position: relative;
+}
+
+.link:hover {
+  cursor: pointer;
+  opacity: 0.66;
+}
+
+.hoogleItemLink {
+  display: inline-flex;
+  flex-wrap: wrap;
+  font-family: "Fira Mono", monospace;
+  border-radius: 4rem;
+  padding: 0 8rem;
+  margin-bottom: 4rem;
+  font-size: 14rem;
+}
+
+.hoogleItemTypeName {
+}
+
+.hoogleItemModules {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.hoogleItemPackage {
+  width: 33.3333%;
+}
+
+.hoogleItemPackages {
+  display: flex;
+  padding: 0 8rem;
+  flex-wrap: wrap;
+  color: var(--purple-color-2);
 }

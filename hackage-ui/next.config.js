@@ -6,6 +6,10 @@ module.exports = {
         source: "/api/hackage/:path*",
         destination: "https://hackage.haskell.org/:path*",
       },
+      {
+        source: "/api/hoogle/:path*",
+        destination: "https://hoogle.haskell.org/:path*",
+      },
     ];
   },
   reactStrictMode: true,
