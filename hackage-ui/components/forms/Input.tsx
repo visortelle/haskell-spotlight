@@ -35,6 +35,7 @@ const Input = ({ value, placeholder, onChange, onFocus, onBlur, onInputRef, focu
         onFocus={onFocus || (() => {})}
         onBlur={onBlur || (() => {})}
         placeholder={placeholder}
+        spellCheck={false}
       />
     </div>
   );

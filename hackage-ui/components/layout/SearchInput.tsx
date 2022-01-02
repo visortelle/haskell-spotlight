@@ -133,7 +133,7 @@ type SearchResultsProps = {
 
 const SearchResults = (props: SearchResultsProps) => {
   const query = useThrottle(props.query, 500);
-  const queryType: 'hackage' | 'hoogle' = query.match(/^\:t .*$/g) ? 'hoogle' : 'hackage';
+  const queryType: 'hackage' | 'hoogle' = query?.match(/^\:t .*$/g) ? 'hoogle' : 'hackage';
 
   return (
     <div className={s.searchResultsContainer}>
@@ -167,10 +167,10 @@ const SearchInput = () => {
   }, [router]);
 
   useEffect(() => {
-    if (router.query?.search !== query) {
+    if (!isDirty && router.query?.search !== query) {
       _setQuery(router.query.search as string);
     }
-  }, [query, setQuery, router.query.search]);
+  }, [query, isDirty, setQuery, router.query.search]);
 
 
   const handleKeyUp = useCallback((event: KeyboardEvent) => {
