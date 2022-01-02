@@ -39,14 +39,7 @@
   font-size: 16rem;
   margin-bottom: 12rem;
 
-  animation: appear 180ms;
-  animation-timing-function: ease-in-out;
   overflow: hidden;
-}
-
-@keyframes appear {
-  0% { opacity: 0; }
-  100% { opacity: 1 }
 }
 
 .nothingToShow {
@@ -59,9 +52,6 @@
   padding: 8rem;
   border-radius: 6rem;
   font-size: 16rem;
-
-  animation: appear 150ms;
-  animation-timing-function: ease-in-out;
 }
 .nothingToShow span {
   opacity: 0.66;

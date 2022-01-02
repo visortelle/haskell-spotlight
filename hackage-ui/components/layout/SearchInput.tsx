@@ -162,7 +162,7 @@ const SearchInput = () => {
   const [inputRef, setInputRef] = useState<RefObject<HTMLInputElement>>();
 
   const setQuery = useCallback((query: string) => {
-    router.replace({query: { ...router.query, search: query}});
+    router.replace({ query: { ...router.query, search: query } });
     _setQuery(query);
   }, [router]);
 
@@ -174,7 +174,7 @@ const SearchInput = () => {
 
 
   const handleKeyUp = useCallback((event: KeyboardEvent) => {
-    if (event.key === 'Tab') {
+    if (ref.current && !ref.current.contains(event.target as Node) && event.key === 'Tab') {
       setIsFocused(false);
       return;
     }
@@ -188,8 +188,8 @@ const SearchInput = () => {
     }
   }, [isFocused, inputRef]);
 
-  const handleMouseDown = useCallback((e: MouseEvent) => {
-    if (ref.current && !ref.current.contains(e.target as Node)) {
+  const handleMouseDown = useCallback((event: MouseEvent) => {
+    if (ref.current && !ref.current.contains(event.target as Node)) {
       setIsFocused(false);
     }
   }, [ref]);
@@ -205,9 +205,8 @@ const SearchInput = () => {
   }, [handleKeyUp, handleMouseDown]);
 
   const showSearchResults =
-    query?.length ||
-    isFocused &&
-    (isDirty || focusedTimes > 1); // don't show search results after page load
+    (isFocused && query?.length) ||
+    (isFocused && (isDirty || focusedTimes > 1)); // don't show search results after page load
 
   return (
     <div className={s.searchInput} ref={ref}>
