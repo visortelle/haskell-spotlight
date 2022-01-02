@@ -97,28 +97,41 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
         const typeDef = _typeDef.join('');
         const pkgs = groupBy(hoogleItem, 'package.name');
 
+        const docs = hoogleItem[0].docs
+          .replace(/\n+/g, '\n').trim(); // Apply minimal formatting to make docs look more consistent.
+
+        const tweetSize = 140;
+
         return (
           <div key={hoogleItemKey} className={s.hoogleSearchResult}>
             <a href={hoogleItem[0].url} className={`${s.hoogleItemLink} ${s.link}`}>
               <>
-                <strong className={s.hoogleItemTypeName}>{typeName}&nbsp;::&nbsp;</strong><span>{typeDef}</span>
+                <strong className={s.hoogleItemTypeName}>{typeName}</strong>{typeDef ? <strong>&nbsp;::&nbsp;</strong> : ''}<span>{typeDef}</span>
               </>
             </a>
-            <div className={s.hoogleItemPackages}>
-              {Object.keys(pkgs).map(packageKey => {
-                const pkg = pkgs[packageKey];
+            <div className={s.hoogleItemContent}>
+              {docs && (
+                <div className={s.hoogleItemDocs}>
+                  {docs.slice(0, tweetSize)}
+                  {docs.length > tweetSize && <>…</>}
+                </div>
+              )}
+              {pkgs[Object.keys(pkgs)[0]][0].package.name && <div className={s.hoogleItemPackages}>
+                {Object.keys(pkgs).map(packageKey => {
+                  const pkg = pkgs[packageKey];
 
-                return (
-                  <div key={packageKey} className={s.hoogleItemPackage}>
-                    <a href={pkg[0].package.url} className={s.link}><strong>{pkg[0].package.name}</strong>&nbsp;</a>
-                    <div className={s.hoogleItemModules}>
-                      {pkg.map(item => (
-                        <a key={item.module.name} href={item.module.url} className={s.link}>{item.module.name}&nbsp;</a>
-                      ))}
+                  return (
+                    <div key={packageKey} className={s.hoogleItemPackage}>
+                      <a href={pkg[0].package.url} className={s.link}><small style={{ marginRight: '0.5em' }}>📦</small>{pkg[0].package.name}</a>
+                      <div className={s.hoogleItemModules}>
+                        {pkg.map(item => (
+                          <a key={item.module.name} href={item.module.url} className={s.link}>{item.module.name}</a>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>}
             </div>
           </div>
         );
@@ -132,7 +145,7 @@ type SearchResultsProps = {
 }
 
 const SearchResults = (props: SearchResultsProps) => {
-  const query = useThrottle(props.query, 500);
+  const query = useThrottle(props.query, 300);
   const queryType: 'hackage' | 'hoogle' = query?.match(/^\:t .*$/g) ? 'hoogle' : 'hackage';
 
   return (
@@ -220,7 +233,7 @@ const SearchInput = () => {
           setIsFocused(true);
         }}
         onInputRef={setInputRef}
-        placeholder='Click or type "/" to search...'
+        placeholder='Click or press "/" to search...'
         value={query}
         focusOnMount
       />
