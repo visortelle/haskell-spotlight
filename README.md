@@ -7,3 +7,5 @@ Fresh look for the <https://hackage.haskell.org/>.
 Just started the project. Not much to look at here.
 
 Progres here: <https://github.com/visortelle/hackage-ui/issues/2>
+
+Communication and cooperation are welcome. ✌️
