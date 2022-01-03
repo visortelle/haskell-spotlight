@@ -10,6 +10,7 @@
   "dependencies": {
     "@types/lodash": "^4.14.178",
     "@types/xmldom": "^0.1.31",
+    "@xmldom/xmldom": "^0.8.0",
     "axios": "^0.24.0",
     "highlight.js": "^11.3.1",
     "lodash": "^4.17.21",
@@ -17,8 +18,7 @@
     "raw-loader": "^4.0.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-use": "^17.3.2",
-    "xmldom": "^0.6.0"
+    "react-use": "^17.3.2"
   },
   "devDependencies": {
     "@types/node": "17.0.4",
