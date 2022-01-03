@@ -16,7 +16,6 @@ class MyDocument extends Document {
           <link href="/styles/globals.css" rel="stylesheet"></link>
 
           <meta charSet="utf-8" />
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
           {/* Empty script tag as chrome bug fix, see https://stackoverflow.com/a/42969608/943337 */}
           <script> </script>

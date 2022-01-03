@@ -1,7 +1,7 @@
 import { NextPage, GetStaticPropsResult } from 'next';
 import React from 'react';
 import { Package } from '../components/package-list/PackageList';
-import HomePage, { HomeProps, StatsProps } from '../components/pages/Home';
+import HomePage, { HomeProps } from '../components/pages/Home';
 import axios from 'axios';
 import { DOMParser } from 'xmldom';
 

@@ -1,6 +1,7 @@
 import s from './PackageList.module.css';
 import ArrowRightIcon from '!!raw-loader!../../components/icons/arrow-right.svg';
 import SvgIcon from '../icons/SVGIcon';
+import A from '../layout/A';
 
 export type Package = {
   name: string,
@@ -24,7 +25,7 @@ const PackageList = (props: Props) => {
       )}
       {props.pkgs !== 'loading' && props.pkgs.length > 0 && props.pkgs.map((pkg) => {
         return (
-          <a key={`${pkg.name}@${pkg.version || 'unknown-version'}`} className={s.package} href={props.getHref(pkg)}>
+          <A key={`${pkg.name}@${pkg.version || 'unknown-version'}`} className={s.package} href={props.getHref(pkg)}>
             <div className={s.packageInfo}>
               <div className={s.packageName}>{pkg.name}</div>
               {pkg.version && (
@@ -34,7 +35,7 @@ const PackageList = (props: Props) => {
             <div className={s.openPackageIcon}>
               <SvgIcon svg={ArrowRightIcon} />
             </div>
-          </a>
+          </A>
         );
       })}
     </div>

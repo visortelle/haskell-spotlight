@@ -5,6 +5,7 @@ import s from './SearchInput.module.css';
 import { useThrottle } from 'react-use';
 import groupBy from 'lodash/groupBy';
 import { useRouter } from 'next/router';
+import A from './A';
 
 const HackageSearchResults = ({ query }: { query: string }) => {
   const [searchResults, setSearchResults] = useState<{ name: string }[]>([]);
@@ -35,9 +36,9 @@ const HackageSearchResults = ({ query }: { query: string }) => {
     <div className={s.hackageSearchResults}>
       {searchResults.map(pkg => {
         return (
-          <a key={pkg.name} className={s.searchResult} href={`/package/${pkg.name}`}>
+          <A key={pkg.name} className={s.searchResult} href={`/package/${pkg.name}`}>
             {pkg.name}
-          </a>
+          </A>
         );
       })}
     </div>
@@ -110,11 +111,11 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
 
         return (
           <div key={hoogleItemKey} className={s.hoogleSearchResult}>
-            <a href={rewriteUrl(hoogleItem[0].url)} className={`${s.hoogleItemLink} ${s.link}`}>
+            <A href={rewriteUrl(hoogleItem[0].url)} className={`${s.hoogleItemLink} ${s.link}`}>
               <>
                 <strong className={s.hoogleItemTypeName}>{typeName}</strong>{typeDef ? <strong>&nbsp;::&nbsp;</strong> : ''}<span>{typeDef}</span>
               </>
-            </a>
+            </A>
             <div className={s.hoogleItemContent}>
               {docs && (
                 <div className={s.hoogleItemDocs}>
@@ -128,10 +129,10 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
 
                   return (
                     <div key={packageKey} className={s.hoogleItemPackage}>
-                      <a href={rewriteUrl(pkg[0].package.url)} className={s.link}><small style={{ marginRight: '0.5em' }}>📦</small>{pkg[0].package.name}</a>
+                      <A href={rewriteUrl(pkg[0].package.url)} className={s.link}><small style={{ marginRight: '0.5em' }}>📦</small>{pkg[0].package.name}</A>
                       <div className={s.hoogleItemModules}>
                         {pkg.map(item => (
-                          <a key={item.module.name} href={rewriteUrl(item.module.url)} className={s.link}>{item.module.name}</a>
+                          <A key={item.module.name} href={rewriteUrl(item.module.url)} className={s.link}>{item.module.name}</A>
                         ))}
                       </div>
                     </div>
