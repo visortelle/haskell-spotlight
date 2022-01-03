@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-import axios from 'axios';
 import GlobalMenu, { defaultMenuProps } from "../layout/GlobalMenu";
 import s from './Home.module.css';
 import Button from "../forms/Button";
@@ -7,11 +5,16 @@ import PackageIcon from '!!raw-loader!../icons/package.svg';
 import DownloadIcon from '!!raw-loader!../icons/download.svg';
 import Footer from "../layout/Footer";
 import SvgIcon from "../icons/SVGIcon";
-import PackageList from "../package-list/PackageList";
-import MostDownloadedPackages from '../package-list/MostDownloadedPackages';
-import RecentlyUpdatedPackages from "../package-list/RecentlyUpdatedPackages";
+import PackageList, { Package } from "../package-list/PackageList";
 
-const Home = () => {
+export type HomeProps = {
+  stats: StatsProps,
+  topPackages: Package[],
+  recentlyUpdatedPackages: Package[]
+  packageListsSize: number,
+}
+
+const Home = (props: HomeProps) => {
   return (
     <div className={s.page}>
       <GlobalMenu {...defaultMenuProps} />
@@ -32,18 +35,18 @@ const Home = () => {
       </div>
 
       <div className={s.statsContainer}>
-        <Stats />
+        <Stats {...props.stats} />
       </div>
 
       <div className={s.packageLists}>
         <div className={s.packageList}>
           <h3 className={s.packageListHeader}>Most Downloaded</h3>
-          <MostDownloadedPackages />
+          <PackageList pkgs={props.topPackages} getHref={(pkg) => `/package/${pkg.name}`} count={props.packageListsSize} />
         </div>
 
         <div className={s.packageList}>
           <h3 className={s.packageListHeader}>Just Updated</h3>
-          <RecentlyUpdatedPackages />
+          <PackageList pkgs={props.recentlyUpdatedPackages} getHref={(pkg) => `/package/${pkg.name}`} count={props.packageListsSize} />
         </div>
 
         <div className={s.packageList}>
@@ -59,25 +62,12 @@ const Home = () => {
   );
 }
 
-type Stats = {
+export type StatsProps = {
   downloadsTotal: number,
   packagesTotal: number
 }
 
-const Stats = () => {
-  const [stats, setStats] = useState<'loading' | Stats>('loading');
-
-  useEffect(() => {
-    (async () => {
-      const stats = await (await axios('/api/stats')).data;
-      setStats(stats as Stats);
-    })()
-  }, []);
-
-  if (stats === 'loading') {
-    return null;
-  }
-
+const Stats = (props: StatsProps) => {
   return (
     <div className={s.stats}>
       <div className={s.statsText}>
@@ -103,7 +93,7 @@ const Stats = () => {
       <div className={s.statsGroups}>
         <div className={s.statsGroup}>
           <div className={s.statsGroupContent}>
-            <span className={s.statsAmount}>{(stats.downloadsTotal && stats.downloadsTotal.toLocaleString('en-US')) || 'N/A'}</span>
+            <span className={s.statsAmount}>{(props.downloadsTotal && props.downloadsTotal.toLocaleString('en-US')) || 'N/A'}</span>
             <span className={s.statsUnit}>Downloads</span>
           </div>
           <div className={s.statsGroupIcon}>
@@ -112,7 +102,7 @@ const Stats = () => {
         </div>
         <div className={s.statsGroup}>
           <div className={s.statsGroupContent}>
-            <span className={s.statsAmount}>{(stats.packagesTotal && stats.packagesTotal.toLocaleString('en-US') || 'N/A')}</span>
+            <span className={s.statsAmount}>{(props.packagesTotal && props.packagesTotal.toLocaleString('en-US') || 'N/A')}</span>
             <span className={s.statsUnit}>Packages published</span>
           </div>
           <div className={s.statsGroupIcon}>
@@ -125,4 +115,3 @@ const Stats = () => {
 }
 
 export default Home;
-
