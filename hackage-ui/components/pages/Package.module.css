@@ -16,6 +16,10 @@
   overflow: hidden;
 }
 
+.footer {
+  margin-top: auto;
+}
+
 .packageName {
   margin: 0;
   font-size: 32rem;
@@ -48,6 +52,8 @@
   border-radius: 4rem;
   margin: auto;
   display: block;
+  max-width: 100%;
+    height: auto;
 }
 
 .longDescription p:last-child {

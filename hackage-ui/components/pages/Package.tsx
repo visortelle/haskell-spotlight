@@ -1,9 +1,11 @@
 import GlobalMenu, { defaultMenuProps } from "../layout/GlobalMenu";
 import axios from 'axios';
 import { useState, useEffect } from "react";
+import Footer from "../layout/Footer";
 import s from './Package.module.css';
 import hljs from 'highlight.js';
-import 'highlight.js/styles/a11y-dark.css'; // dark theme candidates - a11y-dark
+import 'highlight.js/styles/a11y-dark.css';
+import escape from 'lodash/escape';
 
 // XXX - We can get rid of most content of this function after the hackage-server will implement missing APIs.
 function monkeyPatchDocument(doc: Document): void {
@@ -11,9 +13,17 @@ function monkeyPatchDocument(doc: Document): void {
   Array.from(doc.querySelectorAll('a')).map(a => a.href.replace('https://hackage.haskell.com/', '/'));
 
   // Highlight code blocks
-  hljs.configure({languages: ['haskell']});
-  Array.from(doc.querySelectorAll('pre')).map(pre => hljs.highlightElement(pre));
-  Array.from(doc.querySelectorAll('code')).map(pre => hljs.highlightElement(pre));
+  [
+    ...Array.from(doc.querySelectorAll('code')),
+    ...Array.from(doc.querySelectorAll('pre'))
+  ].map(el => {
+    /* Prevent HTML/JS injections.
+    https://github.com/highlightjs/highlight.js/issues/2886 */
+    el.innerHTML = escape(el.innerHTML);
+
+    hljs.configure({ languages: ['haskell'] })
+    hljs.highlightElement(el);
+  });
 }
 
 type PackageProps = {
@@ -42,6 +52,7 @@ const Package = (props: PackageProps) => {
       } catch (err) {
         console.log(err);
       }
+
       setRawHtml(html);
 
       const domParser = new DOMParser();
@@ -65,7 +76,6 @@ const Package = (props: PackageProps) => {
 
   }, [props.id]);
 
-  console.log('pkg', pkg);
   return (
     <div>
       <GlobalMenu {...defaultMenuProps} />
@@ -80,6 +90,9 @@ const Package = (props: PackageProps) => {
           </div>
         </div>
       )}
+      <div className={s.footer}>
+        <Footer />
+      </div>
     </div>
   );
 }
