@@ -65,7 +65,7 @@
 .hoogleSearchResult {
   padding: 12rem 8rem;
   font-size: 14rem;
-  font-family: "Fira Mono", monospace;
+  font-family: "Fira Code", monospace;
 }
 
 .hoogleSearchResult:nth-child(even) {

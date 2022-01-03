@@ -1,3 +1,9 @@
+.page {
+  min-height: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
 .package hr {
   background-color: var(--surface-color);
   width: 100%;
@@ -26,6 +32,13 @@
   font-weight: bold;
 }
 
+.packageNameH1 {
+  display: inline-flex;
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+}
+
 .briefInfo {
   background-color: #fff;
   padding: 12rem 24rem;
@@ -35,6 +48,10 @@
   font-size: 18rem;
   opacity: 0.66;
   margin-bottom: 18rem;
+}
+
+.shortDescription:last-child {
+  margin-bottom: 0;
 }
 
 .longDescription {

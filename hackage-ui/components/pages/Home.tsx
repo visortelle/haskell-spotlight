@@ -13,7 +13,7 @@ import RecentlyUpdatedPackages from "../package-list/RecentlyUpdatedPackages";
 
 const Home = () => {
   return (
-    <div className={s.home}>
+    <div className={s.page}>
       <GlobalMenu {...defaultMenuProps} />
 
       <div className={s.greeting}>

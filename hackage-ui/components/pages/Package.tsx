@@ -6,6 +6,7 @@ import s from './Package.module.css';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/a11y-dark.css';
 import escape from 'lodash/escape';
+import unescape from 'lodash/unescape';
 
 // XXX - We can get rid of most content of this function after the hackage-server will implement missing APIs.
 function monkeyPatchDocument(doc: Document): void {
@@ -23,7 +24,14 @@ function monkeyPatchDocument(doc: Document): void {
 
     hljs.configure({ languages: ['haskell'] })
     hljs.highlightElement(el);
+
+    el.innerHTML = unescape(el.innerHTML);
   });
+
+  // Remove "Skip to Readme" links.
+  const description = doc.getElementById('content')?.querySelector('#description') as Element;
+  description.innerHTML = description.innerHTML.replace(`<hr>
+    [<a href="#readme">Skip to Readme</a>]`, '');
 }
 
 type PackageProps = {
@@ -61,12 +69,9 @@ const Package = (props: PackageProps) => {
 
       const docContent = doc.getElementById('content');
 
-      const name = docContent?.querySelector('h1 a')?.innerHTML || '';
-      const shortDescription = docContent?.querySelector('h1 small')?.innerHTML || '';
-      const longDescriptionHtml = docContent?.querySelector('#description')?.innerHTML
-        .replace(`<hr>
-    [<a href="#readme">Skip to Readme</a>]`, '') || '';
-
+      const name = docContent?.querySelector('h1 a')?.innerHTML.trim() || '';
+      const shortDescription = docContent?.querySelector('h1 small')?.innerHTML.trim() || '';
+      const longDescriptionHtml = docContent?.querySelector('#description')?.innerHTML.trim() || '';
       setPkg({
         name,
         longDescriptionHtml,
@@ -77,15 +82,15 @@ const Package = (props: PackageProps) => {
   }, [props.id]);
 
   return (
-    <div>
+    <div className={s.page}>
       <GlobalMenu {...defaultMenuProps} />
       {pkg && (
         <div className={s.package}>
           <div className={s.content}>
             <div className={s.briefInfo}>
-              <div className={s.packageName}>{pkg.name}</div>
-              <div className={s.shortDescription}>{pkg.shortDescription}</div>
-              <div className={s.longDescription} dangerouslySetInnerHTML={{ __html: pkg.longDescriptionHtml }}></div>
+              <div className={s.packageName}><small>📦</small>&nbsp;<h1 className={s.packageNameH1}>{pkg.name}</h1></div>
+              {pkg.shortDescription && <div className={s.shortDescription}>{pkg.shortDescription}</div>}
+              {pkg.longDescriptionHtml && <div className={s.longDescription} dangerouslySetInnerHTML={{ __html: pkg.longDescriptionHtml }}></div>}
             </div>
           </div>
         </div>

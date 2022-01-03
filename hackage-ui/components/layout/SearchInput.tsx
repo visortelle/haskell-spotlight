@@ -61,7 +61,7 @@ type HoogleItemEntry = {
 }
 type HoogleItemKey = string;
 const HoogleSearchResults = ({ query }: { query: string }) => {
-  // Hoogle sometimes returns duplicate entries.
+  // Hoogle sometimes returns duplicate entries. Maybe a Hoogle bug, maybe I missed something.
   function deduplicate(arr: any[]) {
     return Array.from(new Set(arr.map(el => JSON.stringify(el)))).map(el => JSON.parse(el));
   }
