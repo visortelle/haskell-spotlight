@@ -29,11 +29,12 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: flex;
+  color: var(--text-color);
 }
 
 .searchResult:hover {
   cursor: pointer;
-  opacity: 0.66;
+  background-color: var(--background-color);
 }
 
 .searchResult:first-child,
@@ -49,6 +50,10 @@
 .help {
   padding: 18rem 24rem;
   background-color: var(--background-color);
+}
+
+.help code {
+  color: #fff;
 }
 
 .helpHeader {

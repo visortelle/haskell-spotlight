@@ -1,0 +1,55 @@
+.package hr {
+  background-color: var(--surface-color);
+  width: 100%;
+  max-width: var(--max-content-width);
+  height: 4rem;
+  background-color: var(--surface-color);
+  border: none;
+  border-radius: 4rem;
+}
+
+.content {
+  max-width: var(--max-content-width);
+  margin: 24rem auto;
+  box-shadow: 0rem 2rem 4rem rgb(0 0 0 / 27%);
+  border-radius: 12rem;
+  overflow: hidden;
+}
+
+.packageName {
+  margin: 0;
+  font-size: 32rem;
+  font-weight: bold;
+}
+
+.briefInfo {
+  background-color: #fff;
+  padding: 12rem 24rem;
+}
+
+.shortDescription {
+  font-size: 18rem;
+  opacity: 0.66;
+  margin-bottom: 18rem;
+}
+
+.longDescription {
+  max-width: var(--max-content-width);
+  margin: auto;
+}
+
+.longDescription p {
+  margin: 0;
+  font-size: 16rem;
+  margin-bottom: 24rem;
+}
+
+.longDescription img {
+  border-radius: 4rem;
+  margin: auto;
+  display: block;
+}
+
+.longDescription p:last-child {
+  margin-bottom: 0;
+}

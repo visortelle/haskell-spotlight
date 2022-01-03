@@ -30,17 +30,20 @@
   margin-right: 48rem;
 }
 
+.footerColumn a {
+  color: var(--purple-color-2);
+}
+
 .footerColumn:last-child {
   margin-right: 0;
 }
 
 .footerColumn a:hover {
-  color: var(--purple-color-2);
+  opacity: 0.66;
 }
 
 .footerColumnHeader {
   font-size: 18rem;
-  color: var(--purple-color-2);
   margin: 0;
   margin-bottom: 8rem;
 }

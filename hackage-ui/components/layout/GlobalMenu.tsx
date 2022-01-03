@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import s from './GlobalMenu.module.css';
 import Logo from '../branding/Logo';
 import SearchInput from './SearchInput';
+import Link from 'next/link';
 
 const heightPx = 60;
 
@@ -52,9 +53,11 @@ const GlobalMenu = (props: Props) => {
         style={{ height: `${heightPx}rem` }}
       >
         <div className={s.content}>
-          <a className={s.logo} href="#">
-            <Logo fontSize={18} />
-          </a>
+          <Link href="/" passHref>
+            <a className={s.logo}>
+              <Logo fontSize={18} />
+            </a>
+          </Link>
 
           <div className={s.searchInput}>
             <SearchInput />

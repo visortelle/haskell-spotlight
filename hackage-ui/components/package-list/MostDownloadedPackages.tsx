@@ -42,7 +42,7 @@ const MostDownloaded = () => {
     })()
   }, []);
 
-  return <PackageList getHref={(pkg) => `https://hackage.haskell.org/package/${pkg.name}`} pkgs={topPackages} count={count} />
+  return <PackageList getHref={(pkg) => `/package/${pkg.name}`} pkgs={topPackages} count={count} />
 }
 
 export default MostDownloaded;

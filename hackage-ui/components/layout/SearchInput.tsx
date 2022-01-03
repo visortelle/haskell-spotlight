@@ -35,7 +35,7 @@ const HackageSearchResults = ({ query }: { query: string }) => {
     <div className={s.hackageSearchResults}>
       {searchResults.map(pkg => {
         return (
-          <a key={pkg.name} className={s.searchResult} href={`https://hackage.haskell.org/package/${pkg.name}`}>
+          <a key={pkg.name} className={s.searchResult} href={`/package/${pkg.name}`}>
             {pkg.name}
           </a>
         );
@@ -64,6 +64,12 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
   // Hoogle sometimes returns duplicate entries.
   function deduplicate(arr: any[]) {
     return Array.from(new Set(arr.map(el => JSON.stringify(el)))).map(el => JSON.parse(el));
+  }
+  function rewriteUrl(url: string): string {
+    if (!url) {
+      return '#';
+    }
+    return url.replace('https://hackage.haskell.org/', '/');
   }
 
   const [searchResults, setSearchResults] = useState<Record<HoogleItemKey, HoogleItemEntry[]>>({});
@@ -104,7 +110,7 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
 
         return (
           <div key={hoogleItemKey} className={s.hoogleSearchResult}>
-            <a href={hoogleItem[0].url} className={`${s.hoogleItemLink} ${s.link}`}>
+            <a href={rewriteUrl(hoogleItem[0].url)} className={`${s.hoogleItemLink} ${s.link}`}>
               <>
                 <strong className={s.hoogleItemTypeName}>{typeName}</strong>{typeDef ? <strong>&nbsp;::&nbsp;</strong> : ''}<span>{typeDef}</span>
               </>
@@ -122,10 +128,10 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
 
                   return (
                     <div key={packageKey} className={s.hoogleItemPackage}>
-                      <a href={pkg[0].package.url} className={s.link}><small style={{ marginRight: '0.5em' }}>📦</small>{pkg[0].package.name}</a>
+                      <a href={rewriteUrl(pkg[0].package.url)} className={s.link}><small style={{ marginRight: '0.5em' }}>📦</small>{pkg[0].package.name}</a>
                       <div className={s.hoogleItemModules}>
                         {pkg.map(item => (
-                          <a key={item.module.name} href={item.module.url} className={s.link}>{item.module.name}</a>
+                          <a key={item.module.name} href={rewriteUrl(item.module.url)} className={s.link}>{item.module.name}</a>
                         ))}
                       </div>
                     </div>
@@ -181,7 +187,7 @@ const SearchInput = () => {
 
   useEffect(() => {
     if (!isDirty && router.query?.search !== query) {
-      _setQuery(router.query.search as string);
+      _setQuery(router.query.search as string || '');
     }
   }, [query, isDirty, setQuery, router.query.search]);
 
