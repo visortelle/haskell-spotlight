@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import s from './GlobalMenu.module.css';
 import Logo from '../branding/Logo';
 import SearchInput from './SearchInput';
-import Link from 'next/link';
+import A from './A';
 
 const heightPx = 60;
 
@@ -53,11 +53,9 @@ const GlobalMenu = (props: Props) => {
         style={{ height: `${heightPx}rem` }}
       >
         <div className={s.content}>
-          <Link href="/" passHref>
-            <a className={s.logo}>
-              <Logo fontSize={18} />
-            </a>
-          </Link>
+          <A href="/" className={s.logo}>
+            <Logo fontSize={18} />
+          </A>
 
           <div className={s.searchInput}>
             <SearchInput />
@@ -67,7 +65,7 @@ const GlobalMenu = (props: Props) => {
             {props.items.map(item => {
               return (
                 <li key={item.id} className={s.menuItem}>
-                  <a className={s.menuItemLink} href={item.href}>{item.title}</a>
+                  <A className={s.menuItemLink} href={item.href}>{item.title}</A>
                 </li>
               );
             })}
