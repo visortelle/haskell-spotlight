@@ -2,7 +2,7 @@ import axios from 'axios';
 import { RefObject, useEffect, useState, useCallback, useRef } from "react";
 import Input from "../forms/Input";
 import s from './SearchInput.module.css';
-import { useThrottle } from 'react-use';
+import { useDebounce } from 'use-debounce';
 import groupBy from 'lodash/groupBy';
 import { useRouter } from 'next/router';
 import A from './A';
@@ -154,7 +154,7 @@ type SearchResultsProps = {
 }
 
 const SearchResults = (props: SearchResultsProps) => {
-  const query = useThrottle(props.query, 300);
+  const [query] = useDebounce(props.query, 300);
   const queryType: 'hackage' | 'hoogle' = query?.match(/^\:t .*$/g) ? 'hoogle' : 'hackage';
 
   return (
