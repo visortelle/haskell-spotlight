@@ -70,7 +70,9 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
     if (!url) {
       return '#';
     }
-    return url.replace('https://hackage.haskell.org/', '/');
+    return url;
+    // Temporary disabled.
+    // return url.replace('https://hackage.haskell.org/', '/');
   }
 
   const [searchResults, setSearchResults] = useState<Record<HoogleItemKey, HoogleItemEntry[]>>({});
