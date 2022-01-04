@@ -19,7 +19,7 @@
   --accent-color-yellow: #ff9042;
   --accent-color-blue: #5084ff;
   --accent-color-purple: #9d50ff;
-  --max-content-width: 1000rem;
+  --max-content-width: 1000px;
 }
 
 html,
@@ -59,6 +59,7 @@ li {
 code,
 pre {
   font-family: "Fira Code", monospace;
+  overflow: auto;
 }
 
 code.hljs,
@@ -68,6 +69,7 @@ pre.hljs {
   ) !important; /* important! here is to override highlight.js theme styles */
   border-radius: 4rem;
   padding: 1rem 6rem;
+  font-size: 14rem;
 }
 
 code.hljs {
@@ -76,6 +78,16 @@ code.hljs {
 
 pre.hljs {
   padding: 8rem 18rem;
+}
+
+hr {
+  background-color: var(--surface-color);
+  width: 100%;
+  max-width: var(--max-content-width);
+  height: 4rem;
+  background-color: var(--surface-color);
+  border: none;
+  border-radius: 4rem;
 }
 
 @keyframes loading-overlay {

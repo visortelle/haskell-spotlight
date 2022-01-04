@@ -4,18 +4,18 @@
   flex-direction: column;
 }
 
-.package hr {
-  background-color: var(--surface-color);
-  width: 100%;
+.packageContainer {
+  display: flex;
   max-width: var(--max-content-width);
-  height: 4rem;
-  background-color: var(--surface-color);
-  border: none;
-  border-radius: 4rem;
+  margin: 0 auto;
+}
+
+.package {
+  flex: 1 1 auto;
+  overflow: hidden;
 }
 
 .content {
-  max-width: var(--max-content-width);
   margin: 24rem auto;
   box-shadow: 0rem 2rem 4rem rgb(0 0 0 / 27%);
   border-radius: 12rem;
@@ -24,24 +24,38 @@
 
 .footer {
   margin-top: auto;
+  width: 100%;
 }
 
 .packageName {
   margin: 0;
   font-size: 32rem;
   font-weight: bold;
+  display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  align-items: flex-end;
 }
 
 .packageNameH1 {
-  display: inline-flex;
+  display: inline;
   font-size: inherit;
   font-weight: inherit;
   margin: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.packageVersion {
+  font-size: 24rem;
+  margin-left: 8rem;
+  font-weight: bold;
+  opacity: 0.66;
 }
 
 .briefInfo {
   background-color: #fff;
-  padding: 12rem 24rem;
+  padding: 32rem 24rem 24rem 24rem;
 }
 
 .shortDescription {
@@ -56,7 +70,7 @@
 
 .longDescription {
   max-width: var(--max-content-width);
-  margin: auto;
+  margin: 0 auto;
 }
 
 .longDescription p {
@@ -67,12 +81,115 @@
 
 .longDescription img {
   border-radius: 4rem;
-  margin: auto;
+  margin: 0 auto;
   display: block;
   max-width: 100%;
-    height: auto;
+  height: auto;
 }
 
 .longDescription p:last-child {
   margin-bottom: 0;
+}
+
+.sidebarContainer {
+  width: 240rem;
+  margin: 24rem 0 24rem 12rem;
+  display: flex;
+  padding-top: calc(32rem + 1em);
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1;
+  width: inherit;
+}
+
+.sidebarSection {
+  margin-bottom: 18rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarSectionHeader {
+  margin: 0;
+  margin-bottom: 8rem;
+  font-weight: bold;
+  font-size: 18rem;
+}
+
+.sidebarEntry {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.sidebarEntryIcon {
+  margin-right: 8rem;
+}
+
+.sidebarEntryIcon svg {
+  width: 24rem;
+  height: 24rem;
+}
+
+.sidebarInstall {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarInstallCopy {
+  display: flex;
+  width: 100%;
+  padding: 8rem;
+  padding-right: 24rem;
+  border-radius: 6rem;
+  background-color: var(--surface-color);
+  align-items: center;
+  position: relative;
+  justify-content: space-between;
+  font-size: 12rem;
+  box-shadow: 1rem 2rem 1rem rgb(0 0 0 / 27%);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebarInstallCopyText {
+  white-space: nowrap;
+  display: inline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebarInstallCopyIcon {
+  margin-left: 8rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 0 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebarInstallCopy svg {
+  width: 16rem;
+  height: 16rem;
+  opacity: 0.66;
+}
+
+.sidebarInstallCopy:hover {
+  cursor: pointer;
+  opacity: 0.66;
+}
+
+@media (max-width: 1000px) {
+  .packageContainer {
+    margin: 0 12rem;
+    flex-direction: column;
+  }
+  .sidebarContainer {
+    padding-top: 0;
+  }
 }

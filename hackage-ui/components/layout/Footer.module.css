@@ -5,9 +5,7 @@
   margin-top: 72rem;
   padding: 8rem 0 24rem 0;
   background: var(--surface-color);
-  box-shadow: 0 0 8rem rgb(0 0 0 / 50%);
-  border-top-right-radius: 12rem;
-  border-top-left-radius: 12rem;
+  box-shadow: 0 0 4rem rgb(0 0 0 / 50%);
 }
 
 .footerContent {

@@ -1,6 +1,5 @@
 import { NextPage, GetStaticPropsResult, GetStaticPropsContext } from 'next';
-import PackagePage, { PackageProps } from '../../components/pages/Package';
-import { useRouter } from 'next/router';
+import PackagePage, { PackageProps, Versions, License } from '../../components/pages/Package';
 import axios from 'axios';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/a11y-dark.css';
@@ -29,13 +28,18 @@ export async function getStaticProps(props: GetStaticPropsContext): Promise<GetS
   const docContent = $('#content');
 
   const name = $('h1 a', docContent).html()?.trim() || '';
-  const shortDescription = $('h1 small', docContent).html()?.trim() || '';
-  const longDescriptionHtml = $('#description').html()?.trim() || '';
+  const shortDescription = $('h1 small', docContent).html()?.trim();
+  const longDescriptionHtml = $('#description').html()?.trim();
+
+  const versions = getVersions($);
+  const license = getLicense($);
 
   return {
     props: {
       id: packageId,
       name,
+      versions,
+      license,
       shortDescription,
       longDescriptionHtml
     },
@@ -80,9 +84,9 @@ function monkeyPatchDocument($: CheerioAPI): void {
     /* Ignore blocks containing other HTML elements:
     <code><a href="http://hackage.haskell.org/package/array">array</a></code>
     */
-   if ($(el).children().length) {
-    return el;
-   }
+    if ($(el).children().length) {
+      return el;
+    }
 
 
     const highlightedHtml = hljs.highlightAuto(unescape($(el).html() as string), languagesToHighlight).value;
@@ -96,5 +100,21 @@ function monkeyPatchDocument($: CheerioAPI): void {
     [<a href="#readme">Skip to Readme</a>]`, '');
   description.html(newDescriptionHtml);
 }
+
+function getVersions($: CheerioAPI): Versions {
+  const propertiesElement = $('#properties').get(0);
+  const tableTd = $(`th:contains('Version') + td`, propertiesElement).get(0);
+  const current = $(`strong`, tableTd).text();
+  const available = $('*', tableTd).map((_, el) => $(el).text()).toArray();
+  return { current, available };
+}
+
+function getLicense($: CheerioAPI): License | undefined {
+  const propertiesElement = $('#properties').get(0);
+  const tableTd = $(`th:contains('License') + td`, propertiesElement).get(0);
+  const licenseEl = $(`> *`, tableTd);
+  return { name: licenseEl.text(), url: licenseEl.attr('href') };
+}
+
 
 export default Page;

@@ -29,8 +29,7 @@
 }
 
 .greetingHeader {
-  margin: 0;
-  margin: auto;
+  margin: 0 auto;
   padding: 24rem 0 64rem 0;
   color: #fff;
   text-shadow: 1rem 3rem 2rem rgb(0 0 0 / 0.27);
@@ -47,7 +46,7 @@
 
 .packageLists {
   display: flex;
-  margin: auto;
+  margin: 0 auto;
   justify-content: space-between;
   width: 100%;
   max-width: var(--max-content-width);
