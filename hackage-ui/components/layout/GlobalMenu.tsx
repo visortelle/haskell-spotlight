@@ -58,7 +58,12 @@ const GlobalMenu = (props: Props) => {
           </A>
 
           <div className={s.searchInput}>
-            <SearchInput />
+            <SearchInput
+              key={
+                // Refresh search input state on each location change
+                (global as any)?.document ? (document.location.origin + document.location.pathname) : '_'
+              }
+            />
           </div>
 
           <ul className={s.menuItems}>
