@@ -22,7 +22,6 @@ const Home = (props: HomeProps) => {
       <div className={s.greeting}>
         <div className={s.greetingContent}>
           <h1 className={s.greetingHeader}>The Haskell community’s<br /> package registry</h1>
-          <a style={{ color: '#fff', marginTop: '24rem' }} target="__blank" href="https://github.com/visortelle/hackage-ui">🚧 The project is under construction and looking for cooperation. 🚧</a>
         </div>
       </div>
       <div className={s.gettingStarted}>
@@ -73,22 +72,11 @@ const Stats = (props: StatsProps) => {
     <div className={s.stats}>
       <div className={s.statsText}>
         <p className={s.statsTextParagraph}>
-          Some text here.
-          Some text here.
-          Some text here.
-          Some text here.
+          This project is an alternative UI implementation for <a href="https://hackage.haskell.org">Hackage</a>.
         </p>
+        <p className={s.statsTextParagraph}>The project is under construction and looking for cooperation.</p>
         <p className={s.statsTextParagraph}>
-          Some text here.
-          Some text here.
-          Some text here.
-          Some text here.
-        </p>
-        <p className={s.statsTextParagraph}>
-          Some text here.
-          Some text here.
-          Some text here.
-          Some text here.
+          <a target="__blank" href="https://github.com/visortelle/hackage-ui">Open at GitHub </a>
         </p>
       </div>
       <div className={s.statsGroups}>
