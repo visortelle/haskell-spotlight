@@ -22,6 +22,7 @@ const Home = (props: HomeProps) => {
       <div className={s.greeting}>
         <div className={s.greetingContent}>
           <h1 className={s.greetingHeader}>The Haskell community’s<br /> package registry</h1>
+          <a style={{ color: '#fff', marginTop: '24rem' }} target="__blank" href="https://github.com/visortelle/hackage-ui">🚧 The project is under construction and looking for cooperation. 🚧</a>
         </div>
       </div>
       <div className={s.gettingStarted}>

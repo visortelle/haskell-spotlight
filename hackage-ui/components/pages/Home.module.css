@@ -10,6 +10,7 @@
   background-color: var(--purple-color-2);
   position: relative;
   overflow: hidden;
+  padding-bottom: 64rem;
 }
 
 .greeting:after {
@@ -26,11 +27,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .greetingHeader {
   margin: 0 auto;
-  padding: 24rem 0 64rem 0;
+  padding-top: 24rem;
   color: #fff;
   text-shadow: 1rem 3rem 2rem rgb(0 0 0 / 0.27);
   font-size: 42rem;
