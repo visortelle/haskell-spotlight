@@ -242,7 +242,7 @@ const SearchInput = () => {
           setIsFocused(true);
         }}
         onInputRef={setInputRef}
-        placeholder='Click or press "/" to search...'
+        placeholder={isFocused ? `Type a package name or :t a -> b for search in Hoogle` : `Click or press "/" to search…`}
         value={query}
         focusOnMount
       />
