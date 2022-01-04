@@ -55,31 +55,14 @@ export async function getStaticPaths() {
 // If you want to modify the list or know a better solution, please raise an issue or pull request at our issue tracker.
 // Full list here https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
 const languagesToHighlight = [
+  'Haskell',
   'Shell',
   'Bash',
-  'C',
-  'C#',
-  'C++',
-  'Clojure',
-  'CSS',
   'Diff',
-  'Go',
-  'Groovy',
-  'Haskell',
-  'Java',
-  'JavaScript',
   'JSON',
   'LaTeX',
-  'Lisp',
-  'Perl',
-  'PHP',
   'Protocol Buffers',
-  'Python',
-  'Ruby',
-  'Rust',
-  'SQL',
   'TOML',
-  'TypeScript',
   'XML',
   'YAML',
   'Nix'
@@ -89,11 +72,19 @@ const languagesToHighlight = [
 function monkeyPatchDocument($: CheerioAPI): void {
   // Rewrite urls.
   $('a').map((_, a) => {
-    $(a).attr('href', $(a).attr('href')?.replace('https://hackage.haskell.com/', '/') || '#')
+    $(a).attr('href', $(a).attr('href')?.replace('https://hackage.haskell.org/package/', '/package/') || '#')
   });
 
   // Highlight code blocks
   $('code, pre').map((_, el) => {
+    /* Ignore blocks containing other HTML elements:
+    <code><a href="http://hackage.haskell.org/package/array">array</a></code>
+    */
+   if ($(el).children().length) {
+    return el;
+   }
+
+
     const highlightedHtml = hljs.highlightAuto(unescape($(el).html() as string), languagesToHighlight).value;
     $(el).html(highlightedHtml);
     $(el).addClass('hljs');

@@ -41,6 +41,10 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  opacity: 0.66;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -55,6 +59,10 @@ li {
 code,
 pre {
   font-family: "Fira Code", monospace;
+}
+
+code.hljs,
+pre.hljs {
   background-color: var(
     --purple-color-1
   ) !important; /* important! here is to override highlight.js theme styles */
@@ -62,12 +70,12 @@ pre {
   padding: 1rem 6rem;
 }
 
-pre {
-  padding: 8rem 18rem;
-}
-
 code.hljs {
   padding: 0rem 4rem !important;
+}
+
+pre.hljs {
+  padding: 8rem 18rem;
 }
 
 @keyframes loading-overlay {

@@ -161,8 +161,8 @@ const SearchResults = (props: SearchResultsProps) => {
         {!query && (
           <div className={s.help}>
             <h3 className={s.helpHeader}>Search Examples</h3>
-            <p><code>servant</code> to search for packages in Hackage.</p>
-            <p><code>:t a -&gt; a</code> to search for types in Hoogle.</p>
+            <p><code className="hljs">servant</code> to search for packages in Hackage.</p>
+            <p><code className="hljs">:t a -&gt; a</code> to search for types in Hoogle.</p>
           </div>
         )}
         {query && queryType === 'hackage' && <HackageSearchResults query={query.trim()} />}
