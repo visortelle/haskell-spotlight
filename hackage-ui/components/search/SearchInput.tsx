@@ -1,22 +1,29 @@
 import { RefObject, useEffect, useState, useCallback, useContext, useRef } from "react";
+import AppContext from "../AppContext";
 import Input from "../forms/Input";
 import s from './SearchInput.module.css';
 import { useDebounce } from 'use-debounce';
 import { useRouter } from 'next/router';
 import HackageSearchResults from './HackageSearchResults';
 import HoogleSearchResults from './HoogleSearchResults';
+import RecentSearches from './RecentSearches';
 
 type SearchResultsProps = {
-  query: string
+  query: string,
+  setQuery: (query: string) => void
 }
 
 const SearchResults = (props: SearchResultsProps) => {
   const [query] = useDebounce(props.query, 300);
-  let queryType: 'hackage' | 'hoogle' | 'unknown' = 'unknown';
+  let queryType: 'hackage' | 'hoogle' | 'recentSearches' | 'unknown' = 'unknown';
 
   if (query.startsWith(':')) {
     if (query?.match(/^\:t .*$/g)) {
       queryType = 'hoogle';
+    };
+
+    if (query?.match(/^\:r.*$/g)) {
+      queryType = 'recentSearches';
     };
   } else {
     queryType = 'hackage';
@@ -30,10 +37,12 @@ const SearchResults = (props: SearchResultsProps) => {
             <h3 className={s.helpHeader}>Search Examples</h3>
             <p><code className="hljs">servant</code> to search for packages in Hackage.</p>
             <p><code className="hljs">:t a -&gt; a</code> to search by type signature or function name in Hoogle.</p>
+            <p><code className="hljs">:r smth</code> to show your recent searches.</p>
           </div>
         )}
         {query && queryType === 'hackage' && <HackageSearchResults query={query.trim()} />}
         {query && queryType === 'hoogle' && <HoogleSearchResults query={query.replace(/^\:t /, '').trim()} />}
+        {query && queryType === 'recentSearches' && <RecentSearches query={query.replace(/^\:r ?/, '').trim()} onSelect={props.setQuery} />}
       </div>
     </div>
   );
@@ -111,7 +120,7 @@ const SearchInput = () => {
         value={query}
         focusOnMount
       />
-      {showSearchResults && <SearchResults query={query} />}
+      {showSearchResults && <SearchResults query={query} setQuery={setQuery}/>}
     </div>
   );
 }

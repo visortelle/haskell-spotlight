@@ -23,6 +23,8 @@ export type HoogleItemEntry = {
 
 export type HoogleItemKey = string;
 
+export type HoogleSearchResults = Record<HoogleItemKey, HoogleItemEntry[]>;
+
 const HoogleSearchResults = ({ query }: { query: string }) => {
   // Hoogle sometimes returns duplicate entries. Maybe a Hoogle bug, maybe I missed something.
   function deduplicate(arr: any[]) {
@@ -38,7 +40,7 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
   }
 
   const appContext = useContext(AppContext);
-  const [searchResults, setSearchResults] = useState<Record<HoogleItemKey, HoogleItemEntry[]>>({});
+  const [searchResults, setSearchResults] = useState<HoogleSearchResults>({});
 
   useEffect(() => {
     (async () => {
@@ -63,7 +65,13 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
         appContext.finishTask(taskId);
       }
 
-      setSearchResults(groupBy(deduplicate(resData), 'item'));
+      const searchResults: HoogleSearchResults = groupBy(deduplicate(resData), 'item');
+
+      if (Object.keys(searchResults).length > 0) {
+          appContext.writeSearchHistoryEntry(`:t ${query}`);
+      }
+
+      setSearchResults(searchResults);
     })();
 
     // XXX - don't add appContext to deps here as eslint suggests.

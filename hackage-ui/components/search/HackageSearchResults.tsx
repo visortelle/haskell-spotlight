@@ -4,9 +4,11 @@ import AppContext from '../AppContext';
 import A from '../layout/A';
 import s from './HackageSearchResults.module.css';
 
+export type HackageSearchResults = { name: string }[];
+
 const HackageSearchResults = ({ query }: { query: string }) => {
   const appContext = useContext(AppContext);
-  const [searchResults, setSearchResults] = useState<{ name: string }[]>([]);
+  const [searchResults, setSearchResults] = useState<HackageSearchResults>([]);
 
   useEffect(() => {
     (async () => {
@@ -33,7 +35,13 @@ const HackageSearchResults = ({ query }: { query: string }) => {
         appContext.finishTask(taskId);
       }
 
-      setSearchResults(resData);
+      const searchResults: HackageSearchResults = resData;
+
+      if (searchResults.length > 0) {
+        appContext.writeSearchHistoryEntry(query);
+      }
+
+      setSearchResults(searchResults);
     })()
 
     // XXX - don't add appContext to deps here as eslint suggests.
