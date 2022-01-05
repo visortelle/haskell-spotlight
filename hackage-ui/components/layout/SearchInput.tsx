@@ -8,7 +8,6 @@ import { useDebounce } from 'use-debounce';
 import groupBy from 'lodash/groupBy';
 import { useRouter } from 'next/router';
 import A from './A';
-import { useAmp } from 'next/amp';
 
 const HackageSearchResults = ({ query }: { query: string }) => {
   const appContext = useContext(AppContext);
@@ -26,7 +25,7 @@ const HackageSearchResults = ({ query }: { query: string }) => {
 
       const taskId = nanoid();
       try {
-        appContext.startTask(taskId, 'search on Hackage');
+        appContext.startTask(taskId, `search on Hackage: ${query}`);
 
         resData = await (await axios.get(
           `/api/hackage/packages/search?terms=${encodeURIComponent(searchTerms)}`,
@@ -102,7 +101,7 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
 
       const taskId = nanoid();
       try {
-        appContext.startTask(taskId, 'search on Hoogle');
+        appContext.startTask(taskId, `search on Hoogle: ${query}`);
 
         resData = await (await axios.get(
           `/api/hoogle?mode=json&format=text&hoogle=${encodeURIComponent(query)}&start=1&count=1000`,
@@ -179,7 +178,15 @@ type SearchResultsProps = {
 
 const SearchResults = (props: SearchResultsProps) => {
   const [query] = useDebounce(props.query, 300);
-  const queryType: 'hackage' | 'hoogle' = query?.match(/^\:t .*$/g) ? 'hoogle' : 'hackage';
+  let queryType: 'hackage' | 'hoogle' | 'unknown' = 'unknown';
+
+  if (query.startsWith(':')) {
+    if (query?.match(/^\:t .*$/g)) {
+      queryType = 'hoogle';
+    };
+  } else {
+    queryType = 'hackage';
+  }
 
   return (
     <div className={s.searchResultsContainer}>
@@ -208,7 +215,7 @@ const SearchInput = () => {
   const [inputRef, setInputRef] = useState<RefObject<HTMLInputElement>>();
 
   const setQuery = useCallback((query: string) => {
-    router.replace({ query: { ...router.query, search: query } });
+    router.replace({ query: { ...router.query, search: query } }, undefined, { shallow: true });
     _setQuery(query);
   }, [router]);
 
