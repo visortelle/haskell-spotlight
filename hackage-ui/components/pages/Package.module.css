@@ -186,10 +186,24 @@
 }
 
 @media (max-width: 1000px) {
+  .page {
+    align-items: center;
+  }
+
   .packageContainer {
-    margin: 0 12rem;
+    margin: 0;
     flex-direction: column;
   }
+
+  .packageName {
+    align-items: center;
+    font-size: 24rem;
+  }
+
+  .packageVersion {
+    font-size: 18rem;
+  }
+
   .sidebarContainer {
     padding-top: 0;
   }

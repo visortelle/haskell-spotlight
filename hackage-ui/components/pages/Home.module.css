@@ -145,6 +145,7 @@
   width: 48rem;
   height: 48rem;
   fill: var(--text-color);
+  opacity: 0.66;
 }
 
 .statsAmount {
@@ -155,4 +156,38 @@
 .statsUnit {
   font-size: 16rem;
   opacity: 0.66;
+}
+
+@media (max-width: 1000px) {
+  .greetingHeader {
+    font-size: 32rem;
+  }
+
+  .greeting {
+    margin-bottom: 24rem;
+  }
+
+  .gettingStarted {
+    display: none;
+  }
+
+  .statsContainer {
+    display: none;
+  }
+
+  .packageLists {
+    padding: 0 24rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .packageLists {
+    flex-direction: column;
+  }
+
+  .packageList {
+    width: auto;
+    padding: 0;
+    margin-bottom: 48rem;
+  }
 }

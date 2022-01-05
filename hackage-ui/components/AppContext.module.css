@@ -1,3 +1,7 @@
+.toastContainer {
+max-width: calc(100vw - 24rem);
+    padding: 8rem;
+}
 .toast {
   font-family: 'Fira Sans';
   border-radius: 8rem;

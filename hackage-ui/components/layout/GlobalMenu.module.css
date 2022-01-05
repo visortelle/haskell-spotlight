@@ -97,3 +97,18 @@
   margin-left: 24rem;
   position: relative;
 }
+
+@media (max-width: 1000px) {
+  .logo {
+    display: none;
+  }
+
+  .menuItems {
+    display: none;
+  }
+
+  .searchInput {
+    margin: 0 24rem;
+  }
+}
+

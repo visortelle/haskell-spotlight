@@ -63,6 +63,7 @@ export const DefaultAppContextProvider = ({ children }: { children: ReactNode })
           pauseOnFocusLoss
           draggable={false}
           pauseOnHover
+          className={s.toastContainer}
           toastClassName={s.toast}
           bodyClassName={s.toastBody}
         />
