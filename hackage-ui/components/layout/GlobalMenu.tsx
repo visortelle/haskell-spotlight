@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import s from './GlobalMenu.module.css';
 import Logo from '../branding/Logo';
 import SearchInput from './SearchInput';
+import AppContext from '../AppContext';
 import A from './A';
 
 const heightPx = 60;
@@ -21,7 +22,8 @@ export const defaultMenuProps: Props = {
 };
 
 const GlobalMenu = (props: Props) => {
-  let [atTop, setAtTop] = useState(false);
+  const [atTop, setAtTop] = useState(false);
+  const appContext = useContext(AppContext);
 
   function handleScroll(): void {
     let scrollY = window.scrollY;
@@ -52,6 +54,7 @@ const GlobalMenu = (props: Props) => {
         className={`${s.menu} ${atTop ? s.menuAtTop : ''}`}
         style={{ height: `${heightPx}rem` }}
       >
+        <div className={`${s.progressIndicator} ${Object.keys(appContext.tasks).length > 0 ? s.progressIndicatorRunning : ''}`}></div>
         <div className={s.content}>
           <A href="/" className={s.logo}>
             <Logo fontSize={18} />

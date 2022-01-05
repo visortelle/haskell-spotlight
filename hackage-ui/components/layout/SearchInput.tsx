@@ -1,13 +1,17 @@
 import axios from 'axios';
-import { RefObject, useEffect, useState, useCallback, useRef } from "react";
+import { RefObject, useEffect, useState, useCallback, useContext, useRef } from "react";
+import { nanoid } from 'nanoid'
+import AppContext from '../AppContext';
 import Input from "../forms/Input";
 import s from './SearchInput.module.css';
 import { useDebounce } from 'use-debounce';
 import groupBy from 'lodash/groupBy';
 import { useRouter } from 'next/router';
 import A from './A';
+import { useAmp } from 'next/amp';
 
 const HackageSearchResults = ({ query }: { query: string }) => {
+  const appContext = useContext(AppContext);
   const [searchResults, setSearchResults] = useState<{ name: string }[]>([]);
 
   useEffect(() => {
@@ -20,17 +24,27 @@ const HackageSearchResults = ({ query }: { query: string }) => {
 
       let resData: { name: string }[] = [];
 
+      const taskId = nanoid();
       try {
+        appContext.startTask(taskId, 'search on Hackage');
+
         resData = await (await axios.get(
           `/api/hackage/packages/search?terms=${encodeURIComponent(searchTerms)}`,
           { headers: { 'Content-Type': 'application/json' } }
         )).data;
       } catch (err) {
+        appContext.notifyError('An error occured during searching on Hackage');
         console.log(err);
+      } finally {
+        appContext.finishTask(taskId);
       }
+
       setSearchResults(resData);
     })()
-  }, [query]);
+
+    // XXX - don't add appContext to deps here as eslint suggests.
+    // It may cause infinite recursive calls. Fix it if you know how.
+  }, [query, appContext.tasks.length]);
 
   return (
     <div className={s.hackageSearchResults}>
@@ -75,6 +89,7 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
     // return url.replace('https://hackage.haskell.org/', '/');
   }
 
+  const appContext = useContext(AppContext);
   const [searchResults, setSearchResults] = useState<Record<HoogleItemKey, HoogleItemEntry[]>>({});
 
   useEffect(() => {
@@ -85,17 +100,26 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
 
       let resData = [];
 
+      const taskId = nanoid();
       try {
+        appContext.startTask(taskId, 'search on Hoogle');
+
         resData = await (await axios.get(
           `/api/hoogle?mode=json&format=text&hoogle=${encodeURIComponent(query)}&start=1&count=1000`,
           { headers: { 'Content-Type': 'application/json' } }
         )).data;
       } catch (err) {
+        appContext.notifyError('An error occured during searching on Hoogle');
         console.log(err);
+      } finally {
+        appContext.finishTask(taskId);
       }
 
       setSearchResults(groupBy(deduplicate(resData), 'item'));
-    })()
+    })();
+
+    // XXX - don't add appContext to deps here as eslint suggests.
+    // It may cause infinite recursive calls. Fix it if you know how.
   }, [query]);
 
   return (
