@@ -15,7 +15,7 @@ type SearchResultsProps = {
 
 const SearchResults = (props: SearchResultsProps) => {
   const [query] = useDebounce(props.query, 300);
-  let queryType: 'hackage' | 'hoogle' | 'recentSearches' | 'unknown' = 'unknown';
+  let queryType: 'hackage' | 'hoogle' | 'recentSearches' | 'showHelp' | 'unknown' = 'unknown';
 
   if (query.startsWith(':')) {
     if (query?.match(/^\:t .*$/g)) {
@@ -25,6 +25,10 @@ const SearchResults = (props: SearchResultsProps) => {
     if (query?.match(/^\:r.*$/g)) {
       queryType = 'recentSearches';
     };
+
+    if (query?.match(/^\:\?.*$/g)) {
+      queryType = 'showHelp';
+    };
   } else {
     queryType = 'hackage';
   }
@@ -32,12 +36,13 @@ const SearchResults = (props: SearchResultsProps) => {
   return (
     <div className={s.searchResultsContainer}>
       <div className={s.searchResults}>
-        {!query && (
+        {!query || queryType === 'showHelp' && (
           <div className={s.help}>
             <h3 className={s.helpHeader}>Search Examples</h3>
             <p><code className="hljs">servant</code> to search for packages in Hackage.</p>
             <p><code className="hljs">:t a -&gt; a</code> to search by type signature or function name in Hoogle.</p>
             <p><code className="hljs">:r smth</code> to show your recent searches.</p>
+            <p><code className="hljs">:?</code> to show this help info.</p>
           </div>
         )}
         {query && queryType === 'hackage' && <HackageSearchResults query={query.trim()} />}
@@ -116,11 +121,11 @@ const SearchInput = () => {
           setIsFocused(true);
         }}
         onInputRef={setInputRef}
-        placeholder={isFocused ? `Type a package name or :t a -> b for search in Hoogle` : `Click or press "/" to search…`}
+        placeholder={isFocused ? `Type :? to show help` : `Click or press "/" to search…`}
         value={query}
         focusOnMount
       />
-      {showSearchResults && <SearchResults query={query} setQuery={setQuery}/>}
+      {showSearchResults && <SearchResults query={query} setQuery={setQuery} />}
     </div>
   );
 }
