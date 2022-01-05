@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { RefObject, useEffect, useState, useCallback, useContext, useRef } from "react";
-import { nanoid } from 'nanoid'
 import AppContext from '../AppContext';
 import Input from "../forms/Input";
 import s from './SearchInput.module.css';
@@ -23,7 +22,7 @@ const HackageSearchResults = ({ query }: { query: string }) => {
 
       let resData: { name: string }[] = [];
 
-      const taskId = nanoid();
+      const taskId = 'hackage-search';
       try {
         appContext.startTask(taskId, `search on Hackage: ${query}`);
 
@@ -99,7 +98,7 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
 
       let resData = [];
 
-      const taskId = nanoid();
+      const taskId = 'hoogle-search';
       try {
         appContext.startTask(taskId, `search on Hoogle: ${query}`);
 
