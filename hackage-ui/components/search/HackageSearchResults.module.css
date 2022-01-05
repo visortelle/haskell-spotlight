@@ -1,0 +1,21 @@
+.searchResult {
+  padding: 8rem 24rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  color: var(--text-color);
+}
+
+.searchResult:hover {
+  cursor: pointer;
+  background-color: var(--background-color);
+}
+
+.searchResult:first-child {
+  padding-top: 18rem;
+}
+
+.searchResult:last-child {
+  padding-bottom: 24rem;
+}

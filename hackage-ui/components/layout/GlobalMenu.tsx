@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import s from './GlobalMenu.module.css';
 import Logo from '../branding/Logo';
-import SearchInput from './SearchInput';
+import SearchInput from '../search/SearchInput';
 import AppContext from '../AppContext';
 import A from './A';
 

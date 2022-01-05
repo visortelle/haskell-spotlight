@@ -1,67 +1,3 @@
-.searchInput {
-  position: relative;
-}
-
-.searchResultsContainer {
-  position: absolute;
-  display: flex;
-  width: calc(100vw - 48rem);
-  left: calc(50% - 18rem);
-  max-width: var(--max-content-width);
-  bottom: -8rem;
-  transform: translate(-50%, 100%);
-  background-color: #fff;
-  border-radius: 12rem;
-  max-height: calc(100vh - 75rem);
-  overflow: hidden;
-  box-shadow: 1rem 3rem 8rem rgb(0 0 0 / 27%);
-}
-
-.searchResults {
-  height: inherit;
-  overflow: auto;
-  flex: 1;
-}
-
-.searchResult {
-  padding: 8rem 24rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: flex;
-  color: var(--text-color);
-}
-
-.searchResult:hover {
-  cursor: pointer;
-  background-color: var(--background-color);
-}
-
-.searchResult:first-child,
-.hoogleSearchResult:first-child {
-  padding-top: 18rem;
-}
-
-.searchResult:last-child,
-.hoogleSearchResult:last-child {
-  padding-bottom: 24rem;
-}
-
-.help {
-  padding: 18rem 24rem;
-  background-color: var(--background-color);
-}
-
-.help code {
-  color: #fff;
-}
-
-.helpHeader {
-  font-size: 18rem;
-  margin: 0;
-  margin-bottom: 8rem;
-}
-
 .hoogleSearchResult {
   padding: 12rem 8rem;
   font-size: 14rem;
@@ -72,9 +8,18 @@
   background-color: #f5f5f5;
   position: relative;
 }
+
 .hoogleSearchResult:nth-child(odd) {
   background-color: #e5e5e5;
   position: relative;
+}
+
+.hoogleSearchResult:first-child {
+  padding-top: 18rem;
+}
+
+.hoogleSearchResult:last-child {
+  padding-bottom: 24rem;
 }
 
 .hoogleItemDocs {
@@ -138,13 +83,5 @@
   margin-left: auto;
   color: var(--purple-color-2);
   white-space: nowrap;
-}
-
-@media (max-width: 1000px) {
-  .searchResultsContainer {
-    width: calc(100vw - 8rem);
-    left: calc(50%);
-    max-height: calc(100vh - 24rem);
-  }
 }
 
