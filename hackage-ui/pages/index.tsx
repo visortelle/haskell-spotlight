@@ -1,13 +1,21 @@
 import { NextPage, GetStaticPropsResult } from 'next';
+import Head from 'next/head';
 import React from 'react';
 import { Package } from '../components/package-list/PackageList';
 import HomePage, { HomeProps } from '../components/pages/Home';
 import axios from 'axios';
-import cheerio, { Cheerio } from 'cheerio';
+import cheerio from 'cheerio';
 
 const Page: NextPage<HomeProps> = (props) => {
   return (
-    <HomePage {...props} />
+    <>
+      <Head>
+        <title>Hackage: The Haskell community’s package registry</title>
+        <meta name="description" content="Hackage is a package registry for Haskell"></meta>
+      </Head>
+
+      <HomePage {...props} />
+    </>
   )
 }
 

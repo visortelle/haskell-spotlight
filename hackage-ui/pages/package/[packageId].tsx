@@ -1,4 +1,5 @@
 import { NextPage, GetStaticPropsResult, GetStaticPropsContext } from 'next';
+import Head from 'next/head';
 import PackagePage, { PackageProps, Versions, License } from '../../components/pages/Package';
 import axios from 'axios';
 import hljs from 'highlight.js';
@@ -9,7 +10,14 @@ import unescape from 'lodash/unescape';
 
 const Page: NextPage<PackageProps> = (props) => {
   return (
-    <PackagePage {...props} />
+    <>
+      <Head>
+        <title>{props.id} - Hackage: The Haskell community’s package registry</title>
+        <meta name="description" content={props.shortDescription || props.name}></meta>
+      </Head>
+
+      <PackagePage {...props} />
+    </>
   );
 }
 
