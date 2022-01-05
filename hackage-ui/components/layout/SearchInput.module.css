@@ -139,3 +139,12 @@
   color: var(--purple-color-2);
   white-space: nowrap;
 }
+
+@media (max-width: 1000px) {
+  .searchResultsContainer {
+    width: calc(100vw - 8rem);
+    left: calc(50%);
+    max-height: calc(100vh - 24rem);
+  }
+}
+
