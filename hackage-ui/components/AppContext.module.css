@@ -1,0 +1,13 @@
+.toast {
+  font-family: 'Fira Sans';
+  border-radius: 8rem;
+  box-shadow: 0rem 2rem 4rem rgb(0 0 0 / 27%);
+  font-size: 14rem;
+  margin-bottom: 8rem;
+  --toastify-icon-color-success: var(--purple-color-2)
+}
+
+.toastBody {
+  padding: 0;
+  margin: 0;
+}

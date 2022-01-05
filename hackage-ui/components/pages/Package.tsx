@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import AppContext from "../AppContext";
 import GlobalMenu, { defaultMenuProps } from "../layout/GlobalMenu";
 import Footer from "../layout/Footer";
 import s from './Package.module.css';
@@ -56,6 +58,8 @@ type SidebarProps = {
   package: PackageProps
 }
 const Sidebar = (props: SidebarProps) => {
+  const appContex = useContext(AppContext);
+
   return (
     <div className={s.sidebar}>
       <div className={s.sidebarSection}>
@@ -74,7 +78,13 @@ const Sidebar = (props: SidebarProps) => {
         <h3 className={s.sidebarSectionHeader}>Install</h3>
         <div className={`${s.sidebarEntry} ${s.sidebarInstall}`}>
           <small>Add this to your *.cabal file:</small>
-          <div className={s.sidebarInstallCopy} onClick={() => navigator.clipboard.writeText(`${props.package.name} >= ${props.package.versions.current}`)}>
+          <div
+            className={s.sidebarInstallCopy}
+            onClick={() => {
+              navigator.clipboard.writeText(`${props.package.name} >= ${props.package.versions.current}`);
+              appContex.notifySuccess('Copied to clipboard!');
+            }}
+          >
             <code className={s.sidebarInstallCopyText}>{props.package.name} &gt;= {props.package.versions.current}</code>
             <div className={s.sidebarInstallCopyIcon}>
               <SvgIcon svg={contentCopyIcon} />
