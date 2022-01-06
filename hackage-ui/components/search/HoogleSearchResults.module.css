@@ -1,24 +1,42 @@
-.hoogleSearchResult {
+.searchResultsHeader {
+  position: relative;
+  padding: 8rem 12rem 8rem 12rem;
+  background: var(--purple-color-2);
+  color: #fff;
+  box-shadow: 0rem 1rem 2rem rgb(0 0 0 / 27%);
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14rem;
+}
+
+.nothingFound {
+  padding: 18rem 24rem;
+  background-color: var(--background-color);
+}
+
+.searchResult {
   padding: 12rem 8rem;
   font-size: 14rem;
   font-family: "Fira Code", monospace;
 }
 
-.hoogleSearchResult:nth-child(even) {
+.searchResult:nth-child(even) {
   background-color: #f5f5f5;
   position: relative;
 }
 
-.hoogleSearchResult:nth-child(odd) {
+.searchResult:nth-child(odd) {
   background-color: #e5e5e5;
   position: relative;
 }
 
-.hoogleSearchResult:first-child {
+.searchResult:first-child {
   padding-top: 18rem;
 }
 
-.hoogleSearchResult:last-child {
+.searchResult:last-child {
   padding-bottom: 24rem;
 }
 
@@ -84,4 +102,3 @@
   color: var(--purple-color-2);
   white-space: nowrap;
 }
-

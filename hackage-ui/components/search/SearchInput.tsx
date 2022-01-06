@@ -15,18 +15,16 @@ type SearchResultsProps = {
 
 const SearchResults = (props: SearchResultsProps) => {
   const [query] = useDebounce(props.query, 300);
-  let queryType: 'hackage' | 'hoogle' | 'recentSearches' | 'showHelp' | 'unknown' = 'unknown';
+  let queryType: 'hackage' | 'hoogle' | 'recentSearches' | 'allRecentSearches' | 'showHelp' | 'unknown' = 'unknown';
 
   if (query.startsWith(':')) {
     if (query?.match(/^\:t .*$/g)) {
       queryType = 'hoogle';
-    };
-
-    if (query?.match(/^\:r.*$/g)) {
+    } else if (query?.match(/^\:r .*$/g)) {
       queryType = 'recentSearches';
-    };
-
-    if (query?.match(/^\:\?.*$/g)) {
+    } else if (query?.match(/^\:r$/g)) {
+      queryType = 'allRecentSearches';
+    } else if (query?.match(/^\:\?.*$/g)) {
       queryType = 'showHelp';
     };
   } else {
@@ -48,6 +46,7 @@ const SearchResults = (props: SearchResultsProps) => {
         {query && queryType === 'hackage' && <HackageSearchResults query={query.trim()} />}
         {query && queryType === 'hoogle' && <HoogleSearchResults query={query.replace(/^\:t /, '').trim()} />}
         {query && queryType === 'recentSearches' && <RecentSearches query={query.replace(/^\:r ?/, '').trim()} onSelect={props.setQuery} />}
+        {query && queryType === 'allRecentSearches' && <RecentSearches query={''} onSelect={props.setQuery} />}
       </div>
     </div>
   );

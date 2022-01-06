@@ -1,7 +1,11 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AppContext from "../AppContext";
 import s from './RecentSearches.module.css';
 import Fuse from 'fuse.js'
+import SVGIcon from '../icons/SVGIcon';
+import clearIcon from '!!raw-loader!../icons/clear.svg';
+import Header from './Header';
+import HeaderButton from './HeaderButton';
 
 type RecentSearchesProps = {
   query: string,
@@ -12,7 +16,7 @@ const RecentSearches = (props: RecentSearchesProps) => {
   const appContext = useContext(AppContext);
   const searchHistory = appContext.readSearchHistory();
   const showHistory = searchHistory.length > 0;
-  console.log('query', props.query);
+  const [_, forceUpdate] = useState({});
 
   const fuse = new Fuse(searchHistory);
   const withFilter = props.query.length === 0 ? searchHistory : fuse.search(props.query).map(item => item.item);
@@ -20,17 +24,39 @@ const RecentSearches = (props: RecentSearchesProps) => {
   return (
     <div className={s.searchResults}>
       {!showHistory && (
-        <div className={s.empty}>
+        <div className={s.nothingFound}>
           Search history is empty.
         </div>
       )}
       {showHistory && (
-        <div className={s.searchResultsHeader}>Filter recent successful searches {withFilter.length} / {searchHistory.length}</div>
+        <Header>
+          <div>Found in recent searches: {withFilter.length} / {searchHistory.length}</div>
+          <HeaderButton
+            text="Delete all"
+            svgIcon={clearIcon}
+            onClick={(e) => {
+              e.stopPropagation();
+              appContext.purgeSearchHistory();
+              forceUpdate({});
+            }}
+          />
+        </Header>
       )}
       {showHistory && withFilter.map(historyEntry => {
         return (
           <div key={historyEntry} className={s.searchResult} onClick={() => props.onSelect(historyEntry)}>
-            {historyEntry}
+            <div className={s.historyEntry}>{historyEntry}</div>
+            <div
+              className={s.removeSearchHistoryEntry}
+              title="Delete search history entry"
+              onClick={(e) => {
+                e.stopPropagation();
+                appContext.removeSearchHistoryEntry(historyEntry);
+                forceUpdate({});
+              }}
+            >
+              <SVGIcon svg={clearIcon} />
+            </div>
           </div>
         );
       })}

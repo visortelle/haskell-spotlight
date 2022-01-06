@@ -1,0 +1,25 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12rem;
+  background-color: var(--purple-color-1);
+  padding: 2rem 8rem;
+  border-radius: 4rem;
+  opacity: 0.66;
+  box-shadow: 1rem 1rem 2rem rgb(0 0 0 / 50%);
+  transition: var(--transition-short);
+}
+
+.button:hover {
+  opacity: 1;
+  cursor: pointer;
+  transition: var(--transition-short);
+}
+
+.button svg {
+  width: 16rem;
+  height: 16rem;
+  margin-right: 4rem;
+  fill: #fff;
+}

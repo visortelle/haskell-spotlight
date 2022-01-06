@@ -4,6 +4,7 @@ import AppContext from '../AppContext';
 import s from './HoogleSearchResults.module.css';
 import groupBy from 'lodash/groupBy';
 import A from '../layout/A';
+import Header from './Header';
 
 // Example:
 // docs: "O(n) map f xs is the ByteString obtained by\napplying f to each element of xs\n"
@@ -68,7 +69,7 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
       const searchResults: HoogleSearchResults = groupBy(deduplicate(resData), 'item');
 
       if (Object.keys(searchResults).length > 0) {
-          appContext.writeSearchHistoryEntry(`:t ${query}`);
+        appContext.writeSearchHistoryEntry(`:t ${query}`);
       }
 
       setSearchResults(searchResults);
@@ -79,7 +80,15 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
   }, [query]);
 
   return (
-    <div className={s.hoogleSearchResults}>
+    <div className={s.searchResults}>
+      {Object.keys(searchResults).length === 0 && (
+        <div className={s.nothingFound}>
+          Nothing found in Hoogle. Try another query.
+        </div>
+      )}
+      {Object.keys(searchResults).length > 0 && (
+        <Header>Found in Hoogle: {Object.keys(searchResults).length} / {Object.keys(searchResults).length}</Header>
+      )}
       {Object.keys(searchResults).map(hoogleItemKey => {
         const hoogleItem = searchResults[hoogleItemKey];
         const [typeName, ..._typeDef] = hoogleItemKey.split(' :: ');
@@ -92,7 +101,7 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
         const tweetSize = 140;
 
         return (
-          <div key={hoogleItemKey} className={s.hoogleSearchResult}>
+          <div key={hoogleItemKey} className={s.searchResult}>
             <A href={rewriteUrl(hoogleItem[0].url)} className={`${s.hoogleItemLink} ${s.link}`}>
               <>
                 <strong className={s.hoogleItemTypeName}>{typeName}</strong>{typeDef ? <strong>&nbsp;::&nbsp;</strong> : ''}<span>{typeDef}</span>
