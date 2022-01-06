@@ -15,7 +15,7 @@ const HeaderButton = (props: HeaderButtonProps) => {
       onClick={props.onClick}
     >
       {props.svgIcon && <SVGIcon svg={props.svgIcon} />}
-      {props.text}
+      <div>{props.text}</div>
     </div>
   );
 }

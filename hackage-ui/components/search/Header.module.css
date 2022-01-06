@@ -1,6 +1,7 @@
 .header {
   position: relative;
-  padding: 8rem 12rem 8rem 12rem;
+  padding: 8rem 12rem 8rem 24rem;
+  height: 32rem;
   background: var(--purple-color-2);
   color: #fff;
   box-shadow: 0rem 1rem 2rem rgb(0 0 0 / 27%);

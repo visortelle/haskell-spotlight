@@ -3,13 +3,13 @@
 }
 
 .searchResultsContainer {
-  position: absolute;
   display: flex;
   width: calc(100vw - 48rem);
-  left: calc(50% - 18rem);
   max-width: var(--max-content-width);
-  bottom: -8rem;
-  transform: translate(-50%, 100%);
+  position: fixed;
+  left: calc(50% - 18rem);
+  top: 54rem;
+  transform: translate(-50%, 0%);
   background-color: #fff;
   border-radius: 12rem;
   max-height: calc(100vh - 75rem);
