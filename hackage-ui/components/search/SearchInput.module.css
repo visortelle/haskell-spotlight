@@ -12,14 +12,14 @@
   transform: translate(-50%, 0%);
   background-color: #fff;
   border-radius: 12rem;
-  max-height: calc(100vh - 75rem);
+  max-height: calc(100vh - 64rem);
   overflow: hidden;
   box-shadow: 1rem 3rem 8rem rgb(0 0 0 / 27%);
 }
 
 .searchResults {
   height: inherit;
-  overflow: auto;
+  overflow: hidden;
   flex: 1;
 }
 
@@ -40,8 +40,7 @@
 
 @media (max-width: 1000px) {
   .searchResultsContainer {
-    max-width: calc(100vw - 8rem);
+    width: calc(100vw - 32rem);
     left: calc(50%);
-    max-height: calc(100vh - 24rem);
   }
 }

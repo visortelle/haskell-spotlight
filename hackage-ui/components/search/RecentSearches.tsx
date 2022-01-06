@@ -43,24 +43,26 @@ const RecentSearches = (props: RecentSearchesProps) => {
           />
         </Header>
       )}
-      {showHistory && withFilter.map(historyEntry => {
-        return (
-          <div key={historyEntry} className={s.searchResult} onClick={() => props.onSelect(historyEntry)}>
-            <div className={s.historyEntry}>{historyEntry}</div>
-            <div
-              className={s.removeSearchHistoryEntry}
-              title="Delete search history entry"
-              onClick={(e) => {
-                e.stopPropagation();
-                appContext.removeSearchHistoryEntry(historyEntry);
-                forceUpdate({});
-              }}
-            >
-              <SVGIcon svg={clearIcon} />
+      <div className={s.searchResultsContainer}>
+        {showHistory && withFilter.map(historyEntry => {
+          return (
+            <div key={historyEntry} className={s.searchResult} onClick={() => props.onSelect(historyEntry)}>
+              <div className={s.historyEntry}>{historyEntry}</div>
+              <div
+                className={s.removeSearchHistoryEntry}
+                title="Delete search history entry"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  appContext.removeSearchHistoryEntry(historyEntry);
+                  forceUpdate({});
+                }}
+              >
+                <SVGIcon svg={clearIcon} />
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   )
 }

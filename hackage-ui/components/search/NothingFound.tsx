@@ -30,10 +30,15 @@ const Delayed = ({ children, waitBeforeShow }: Props) => {
     const taskId = 'artificial-delay-before-rendering-nothing-found-component'
     appContext.startTask(taskId);
 
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setIsShown(true);
       appContext.finishTask(taskId);
     }, waitBeforeShow);
+
+    return () => {
+      appContext.finishTask(taskId);
+      clearTimeout(timeoutId);
+    }
   },
     // XXX - don't add appContext to deps here as eslint suggests.
     // It may cause infinite recursive calls. Fix it if you know how.

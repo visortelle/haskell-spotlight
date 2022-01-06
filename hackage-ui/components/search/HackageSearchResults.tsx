@@ -51,20 +51,22 @@ const HackageSearchResults = ({ query }: { query: string }) => {
   }, [query, appContext.tasks.length]);
 
   return (
-    <div className={s.hackageSearchResults}>
+    <div className={s.searchResults}>
       {searchResults.length === 0 && (
         <NothingFound waitBeforeShow={1500}>Nothing found in Hackage. Try another query.</NothingFound>
       )}
       {searchResults.length > 0 && (
         <Header>Found on Hackage: {searchResults.length}</Header>
       )}
-      {searchResults.map(pkg => {
-        return (
-          <A key={pkg.name} className={s.searchResult} href={`/package/${pkg.name}`}>
-            {pkg.name}
-          </A>
-        );
-      })}
+      <div className={s.searchResultsContainer}>
+        {searchResults.map(pkg => {
+          return (
+            <A key={pkg.name} className={s.searchResult} href={`/package/${pkg.name}`}>
+              {pkg.name}
+            </A>
+          );
+        })}
+      </div>
     </div>
   )
 }

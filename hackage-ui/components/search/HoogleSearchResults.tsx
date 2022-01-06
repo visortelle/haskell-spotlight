@@ -113,55 +113,57 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
           />
         </Header>
       )}
-      {Object.keys(searchResults).map(hoogleItemKey => {
-        const hoogleItem = searchResults[hoogleItemKey];
-        const [typeName, ..._typeDef] = hoogleItemKey.split(' :: ');
-        const typeDef = _typeDef.join('');
-        const pkgs = groupBy(hoogleItem, 'package.name');
+      <div className={s.searchResultsContainer}>
+        {Object.keys(searchResults).map(hoogleItemKey => {
+          const hoogleItem = searchResults[hoogleItemKey];
+          const [typeName, ..._typeDef] = hoogleItemKey.split(' :: ');
+          const typeDef = _typeDef.join('');
+          const pkgs = groupBy(hoogleItem, 'package.name');
 
-        const docs = hoogleItem[0].docs
-          .replace(/\n\n/g, '\n').trim(); // Apply minimal formatting to make docs look more consistent.
+          const docs = hoogleItem[0].docs
+            .replace(/\n\n/g, '\n').trim(); // Apply minimal formatting to make docs look more consistent.
 
-        const itemViewMode = viewModes[hoogleItemKey];
+          const itemViewMode = viewModes[hoogleItemKey];
 
-        return (
-          <div key={hoogleItemKey} className={`${s.searchResult} ${itemViewMode === 'brief' ? s.searchResultBrief : ''}`}>
-            <div className={s.changeHoogleItemViewMode}>
-              <HeaderButton
-                text={itemViewMode === 'normal' ? 'Collapse' : 'Expand'}
-                onClick={() => setViewModes({ ...viewModes, [hoogleItemKey]: itemViewMode === 'brief' ? 'normal' : 'brief' })}
-                svgIcon={itemViewMode === 'normal' ? viewBrieflyIcon : viewNormallyIcon}
-              />
-            </div>
-            <A href={rewriteUrl(hoogleItem[0].url)} className={`${s.hoogleItemLink} ${s.link} ${itemViewMode === 'brief' ? s.hoogleItemLinkBrief : ''}`}>
-              <strong className={s.hoogleItemTypeName}>{typeName}</strong>{typeDef ? <strong>&nbsp;::&nbsp;</strong> : ''}<span>{typeDef}</span>
-            </A>
-            <div className={s.hoogleItemContent}>
-              {docs && (
-                <div className={`${s.hoogleItemDocs} ${itemViewMode === 'brief' ? s.hoogleItemDocsBrief : ''}`}>
-                  {docs}
-                </div>
-              )}
-              {itemViewMode === 'normal' && pkgs[Object.keys(pkgs)[0]][0].package.name && <div className={s.hoogleItemPackages}>
-                {Object.keys(pkgs).map(packageKey => {
-                  const pkg = pkgs[packageKey];
+          return (
+            <div key={hoogleItemKey} className={`${s.searchResult} ${itemViewMode === 'brief' ? s.searchResultBrief : ''}`}>
+              <div className={s.changeHoogleItemViewMode}>
+                <HeaderButton
+                  text={itemViewMode === 'normal' ? 'Collapse' : 'Expand'}
+                  onClick={() => setViewModes({ ...viewModes, [hoogleItemKey]: itemViewMode === 'brief' ? 'normal' : 'brief' })}
+                  svgIcon={itemViewMode === 'normal' ? viewBrieflyIcon : viewNormallyIcon}
+                />
+              </div>
+              <A href={rewriteUrl(hoogleItem[0].url)} className={`${s.hoogleItemLink} ${s.link} ${itemViewMode === 'brief' ? s.hoogleItemLinkBrief : ''}`}>
+                <strong className={s.hoogleItemTypeName}>{typeName}</strong>{typeDef ? <strong>&nbsp;::&nbsp;</strong> : ''}<span>{typeDef}</span>
+              </A>
+              <div className={s.hoogleItemContent}>
+                {docs && (
+                  <div className={`${s.hoogleItemDocs} ${itemViewMode === 'brief' ? s.hoogleItemDocsBrief : ''}`}>
+                    {docs}
+                  </div>
+                )}
+                {itemViewMode === 'normal' && pkgs[Object.keys(pkgs)[0]][0].package.name && <div className={s.hoogleItemPackages}>
+                  {Object.keys(pkgs).map(packageKey => {
+                    const pkg = pkgs[packageKey];
 
-                  return (
-                    <div key={packageKey} className={s.hoogleItemPackage}>
-                      <A href={rewriteUrl(pkg[0].package.url)} className={s.link}><small style={{ marginRight: '0.5em' }}>📦</small>{pkg[0].package.name}</A>
-                      <div className={s.hoogleItemModules}>
-                        {pkg.map(item => (
-                          <A key={`${packageKey}@${item.module.name}`} href={rewriteUrl(item.module.url)} className={s.link}>{item.module.name}</A>
-                        ))}
+                    return (
+                      <div key={packageKey} className={s.hoogleItemPackage}>
+                        <A href={rewriteUrl(pkg[0].package.url)} className={s.link}><small style={{ marginRight: '0.5em' }}>📦</small>{pkg[0].package.name}</A>
+                        <div className={s.hoogleItemModules}>
+                          {pkg.map(item => (
+                            <A key={`${packageKey}@${item.module.name}`} href={rewriteUrl(item.module.url)} className={s.link}>{item.module.name}</A>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>}
+                    );
+                  })}
+                </div>}
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   )
 }

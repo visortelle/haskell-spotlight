@@ -11,6 +11,16 @@
   font-size: 14rem;
 }
 
+.searchResults {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.searchResultsContainer {
+  overflow: auto;
+}
+
 .searchResult {
   padding: 12rem 8rem;
   font-size: 14rem;
