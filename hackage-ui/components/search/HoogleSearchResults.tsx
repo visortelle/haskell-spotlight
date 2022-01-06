@@ -5,7 +5,12 @@ import s from './HoogleSearchResults.module.css';
 import groupBy from 'lodash/groupBy';
 import A from '../layout/A';
 import Header from './Header';
+import HeaderButton from './HeaderButton';
 import NothingFound from './NothingFound';
+import viewNormallyIcon from '!!raw-loader!../icons/plus.svg';
+import viewBrieflyIcon from '!!raw-loader!../icons/minus.svg';
+import zipObject from 'lodash/zipObject';
+import mapValues from 'lodash/mapValues';
 
 // Example:
 // docs: "O(n) map f xs is the ByteString obtained by\napplying f to each element of xs\n"
@@ -27,6 +32,8 @@ export type HoogleItemKey = string;
 
 export type HoogleSearchResults = Record<HoogleItemKey, HoogleItemEntry[]>;
 
+export type ViewMode = 'brief' | 'normal';
+
 const HoogleSearchResults = ({ query }: { query: string }) => {
   // Hoogle sometimes returns duplicate entries. Maybe a Hoogle bug, maybe I missed something.
   function deduplicate(arr: any[]) {
@@ -43,6 +50,12 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
 
   const appContext = useContext(AppContext);
   const [searchResults, setSearchResults] = useState<HoogleSearchResults>({});
+  const [viewModes, setViewModes] = useState<Record<HoogleItemKey, ViewMode>>({});
+  const [globalViewMode, setGlobalViewMode] = useState<ViewMode>('brief');
+
+  useEffect(() => {
+    setViewModes(mapValues(viewModes, () => globalViewMode));
+  }, [globalViewMode, setGlobalViewMode]);
 
   useEffect(() => {
     (async () => {
@@ -74,6 +87,9 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
       }
 
       setSearchResults(searchResults);
+
+      const searchResultsKeys = Object.keys(searchResults);
+      setViewModes(zipObject(searchResultsKeys, searchResultsKeys.map(() => globalViewMode)));
     })();
 
     // XXX - don't add appContext to deps here as eslint suggests.
@@ -83,12 +99,19 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
   return (
     <div className={s.searchResults}>
       {query.length > 0 && Object.keys(searchResults).length === 0 && (
-        <NothingFound waitBeforeShow={1000}>
+        <NothingFound waitBeforeShow={1500}>
           Nothing found in Hoogle. Try another query.
         </NothingFound>
       )}
       {Object.keys(searchResults).length > 0 && (
-        <Header>Found on Hoogle: {Object.keys(searchResults).length}</Header>
+        <Header>
+          <div>Found on Hoogle: {Object.keys(searchResults).length}</div>
+          <HeaderButton
+            text={globalViewMode === 'normal' ? 'Collapse All' : 'Expand All'}
+            onClick={() => globalViewMode === 'normal' ? setGlobalViewMode('brief') : setGlobalViewMode('normal')}
+            svgIcon={globalViewMode === 'normal' ? viewBrieflyIcon : viewNormallyIcon}
+          />
+        </Header>
       )}
       {Object.keys(searchResults).map(hoogleItemKey => {
         const hoogleItem = searchResults[hoogleItemKey];
@@ -97,25 +120,29 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
         const pkgs = groupBy(hoogleItem, 'package.name');
 
         const docs = hoogleItem[0].docs
-          .replace(/\n+/g, '\n').trim(); // Apply minimal formatting to make docs look more consistent.
+          .replace(/\n\n/g, '\n').trim(); // Apply minimal formatting to make docs look more consistent.
 
-        const tweetSize = 140;
+        const itemViewMode = viewModes[hoogleItemKey];
 
         return (
-          <div key={hoogleItemKey} className={s.searchResult}>
-            <A href={rewriteUrl(hoogleItem[0].url)} className={`${s.hoogleItemLink} ${s.link}`}>
-              <>
-                <strong className={s.hoogleItemTypeName}>{typeName}</strong>{typeDef ? <strong>&nbsp;::&nbsp;</strong> : ''}<span>{typeDef}</span>
-              </>
+          <div key={hoogleItemKey} className={`${s.searchResult} ${itemViewMode === 'brief' ? s.searchResultBrief : ''}`}>
+            <div className={s.changeHoogleItemViewMode}>
+              <HeaderButton
+                text={itemViewMode === 'normal' ? 'Collapse' : 'Expand'}
+                onClick={() => setViewModes({ ...viewModes, [hoogleItemKey]: itemViewMode === 'brief' ? 'normal' : 'brief' })}
+                svgIcon={itemViewMode === 'normal' ? viewBrieflyIcon : viewNormallyIcon}
+              />
+            </div>
+            <A href={rewriteUrl(hoogleItem[0].url)} className={`${s.hoogleItemLink} ${s.link} ${itemViewMode === 'brief' ? s.hoogleItemLinkBrief : ''}`}>
+              <strong className={s.hoogleItemTypeName}>{typeName}</strong>{typeDef ? <strong>&nbsp;::&nbsp;</strong> : ''}<span>{typeDef}</span>
             </A>
             <div className={s.hoogleItemContent}>
               {docs && (
-                <div className={s.hoogleItemDocs}>
-                  {docs.slice(0, tweetSize)}
-                  {docs.length > tweetSize && <>…</>}
+                <div className={`${s.hoogleItemDocs} ${itemViewMode === 'brief' ? s.hoogleItemDocsBrief : ''}`}>
+                  {docs}
                 </div>
               )}
-              {pkgs[Object.keys(pkgs)[0]][0].package.name && <div className={s.hoogleItemPackages}>
+              {itemViewMode === 'normal' && pkgs[Object.keys(pkgs)[0]][0].package.name && <div className={s.hoogleItemPackages}>
                 {Object.keys(pkgs).map(packageKey => {
                   const pkg = pkgs[packageKey];
 
@@ -124,7 +151,7 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
                       <A href={rewriteUrl(pkg[0].package.url)} className={s.link}><small style={{ marginRight: '0.5em' }}>📦</small>{pkg[0].package.name}</A>
                       <div className={s.hoogleItemModules}>
                         {pkg.map(item => (
-                          <A key={item.module.name} href={rewriteUrl(item.module.url)} className={s.link}>{item.module.name}</A>
+                          <A key={`${packageKey}@${item.module.name}`} href={rewriteUrl(item.module.url)} className={s.link}>{item.module.name}</A>
                         ))}
                       </div>
                     </div>

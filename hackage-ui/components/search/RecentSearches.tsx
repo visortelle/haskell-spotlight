@@ -33,7 +33,7 @@ const RecentSearches = (props: RecentSearchesProps) => {
         <Header>
           <div>Found in recent searches: {withFilter.length} / {searchHistory.length}</div>
           <HeaderButton
-            text="Delete all"
+            text="Delete All"
             svgIcon={clearIcon}
             onClick={(e) => {
               e.stopPropagation();

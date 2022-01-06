@@ -53,7 +53,7 @@ const HackageSearchResults = ({ query }: { query: string }) => {
   return (
     <div className={s.hackageSearchResults}>
       {searchResults.length === 0 && (
-        <NothingFound waitBeforeShow={1000}>Nothing found in Hackage. Try another query.</NothingFound>
+        <NothingFound waitBeforeShow={1500}>Nothing found in Hackage. Try another query.</NothingFound>
       )}
       {searchResults.length > 0 && (
         <Header>Found on Hackage: {searchResults.length}</Header>

@@ -1,4 +1,5 @@
 .button {
+  color: #fff;
   display: inline-flex;
   flex: 0 1 auto;
   align-items: center;
@@ -10,6 +11,9 @@
   opacity: 0.66;
   box-shadow: 1rem 1rem 2rem rgb(0 0 0 / 50%);
   transition: var(--transition-short);
+  user-select: none;
+  position: relative;
+  top: -1rem;
 }
 
 .button:hover {
@@ -23,4 +27,12 @@
   height: 16rem;
   margin-right: 4rem;
   fill: #fff;
+}
+
+.buttonWithoutText {
+  padding: 2rem;
+}
+
+.buttonWithoutText svg {
+  margin-right: 0;
 }

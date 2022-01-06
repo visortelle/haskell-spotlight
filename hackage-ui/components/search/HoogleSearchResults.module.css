@@ -35,12 +35,24 @@
   padding-bottom: 24rem;
 }
 
+.searchResultBrief {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+}
+
 .hoogleItemDocs {
   width: 100%;
   overflow: hidden;
   padding: 0 8rem;
   margin: 0rem 0 12rem 0;
   white-space: pre;
+}
+
+.hoogleItemDocsBrief {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
 }
 
 .link {
@@ -61,6 +73,10 @@
   padding: 0 8rem;
   margin-bottom: 12rem;
   font-size: 14rem;
+}
+
+.hoogleItemLinkBrief {
+  margin-bottom: 2rem;
 }
 
 .hoogleItemContent {
@@ -96,4 +112,16 @@
   margin-left: auto;
   color: var(--purple-color-2);
   white-space: nowrap;
+}
+
+.searchResult:hover .changeHoogleItemViewMode {
+  display: block;
+}
+
+.changeHoogleItemViewMode {
+  position: absolute;
+  display: none;
+  right: 12rem;
+  top: 8rem;
+  z-index: 10;
 }
