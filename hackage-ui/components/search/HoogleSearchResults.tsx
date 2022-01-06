@@ -5,6 +5,7 @@ import s from './HoogleSearchResults.module.css';
 import groupBy from 'lodash/groupBy';
 import A from '../layout/A';
 import Header from './Header';
+import NothingFound from './NothingFound';
 
 // Example:
 // docs: "O(n) map f xs is the ByteString obtained by\napplying f to each element of xs\n"
@@ -81,13 +82,13 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
 
   return (
     <div className={s.searchResults}>
-      {Object.keys(searchResults).length === 0 && (
-        <div className={s.nothingFound}>
+      {query.length > 0 && Object.keys(searchResults).length === 0 && (
+        <NothingFound waitBeforeShow={1000}>
           Nothing found in Hoogle. Try another query.
-        </div>
+        </NothingFound>
       )}
       {Object.keys(searchResults).length > 0 && (
-        <Header>Found in Hoogle: {Object.keys(searchResults).length} / {Object.keys(searchResults).length}</Header>
+        <Header>Found in Hoogle: {Object.keys(searchResults).length}</Header>
       )}
       {Object.keys(searchResults).map(hoogleItemKey => {
         const hoogleItem = searchResults[hoogleItemKey];

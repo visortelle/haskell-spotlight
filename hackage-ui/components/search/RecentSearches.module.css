@@ -25,11 +25,6 @@
   padding-bottom: 24rem;
 }
 
-.nothingFound {
-  padding: 18rem 24rem;
-  background-color: var(--background-color);
-}
-
 .removeSearchHistoryEntry {
   display: none;
   position: absolute;

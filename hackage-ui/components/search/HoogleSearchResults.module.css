@@ -11,11 +11,6 @@
   font-size: 14rem;
 }
 
-.nothingFound {
-  padding: 18rem 24rem;
-  background-color: var(--background-color);
-}
-
 .searchResult {
   padding: 12rem 8rem;
   font-size: 14rem;

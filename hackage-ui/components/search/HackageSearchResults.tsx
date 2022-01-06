@@ -3,6 +3,8 @@ import { useEffect, useState, useContext } from "react";
 import AppContext from '../AppContext';
 import A from '../layout/A';
 import s from './HackageSearchResults.module.css';
+import Header from './Header';
+import NothingFound from './NothingFound';
 
 export type HackageSearchResults = { name: string }[];
 
@@ -50,6 +52,12 @@ const HackageSearchResults = ({ query }: { query: string }) => {
 
   return (
     <div className={s.hackageSearchResults}>
+      {searchResults.length === 0 && (
+        <NothingFound waitBeforeShow={1000}>Nothing found in Hackage. Try another query.</NothingFound>
+      )}
+      {searchResults.length > 0 && (
+        <Header>Found in Hackage: {searchResults.length}</Header>
+      )}
       {searchResults.map(pkg => {
         return (
           <A key={pkg.name} className={s.searchResult} href={`/package/${pkg.name}`}>

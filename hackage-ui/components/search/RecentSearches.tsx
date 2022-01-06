@@ -6,6 +6,7 @@ import SVGIcon from '../icons/SVGIcon';
 import clearIcon from '!!raw-loader!../icons/clear.svg';
 import Header from './Header';
 import HeaderButton from './HeaderButton';
+import NothingFound from './NothingFound';
 
 type RecentSearchesProps = {
   query: string,
@@ -24,9 +25,9 @@ const RecentSearches = (props: RecentSearchesProps) => {
   return (
     <div className={s.searchResults}>
       {!showHistory && (
-        <div className={s.nothingFound}>
+        <NothingFound waitBeforeShow={0}>
           Search history is empty.
-        </div>
+        </NothingFound>
       )}
       {showHistory && (
         <Header>
