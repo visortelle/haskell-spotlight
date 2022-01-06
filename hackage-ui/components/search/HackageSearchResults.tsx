@@ -56,7 +56,7 @@ const HackageSearchResults = ({ query }: { query: string }) => {
         <NothingFound waitBeforeShow={1000}>Nothing found in Hackage. Try another query.</NothingFound>
       )}
       {searchResults.length > 0 && (
-        <Header>Found in Hackage: {searchResults.length}</Header>
+        <Header>Found on Hackage: {searchResults.length}</Header>
       )}
       {searchResults.map(pkg => {
         return (

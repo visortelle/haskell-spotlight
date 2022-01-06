@@ -88,7 +88,7 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
         </NothingFound>
       )}
       {Object.keys(searchResults).length > 0 && (
-        <Header>Found in Hoogle: {Object.keys(searchResults).length}</Header>
+        <Header>Found on Hoogle: {Object.keys(searchResults).length}</Header>
       )}
       {Object.keys(searchResults).map(hoogleItemKey => {
         const hoogleItem = searchResults[hoogleItemKey];
