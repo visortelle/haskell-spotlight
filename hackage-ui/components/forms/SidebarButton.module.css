@@ -25,5 +25,12 @@
   width: 24rem;
   height: 24rem;
   fill: #fff;
+}
+
+.button > :first-child:not(:last-child) {
   margin-right: 12rem;
+}
+
+.button > :last-child:not(:first-child) {
+  margin-left: 12rem;
 }

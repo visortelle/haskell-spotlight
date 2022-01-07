@@ -82,27 +82,28 @@ const Stats = (props: StatsProps) => {
           This project is an alternative UI implementation for <a href="https://hackage.haskell.org">Hackage</a>.
         </p>
         <p className={s.statsTextParagraph}>The project is under construction.</p>
-        <h3 style={{ marginBottom: '8rem'}}>You can help us finish it faster</h3>
-        <p className={s.statsTextParagraph}>
+        <h3 style={{ marginBottom: '8rem' }}>You can help us to make it better</h3>
+        <div className={s.statsTextParagraph}>
           <SidebarButton
             onClick={() => { }} href="https://github.com/visortelle/hackage-ui/issues/"
-            overrides={{ style: { backgroundColor: 'var(--text-color)', marginBottom: '12rem', width: '230rem', justifyContent: 'flex-start' } }}
+            overrides={{ style: { backgroundColor: 'var(--text-color)', marginBottom: '12rem', width: '240rem', justifyContent: 'flex-start' } }}
           >
             <SvgIcon svg={GitHubIcon} />
-            Contribute on GitHub
+            <div>Contribute on GitHub</div>
           </SidebarButton>
 
           <SidebarButton
             onClick={() => { }} href="https://twitter.com/HackageUI"
-            overrides={{ style: { backgroundColor: '#00ACEE', marginBottom: '12rem', width: '230rem', justifyContent: 'flex-start'  } }}
+            overrides={{ style: { backgroundColor: '#00ACEE', marginBottom: '12rem', width: '240rem', justifyContent: 'flex-start' } }}
           >
             <SvgIcon svg={TwitterIcon} />
-            Follow us on Twitter
+            <div>Follow us on Twitter</div>
           </SidebarButton>
-          <p>
-            Also you can sponsor the project or propose a job in Haskell project to <a href="mailto:visortelle@gmail.com">the author 🙂</a>
-          </p>
-        </p>
+        </div>
+
+        <div>
+          Also you can sponsor the project or propose a job in Haskell project to <a href="mailto:visortelle@gmail.com">the author 🙂</a>
+        </div>
       </div>
       <div className={s.statsGroups}>
         <div className={s.statsGroup}>

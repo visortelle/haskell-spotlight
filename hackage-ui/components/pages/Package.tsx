@@ -164,7 +164,7 @@ const Sidebar = (props: SidebarProps) => {
                   href={repository.browserUrl}
                   overrides={{ style: { backgroundColor: 'var(--text-color)' } }}
                 >
-                  Browse on GitHub
+                  <div>Browse on GitHub</div>
                   <div className={s.sidebarGitHubButtonIcon}><SvgIcon svg={repositoryIcon} /></div>
                 </SidebarButton>
               </div>
@@ -177,7 +177,7 @@ const Sidebar = (props: SidebarProps) => {
                   href={props.package.bugReportsUrl}
                   overrides={{ style: { backgroundColor: 'var(--accent-color-red)' } }}
                 >
-                  Report a Bug
+                  <div>Report a Bug</div>
                   <div className={s.sidebarBugReportIcon}><SvgIcon svg={bugReportIcon} /></div>
                 </SidebarButton>
               </div>
