@@ -1,20 +1,18 @@
 import { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
-import s from './Button.module.css';
+import s from './SidebarButton.module.css';
 
-export type ButtonProps = {
+export type SidebarButtonProps = {
   children: ReactNode,
-  type: 'regularButton' | 'promoButton',
   onClick: () => void,
-  kind?: 'regular' | 'danger',
   tabIndex?: number,
   href?: string,
   overrides?: ButtonHTMLAttributes<HTMLButtonElement> | AnchorHTMLAttributes<HTMLAnchorElement>
 };
 
-const Button = (props: ButtonProps) => {
+const SidebarButton = (props: SidebarButtonProps) => {
   return props.href ? (
     <a
-      className={`${s[props.type]} ${props.kind === 'danger' ? s.danger : ''}`}
+      className={s.button}
       href={props.href}
       tabIndex={props.tabIndex}
       {...props.overrides as AnchorHTMLAttributes<HTMLAnchorElement>}
@@ -24,7 +22,7 @@ const Button = (props: ButtonProps) => {
   ) : (
     <button
       type="button"
-      className={`${s[props.type]} ${props.kind === 'danger' ? s.danger : ''}`}
+      className={s.button}
       tabIndex={props.tabIndex}
       {...props.overrides as ButtonHTMLAttributes<HTMLButtonElement>}
     >
@@ -33,4 +31,5 @@ const Button = (props: ButtonProps) => {
   );
 }
 
-export default Button;
+export default SidebarButton;
+

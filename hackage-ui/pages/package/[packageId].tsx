@@ -1,12 +1,11 @@
 import { NextPage, GetStaticPropsResult, GetStaticPropsContext } from 'next';
 import Head from 'next/head';
-import PackagePage, { PackageProps, Versions, License } from '../../components/pages/Package';
+import PackagePage, { PackageProps, Versions, License, Homepage } from '../../components/pages/Package';
 import axios from 'axios';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/a11y-dark.css';
 import cheerio, { CheerioAPI } from 'cheerio';
 import unescape from 'lodash/unescape';
-
 
 const Page: NextPage<PackageProps> = (props) => {
   return (
@@ -36,18 +35,19 @@ export async function getStaticProps(props: GetStaticPropsContext): Promise<GetS
   const docContent = $('#content');
 
   const name = $('h1 a', docContent).html()?.trim() || '';
-  const shortDescription = $('h1 small', docContent).html()?.trim();
-  const longDescriptionHtml = $('#description').html()?.trim();
-
-  const versions = getVersions($);
-  const license = getLicense($);
+  const shortDescription = $('h1 small', docContent).html()?.trim() || null;
+  const longDescriptionHtml = $('#description').html()?.trim() || null;
 
   return {
     props: {
       id: packageId,
       name,
-      versions,
-      license,
+      versions: getVersions($),
+      license: getLicense($),
+      homepage: getHomepage($),
+      repositoryUrl: getRepositoryUrl($),
+      bugReportsUrl: getBugReports($),
+      updatedAt: getUpdatedAt($),
       shortDescription,
       longDescriptionHtml
     },
@@ -96,7 +96,6 @@ function monkeyPatchDocument($: CheerioAPI): void {
       return el;
     }
 
-
     const highlightedHtml = hljs.highlightAuto(unescape($(el).html() as string), languagesToHighlight).value;
     $(el).html(highlightedHtml);
     $(el).addClass('hljs');
@@ -105,24 +104,78 @@ function monkeyPatchDocument($: CheerioAPI): void {
   // Remove "Skip to Readme" links.
   const description = $('#content #description');
   const newDescriptionHtml = (description.html() || '').replace(`<hr>
-    [<a href="#readme">Skip to Readme</a>]`, '');
+    [<a href="#readme">Skip to Readme</a>]`, '').trim();
   description.html(newDescriptionHtml);
 }
 
 function getVersions($: CheerioAPI): Versions {
   const propertiesElement = $('#properties').get(0);
   const tableTd = $(`th:contains('Version') + td`, propertiesElement).get(0);
-  const current = $(`strong`, tableTd).text();
-  const available = $('*', tableTd).map((_, el) => $(el).text()).toArray();
+  const current = $(`strong`, tableTd).text().trim();
+  const available = $('*', tableTd).map((_, el) => $(el).text().trim()).toArray();
   return { current, available };
 }
 
-function getLicense($: CheerioAPI): License | undefined {
+function getLicense($: CheerioAPI): License | null {
   const propertiesElement = $('#properties').get(0);
   const tableTd = $(`th:contains('License') + td`, propertiesElement).get(0);
+
+  if (!tableTd) {
+    return null;
+  }
+
   const licenseEl = $(`> *`, tableTd);
-  return { name: licenseEl.text(), url: licenseEl.attr('href') };
+  return { name: licenseEl.text(), url: licenseEl.attr('href') || null };
 }
 
+function getHomepage($: CheerioAPI): Homepage | null {
+  const propertiesElement = $('#properties').get(0);
+  const tableTd = $(`th:contains('Home page') + td`, propertiesElement).get(0);
+
+  if (!tableTd) {
+    return null;
+  }
+
+  const homepageLink = $(`a`, tableTd);
+  return {
+    text: homepageLink.text().trim(),
+    url: homepageLink.attr('href')?.trim() || '#'
+  };
+}
+
+function getRepositoryUrl($: CheerioAPI): string | null {
+  const propertiesElement = $('#properties').get(0);
+  const tableTd = $(`th:contains('Source') + td`, propertiesElement).get(0);
+
+  if (!tableTd) {
+    return null;
+  }
+
+  const repositoryLink = $(`a`, tableTd);
+  return repositoryLink.attr('href')?.trim() || null;
+}
+
+function getBugReports($: CheerioAPI): string | null {
+  const propertiesElement = $('#properties').get(0);
+  const tableTd = $(`th:contains('Bug') + td`, propertiesElement).get(0);
+
+  if (!tableTd) {
+    return null;
+  }
+
+  const repositoryLink = $(`a`, tableTd);
+  return repositoryLink.attr('href')?.trim() || null;
+}
+
+function getUpdatedAt($: CheerioAPI): string | null {
+  const propertiesElement = $('#properties').get(0);
+  const tableTd = $(`th:contains('Uploaded') + td`, propertiesElement).get(0);
+
+  if (!tableTd) {
+    return null;
+  }
+
+  return $(tableTd).text().replace(/^by .* at /, '').trim();
+}
 
 export default Page;

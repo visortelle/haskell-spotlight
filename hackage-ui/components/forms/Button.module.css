@@ -43,3 +43,13 @@
   border: 1px solid transparent;
   opacity: 0.8;
 }
+
+.promoButton.danger {
+  background-color: var(--accent-color-red);
+}
+
+.promoButton svg {
+  width: 24rem;
+  height: 24rem;
+  fill: #fff;
+}

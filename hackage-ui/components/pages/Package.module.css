@@ -34,7 +34,7 @@
   display: flex;
   overflow: hidden;
   text-overflow: ellipsis;
-  align-items: flex-end;
+  align-items: center;
 }
 
 .packageNameH1 {
@@ -51,6 +51,8 @@
   margin-left: 8rem;
   font-weight: bold;
   opacity: 0.66;
+  position: relative;
+  top: 2rem;
 }
 
 .briefInfo {
@@ -93,7 +95,7 @@
 
 .sidebarContainer {
   width: 240rem;
-  margin: 24rem 0 24rem 12rem;
+  margin: 24rem 0 24rem 18rem;
   display: flex;
   padding-top: calc(32rem + 1em);
 }
@@ -116,12 +118,26 @@
   margin-bottom: 8rem;
   font-weight: bold;
   font-size: 18rem;
+  display: flex;
 }
 
 .sidebarEntry {
   display: flex;
+  font-size: 14rem;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 12rem;
+}
+.sidebarEntry.sidebarEntryShrink {
+  margin-bottom: 4rem;
+}
+
+.sidebarEntryLink {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14rem;
 }
 
 .sidebarEntryIcon {
@@ -131,57 +147,21 @@
 .sidebarEntryIcon svg {
   width: 24rem;
   height: 24rem;
+  fill: var(--text-color);
 }
 
 .sidebarInstall {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 }
 
-.sidebarInstallCopy {
+.repositoryContent {
   display: flex;
   width: 100%;
-  padding: 8rem;
-  padding-right: 24rem;
-  border-radius: 6rem;
-  background-color: var(--surface-color);
-  align-items: center;
-  position: relative;
-  justify-content: space-between;
-  font-size: 12rem;
-  box-shadow: 1rem 2rem 1rem rgb(0 0 0 / 27%);
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.sidebarInstallCopyText {
-  white-space: nowrap;
-  display: inline;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.sidebarInstallCopyIcon {
-  margin-left: 8rem;
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  padding: 0 4rem;
-  display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
-}
-
-.sidebarInstallCopy svg {
-  width: 16rem;
-  height: 16rem;
-  opacity: 0.66;
-}
-
-.sidebarInstallCopy:hover {
-  cursor: pointer;
-  opacity: 0.66;
 }
 
 @media (max-width: 1000px) {
@@ -204,6 +184,14 @@
   }
 
   .sidebarContainer {
+    width: 50%;
     padding-top: 0;
+    margin: 24rem 18rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebarContainer {
+    width: auto;
   }
 }

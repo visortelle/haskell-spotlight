@@ -26,11 +26,15 @@ const Home = (props: HomeProps) => {
       </div>
       <div className={s.gettingStarted}>
         <div>
-          <Button onClick={() => { }} text="Install Cabal" type="promoButton" overrides={{ style: { width: '200rem' } }} />
+          <Button onClick={() => { }} type="promoButton" overrides={{ style: { width: '200rem' } }}>
+            Install Cabal
+          </Button>
         </div>
         <div style={{ width: '48rem' }}></div>
         <div>
-          <Button onClick={() => { }} text="Getting Started" type="promoButton" overrides={{ style: { width: '200rem' } }} />
+          <Button onClick={() => { }} type="promoButton" overrides={{ style: { width: '200rem' } }}>
+            Getting Started
+          </Button>
         </div>
       </div>
 
