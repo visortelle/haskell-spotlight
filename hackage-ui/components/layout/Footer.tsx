@@ -20,6 +20,7 @@ const Footer = () => {
           <a href="https://hackage.haskell.org/upload">Upload a Package</a>
           <a href="https://cabal.readthedocs.io/">Cabal User Guide</a>
           <a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-maintainer">Cabal Package Description</a>
+          <a href="https://github.com/Gabriel439/post-rfc/blob/main/sotu.md">State of the Haskell ecosystem</a>
         </div>
 
         <div className={s.footerColumn}>

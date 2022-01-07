@@ -1,8 +1,11 @@
 import GlobalMenu, { defaultMenuProps } from "../layout/GlobalMenu";
 import s from './Home.module.css';
 import Button from "../forms/Button";
+import SidebarButton from "../forms/SidebarButton"; // Temporary here.
 import PackageIcon from '!!raw-loader!../icons/package.svg';
 import DownloadIcon from '!!raw-loader!../icons/download.svg';
+import GitHubIcon from '!!raw-loader!../icons/github.svg';
+import TwitterIcon from '!!raw-loader!../icons/twitter.svg';
 import Footer from "../layout/Footer";
 import SvgIcon from "../icons/SVGIcon";
 import PackageList, { Package } from "../package-list/PackageList";
@@ -78,9 +81,27 @@ const Stats = (props: StatsProps) => {
         <p className={s.statsTextParagraph}>
           This project is an alternative UI implementation for <a href="https://hackage.haskell.org">Hackage</a>.
         </p>
-        <p className={s.statsTextParagraph}>The project is under construction and looking for cooperation.</p>
+        <p className={s.statsTextParagraph}>The project is under construction.</p>
+        <h3 style={{ marginBottom: '8rem'}}>You can help us finish it faster</h3>
         <p className={s.statsTextParagraph}>
-          <a target="__blank" href="https://github.com/visortelle/hackage-ui">Open at GitHub </a>
+          <SidebarButton
+            onClick={() => { }} href="https://github.com/visortelle/hackage-ui/issues/"
+            overrides={{ style: { backgroundColor: 'var(--text-color)', marginBottom: '12rem', width: '230rem', justifyContent: 'flex-start' } }}
+          >
+            <SvgIcon svg={GitHubIcon} />
+            Contribute on GitHub
+          </SidebarButton>
+
+          <SidebarButton
+            onClick={() => { }} href="https://twitter.com/HackageUI"
+            overrides={{ style: { backgroundColor: '#00ACEE', marginBottom: '12rem', width: '230rem', justifyContent: 'flex-start'  } }}
+          >
+            <SvgIcon svg={TwitterIcon} />
+            Follow us on Twitter
+          </SidebarButton>
+          <p>
+            Also you can sponsor the project or propose a job in Haskell project to <a href="mailto:visortelle@gmail.com">the author 🙂</a>
+          </p>
         </p>
       </div>
       <div className={s.statsGroups}>
