@@ -1,6 +1,8 @@
 # Hackage UI
 
-Fresh look for the <https://hackage.haskell.org/>.
+Fresh look for the <https://hackage.haskell.org/>. 
+
+Rust's http://crates.io is used as a visual design reference.
 
 Demo here: <https://hackage-ui.vercel.app/>
 
