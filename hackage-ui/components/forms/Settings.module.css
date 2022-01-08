@@ -1,0 +1,44 @@
+.settings {
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.settingsButton {
+  width: 32rem;
+  height: 32rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  user-select: none;
+}
+
+.settingsButton:hover {
+  cursor: pointer;
+  background-color: var(--purple-color-2);
+}
+
+.settingsButtonPopup {
+  position: absolute;
+  width: 240rem;
+  height: 320rem;
+  bottom: -8rem;
+  right: 0;
+  overflow: auto;
+  transform: translate(0, 100%);
+  background-color: var(--purple-color-1);
+  box-shadow: 0rem 2rem 4rem rgb(0 0 0 / 27%);
+  border-radius: 12rem;
+  user-select: initial;
+}
+
+.settingsButtonPopup:hover {
+  cursor: initial;
+}
+
+.settingsButtonIcon svg {
+  width: 24rem;
+  height: 24rem;
+  fill: #fff;
+}

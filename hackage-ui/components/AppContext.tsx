@@ -1,9 +1,9 @@
-import React, { ReactNode, useCallback, useState } from 'react';
+import React, { ReactNode, useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import s from './AppContext.module.css';
-
+import { Analytics, AnalyticsState } from './analytics';
 export type SearchHistory = string[];
 
 export type AppContextValue = {
@@ -15,9 +15,9 @@ export type AppContextValue = {
   writeSearchHistoryEntry: (query: string) => void
   readSearchHistory: () => SearchHistory,
   removeSearchHistoryEntry: (query: string) => void,
-  purgeSearchHistory: () => void
+  purgeSearchHistory: () => void,
+  analytics?: AnalyticsState,
 }
-
 
 const defaultAppContextValue: AppContextValue = {
   notifySuccess: () => { },
@@ -28,7 +28,8 @@ const defaultAppContextValue: AppContextValue = {
   writeSearchHistoryEntry: () => { },
   readSearchHistory: () => [],
   removeSearchHistoryEntry: () => [],
-  purgeSearchHistory: () => { }
+  purgeSearchHistory: () => { },
+  analytics: undefined
 }
 
 const AppContext = React.createContext<AppContextValue>(defaultAppContextValue);
@@ -37,7 +38,16 @@ export const DefaultAppContextProvider = ({ children }: { children: ReactNode })
   const [value, setValue] = useState<AppContextValue>(defaultAppContextValue);
 
   const notifySuccess = useCallback((content: ReactNode) => toast.success(content), []);
-  const notifyError = useCallback((content: ReactNode) => toast.error(content), []);
+  const notifyError = useCallback((content: ReactNode) => {
+    if (value.analytics) {
+      value.analytics.gtag('event', 'error', {
+        category: value.analytics.categories.issues,
+        label: content?.toString() || 'unknown error',
+      });
+    }
+
+    toast.error(content);
+  }, [value.analytics]);
 
   const startTask = useCallback((id: string, comment?: string) => {
     setValue({
@@ -90,20 +100,21 @@ export const DefaultAppContextProvider = ({ children }: { children: ReactNode })
   }, [value]);
 
   return (
-    <AppContext.Provider
-      value={{
-        ...value,
-        notifySuccess,
-        notifyError,
-        startTask,
-        finishTask,
-        readSearchHistory,
-        writeSearchHistoryEntry,
-        purgeSearchHistory,
-        removeSearchHistoryEntry
-      }}
-    >
-      <>
+    <>
+      <Analytics onChange={(analytics) => setValue({ ...value, analytics })} />
+      <AppContext.Provider
+        value={{
+          ...value,
+          notifySuccess,
+          notifyError,
+          startTask,
+          finishTask,
+          readSearchHistory,
+          writeSearchHistoryEntry,
+          purgeSearchHistory,
+          removeSearchHistoryEntry
+        }}
+      >
         <ToastContainer
           position="top-right"
           autoClose={3000}
@@ -118,8 +129,8 @@ export const DefaultAppContextProvider = ({ children }: { children: ReactNode })
           bodyClassName={s.toastBody}
         />
         {children}
-      </>
-    </AppContext.Provider>
+      </AppContext.Provider>
+    </>
   )
 };
 

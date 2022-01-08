@@ -9,6 +9,8 @@ import TwitterIcon from '!!raw-loader!../icons/twitter.svg';
 import Footer from "../layout/Footer";
 import SvgIcon from "../icons/SVGIcon";
 import PackageList, { Package } from "../package-list/PackageList";
+import AppContext from "../AppContext";
+import { useContext, useEffect } from "react";
 
 export type HomeProps = {
   stats: StatsProps,
@@ -17,7 +19,14 @@ export type HomeProps = {
   packageListsSize: number,
 }
 
+const screenName = 'HomePage';
+
 const Home = (props: HomeProps) => {
+  const appContext = useContext(AppContext);
+  useEffect(() => {
+    appContext.analytics?.gtag('event', 'screen_view', { screen_name: screenName });
+  }, []);
+
   return (
     <div className={s.page}>
       <GlobalMenu {...defaultMenuProps} />
@@ -29,13 +38,13 @@ const Home = (props: HomeProps) => {
       </div>
       <div className={s.gettingStarted}>
         <div>
-          <Button onClick={() => { }} type="promoButton" overrides={{ style: { width: '200rem' } }}>
+          <Button onClick={() => { }} type="promoButton" overrides={{ style: { width: '200rem' } }} analytics={{ featureName: 'Install Cabal', eventParams: { screen_name: screenName } }}>
             Install Cabal
           </Button>
         </div>
         <div style={{ width: '48rem' }}></div>
         <div>
-          <Button onClick={() => { }} type="promoButton" overrides={{ style: { width: '200rem' } }}>
+          <Button onClick={() => { }} type="promoButton" overrides={{ style: { width: '200rem' } }} analytics={{ featureName: 'Getting Started', eventParams: { screen_name: screenName } }}>
             Getting Started
           </Button>
         </div>
@@ -48,17 +57,17 @@ const Home = (props: HomeProps) => {
       <div className={s.packageLists}>
         <div className={s.packageList}>
           <h3 className={s.packageListHeader}>Most Downloaded</h3>
-          <PackageList pkgs={props.topPackages} getHref={(pkg) => `/package/${pkg.name}`} count={props.packageListsSize} />
+          <PackageList pkgs={props.topPackages} getHref={(pkg) => `/package/${pkg.name}`} count={props.packageListsSize} analytics={{ screenName }} />
         </div>
 
         <div className={s.packageList}>
           <h3 className={s.packageListHeader}>Just Updated</h3>
-          <PackageList pkgs={props.recentlyUpdatedPackages} getHref={(pkg) => `/package/${pkg.name}`} count={props.packageListsSize} />
+          <PackageList pkgs={props.recentlyUpdatedPackages} getHref={(pkg) => `/package/${pkg.name}`} count={props.packageListsSize} analytics={{ screenName }} />
         </div>
 
         <div className={s.packageList}>
           <h3 className={s.packageListHeader}>Recently Visited</h3>
-          <PackageList pkgs={[]} getHref={() => '#'} count={0} />
+          <PackageList pkgs={[]} getHref={() => '#'} count={0} analytics={{ screenName }} />
         </div>
       </div>
 

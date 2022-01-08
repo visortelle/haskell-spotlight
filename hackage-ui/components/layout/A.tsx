@@ -1,9 +1,33 @@
 // Regular html <a /> tag, but that works properly with NextJS.
 
-import { LinkHTMLAttributes } from 'react';
+import { LinkHTMLAttributes, forwardRef, ForwardedRef, useContext } from 'react';
 import Link, { LinkProps } from 'next/link';
+import AppContext from '../AppContext';
 
-type AProps = LinkHTMLAttributes<HTMLAnchorElement> & LinkProps;
+type ExtAProps = LinkHTMLAttributes<HTMLAnchorElement> & { analytics: { featureName: string, eventParams: Gtag.EventParams } };
+type AProps = ExtAProps & LinkProps;
+
+// eslint-disable-next-line react/display-name
+export const ExtA = forwardRef((props: ExtAProps, ref: ForwardedRef<HTMLAnchorElement>) => {
+  const appContext = useContext(AppContext);
+
+  return (
+    <a
+      ref={ref}
+      {...props}
+      onClick={(e) => {
+        appContext?.analytics?.gtag('event', `FeatureUsed`, {
+          event_label: props.href,
+          label: props.analytics.featureName,
+          ...props.analytics.eventParams
+        });
+
+        if (props.onClick) {
+          props.onClick(e);
+        }
+      }} />
+  );
+});
 
 const A = (props: AProps) => {
   return (
@@ -17,7 +41,7 @@ const A = (props: AProps) => {
       replace={props.replace}
       passHref={props.passHref}
     >
-      <a {...props} />
+      <ExtA {...props} />
     </Link>
   );
 }

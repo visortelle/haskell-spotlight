@@ -1,5 +1,6 @@
 import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
+import { gaTrackingId } from '../components/analytics';
 
 class MyDocument extends Document {
   render() {
@@ -7,6 +8,19 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <meta charSet="utf-8" />
+
+          {/* Global Site Tag (gtag.js) - Google Analytics */}
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`} />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${gaTrackingId}', { send_page_view: false, cookie_flags: 'SameSite=None;Secure' })
+                gtag('consent', 'default', { ad_storage: 'denied', analytics_storage: 'granted' });
+            `}}
+          />
 
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='' />
@@ -16,7 +30,6 @@ class MyDocument extends Document {
           {/* Include stylesheets here is the only way I found to get rid of annoying styles flickering NextJS bug after each page reload. */}
           <link href="/styles/normalize.css" rel="stylesheet"></link>
           <link href="/styles/globals.css" rel="stylesheet"></link>
-
 
           <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
           <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />

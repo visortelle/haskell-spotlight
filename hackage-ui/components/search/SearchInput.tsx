@@ -14,7 +14,24 @@ type SearchResultsProps = {
 }
 
 const SearchResults = (props: SearchResultsProps) => {
+  const appContext = useContext(AppContext);
   const [query] = useDebounce(props.query, 300);
+
+  useEffect(() => {
+    if (query.length === 0) {
+      return;
+    }
+
+    appContext.analytics?.gtag('event', 'search', {
+      search_term: query,
+    });
+
+    console.log('context', appContext);
+
+    console.log('query changed:', query);
+  }, [query]);
+
+
   let queryType: 'hackage' | 'hoogle' | 'recentSearches' | 'allRecentSearches' | 'showHelp' | 'unknown' = 'unknown';
 
   if (query.startsWith(':')) {
@@ -34,15 +51,7 @@ const SearchResults = (props: SearchResultsProps) => {
   return (
     <div className={s.searchResultsContainer}>
       <div className={s.searchResults}>
-        {!query || queryType === 'showHelp' && (
-          <div className={s.help}>
-            <h3 className={s.helpHeader}>Search Examples</h3>
-            <p><code className="hljs">servant</code> to search for packages in Hackage.</p>
-            <p><code className="hljs">:t a -&gt; a</code> to search by type signature or function name in Hoogle.</p>
-            <p><code className="hljs">:r smth</code> to show your recent searches.</p>
-            <p><code className="hljs">:?</code> to show this help info.</p>
-          </div>
-        )}
+        {!query || queryType === 'showHelp' && (<Help />)}
         {query && queryType === 'hackage' && <HackageSearchResults query={query.trim()} />}
         {query && queryType === 'hoogle' && <HoogleSearchResults query={query.replace(/^\:t /, '').trim()} />}
         {query && queryType === 'recentSearches' && <RecentSearches query={query.replace(/^\:r ?/, '').trim()} onSelect={props.setQuery} />}
@@ -128,4 +137,22 @@ const SearchInput = () => {
     </div>
   );
 }
+
+const Help = () => {
+  const appContext = useContext(AppContext);
+  useEffect(() => {
+    appContext.analytics?.gtag('event', 'FeatureUsed', { event_label: 'SearchInputHelpPopup' });
+  }, []);
+
+  return (
+    <div className={s.help}>
+      <h3 className={s.helpHeader}>Search Examples</h3>
+      <p><code className="hljs">servant</code> to search for packages in Hackage.</p>
+      <p><code className="hljs">:t a -&gt; a</code> to search by type signature or function name in Hoogle.</p>
+      <p><code className="hljs">:r smth</code> to show your recent searches.</p>
+      <p><code className="hljs">:?</code> to show this help info.</p>
+    </div>
+  );
+}
+
 export default SearchInput;

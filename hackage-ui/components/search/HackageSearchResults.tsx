@@ -61,7 +61,12 @@ const HackageSearchResults = ({ query }: { query: string }) => {
       <div className={s.searchResultsContainer}>
         {searchResults.map(pkg => {
           return (
-            <A key={pkg.name} className={s.searchResult} href={`/package/${pkg.name}`}>
+            <A
+              key={pkg.name}
+              className={s.searchResult}
+              href={`/package/${pkg.name}`}
+              analytics={{ featureName: 'HackageSearchResult', eventParams: {} }}
+            >
               {pkg.name}
             </A>
           );

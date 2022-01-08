@@ -3,6 +3,7 @@ import s from './GlobalMenu.module.css';
 import Logo from '../branding/Logo';
 import SearchInput from '../search/SearchInput';
 import AppContext from '../AppContext';
+import { SettingsButton } from '../forms/Settings';
 import A from './A';
 
 const heightPx = 60;
@@ -56,7 +57,7 @@ const GlobalMenu = (props: Props) => {
       >
         <div className={`${s.progressIndicator} ${Object.keys(appContext.tasks).length > 0 ? s.progressIndicatorRunning : ''}`}></div>
         <div className={s.content}>
-          <A href="/" className={s.logo}>
+          <A href="/" className={s.logo} analytics={{ featureName: 'GlobalMenuLogo', eventParams: { screen_name: 'All' } }}>
             <Logo fontSize={18} />
           </A>
 
@@ -69,11 +70,12 @@ const GlobalMenu = (props: Props) => {
             />
           </div>
 
+          {false && <SettingsButton />}
           <ul className={s.menuItems}>
             {props.items.map(item => {
               return (
                 <li key={item.id} className={s.menuItem}>
-                  <A className={s.menuItemLink} href={item.href}>{item.title}</A>
+                  <A className={s.menuItemLink} href={item.href} analytics={{ featureName: `GlobalMenuItem`, eventParams: { screen_name: 'All' } }}>{item.title}</A>
                 </li>
               );
             })}

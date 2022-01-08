@@ -11,7 +11,8 @@ export type Package = {
 export type Props = {
   pkgs: 'loading' | Package[],
   getHref: (pkg: Package) => string,
-  count: number
+  count: number,
+  analytics: { screenName: string }
 }
 
 const PackageList = (props: Props) => {
@@ -25,7 +26,12 @@ const PackageList = (props: Props) => {
       )}
       {props.pkgs !== 'loading' && props.pkgs.length > 0 && props.pkgs.map((pkg) => {
         return (
-          <A key={`${pkg.name}@${pkg.version || 'unknown-version'}`} className={s.package} href={props.getHref(pkg)}>
+          <A
+            key={`${pkg.name}@${pkg.version || 'unknown-version'}`}
+            className={s.package}
+            href={props.getHref(pkg)}
+            analytics={{ featureName: 'PackageListItem', eventParams: { screen_name: props.analytics.screenName } }}
+          >
             <div className={s.packageInfo}>
               <div className={s.packageName}>{pkg.name}</div>
               {pkg.version && (

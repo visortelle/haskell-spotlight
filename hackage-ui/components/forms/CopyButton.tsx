@@ -5,6 +5,7 @@ import SvgIcon from '../icons/SVGIcon';
 import s from './CopyButton.module.css';
 
 export type CopyButtonProps = {
+  analyticsId: string,
   copyText: string,
   displayText: string
 }
@@ -18,6 +19,7 @@ export const CopyButton = (props: CopyButtonProps) => {
       style={props.displayText ? {} : { width: '32rem', height: '32rem', padding: '0', justifyContent: 'center' }}
       onClick={() => {
         navigator.clipboard.writeText(props.copyText);
+        appContext.analytics?.gtag('event', `CopyButtonClicked-${props.analyticsId}`);
         appContext.notifySuccess('Copied to clipboard!');
       }}
     >

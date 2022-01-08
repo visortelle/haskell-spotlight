@@ -134,7 +134,11 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
                   svgIcon={itemViewMode === 'normal' ? viewBrieflyIcon : viewNormallyIcon}
                 />
               </div>
-              <A href={rewriteUrl(hoogleItem[0].url)} className={`${s.hoogleItemLink} ${s.link} ${itemViewMode === 'brief' ? s.hoogleItemLinkBrief : ''}`}>
+              <A
+                href={rewriteUrl(hoogleItem[0].url)}
+                className={`${s.hoogleItemLink} ${s.link} ${itemViewMode === 'brief' ? s.hoogleItemLinkBrief : ''}`}
+                analytics={{ featureName: 'HoogleSearchResultItem', eventParams: {} }}
+              >
                 <strong className={s.hoogleItemTypeName}>{typeName}</strong>{typeDef ? <strong>&nbsp;::&nbsp;</strong> : ''}<span>{typeDef}</span>
               </A>
               <div className={s.hoogleItemContent}>
@@ -149,10 +153,23 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
 
                     return (
                       <div key={packageKey} className={s.hoogleItemPackage}>
-                        <A href={rewriteUrl(pkg[0].package.url)} className={s.link}><small style={{ marginRight: '0.5em' }}>📦</small>{pkg[0].package.name}</A>
+                        <A
+                          href={rewriteUrl(pkg[0].package.url)}
+                          className={s.link}
+                          analytics={{ featureName: 'HoogleSearchResultItem', eventParams: {} }}
+                        >
+                          <small style={{ marginRight: '0.5em' }}>📦</small>{pkg[0].package.name}
+                        </A>
                         <div className={s.hoogleItemModules}>
                           {pkg.map(item => (
-                            <A key={`${packageKey}@${item.module.name}`} href={rewriteUrl(item.module.url)} className={s.link}>{item.module.name}</A>
+                            <A
+                              key={`${packageKey}@${item.module.name}`}
+                              href={rewriteUrl(item.module.url)}
+                              className={s.link}
+                              analytics={{ featureName: 'HoogleSearchResultModule', eventParams: {} }}
+                            >
+                              {item.module.name}
+                            </A>
                           ))}
                         </div>
                       </div>

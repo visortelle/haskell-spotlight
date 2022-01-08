@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import AppContext from "../AppContext";
 import GlobalMenu, { defaultMenuProps } from "../layout/GlobalMenu";
 import SidebarButton from "../forms/SidebarButton";
 import Footer from "../layout/Footer";
@@ -12,6 +13,7 @@ import homepageIcon from '!!raw-loader!../icons/link.svg';
 import repositoryIcon from '!!raw-loader!../icons/github.svg';
 import bugReportIcon from '!!raw-loader!../icons/bug-report.svg';
 import updatedAtIcon from '!!raw-loader!../icons/updated-at.svg';
+import { ExtA } from "../layout/A";
 
 export type Versions = {
   current: string,
@@ -43,6 +45,7 @@ export type PackageProps = {
 }
 
 const tooltipId = 'package-tooltip';
+const screenName = 'HackagePackagePage';
 
 const Package = (props: PackageProps) => {
   return (
@@ -75,11 +78,15 @@ type SidebarProps = {
   package: PackageProps
 }
 const Sidebar = (props: SidebarProps) => {
+  const appContext = useContext(AppContext);
   const repository = props.package.repositoryUrl ? parseRepositoryUrl(props.package.repositoryUrl) : null;
   const copyToInstall = `${props.package.name} >= ${props.package.versions.current}`;
 
   const [isMounted, setIsMounted] = useState(false);
+
   useEffect(() => {
+    appContext.analytics?.gtag('event', 'screen_view', { screen_name: screenName });
+    appContext.analytics?.gtag('event', 'view_item', { items: [{ id: props.package.id, name: props.package.name, category: 'hackage_package' }] });
     setIsMounted(true);
   }, []);
 
@@ -107,7 +114,9 @@ const Sidebar = (props: SidebarProps) => {
           >
             <div className={s.sidebarEntryIcon}><SvgIcon svg={licenseIcon} /></div>
             {props.package.license?.url ? (
-              <a style={{ color: 'inherit' }} href={props.package.license.url}>{props.package.license.name}</a>
+              <ExtA style={{ color: 'inherit' }} href={props.package.license.url} analytics={{ featureName: 'PackageLicenseLink', eventParams: { screen_name: screenName } }}>
+                {props.package.license.name}
+              </ExtA>
             ) : (
               <span>{props.package.license.name}</span>
             )}
@@ -119,7 +128,7 @@ const Sidebar = (props: SidebarProps) => {
         <h3 className={s.sidebarSectionHeader}>Install</h3>
         <div className={`${s.sidebarEntry} ${s.sidebarInstall}`}>
           <small>Add this to your *.cabal file:</small>
-          <CopyButton copyText={copyToInstall} displayText={copyToInstall} />
+          <CopyButton copyText={copyToInstall} displayText={copyToInstall} analyticsId="CopyToInstall" />
         </div>
       </div>
 
@@ -131,9 +140,13 @@ const Sidebar = (props: SidebarProps) => {
           </h3>
           <div className={s.sidebarEntry}>
             <div className={s.sidebarEntryIcon}><SvgIcon svg={homepageIcon} /></div>
-            <a className={s.sidebarEntryLink} href={props.package.homepage.url}>
+            <ExtA
+              className={s.sidebarEntryLink}
+              href={props.package.homepage.url}
+              analytics={{ featureName: 'GoToPackageHomepage', eventParams: { screen_name: screenName } }}
+            >
               {props.package.homepage.text.replace(/^https?\:\/\//, '').replace(/\/$/, '')}
-            </a>
+            </ExtA>
           </div>
         </div>
       }
@@ -147,13 +160,18 @@ const Sidebar = (props: SidebarProps) => {
 
             {repository.gitUrl && (
               <div className={s.sidebarEntry}>
-                <CopyButton copyText={repository.gitUrl} displayText={repository.gitUrl} />
+                <CopyButton copyText={repository.gitUrl} displayText={repository.gitUrl} analyticsId="CopyGitRepository" />
               </div>
             )}
 
             {repository.browserUrl && repository.kind === 'unknown' && (
               <div className={s.sidebarEntry}>
-                <a href={repository.browserUrl}>{repository.displayText}</a>
+                <ExtA
+                  href={repository.browserUrl}
+                  analytics={{ featureName: 'GoToPackageRepository', eventParams: { screen_name: screenName } }}
+                >
+                  {repository.displayText}
+                </ExtA>
               </div>
             )}
 
