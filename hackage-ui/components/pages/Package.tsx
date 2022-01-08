@@ -211,8 +211,7 @@ function parseRepositoryUrl(url: string): Repository {
   }
 
   if (url.match(/^git@github.com:.*$/g)) {
-    const [owner, repo] = url.replace(/^git@github\.com\/?/, '').replace(/\/$/, '').replace(/\.git$/, '').split('/');
-    console.log('REPO', owner, repo);
+    const [owner, repo] = url.replace(/^git@github\.com:\/?/, '').replace(/\/$/, '').replace(/\.git$/, '').split('/');
     return gitHub(owner, repo);
 
   } else if (url.match(/^(https?|git)\:\/\/github.com\/.*$/g)) {
