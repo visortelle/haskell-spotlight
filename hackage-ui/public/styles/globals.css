@@ -49,13 +49,6 @@ a:hover {
   box-sizing: border-box;
 }
 
-ul,
-li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
 code,
 pre {
   font-family: "Fira Code", monospace;
