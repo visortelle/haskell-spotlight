@@ -199,16 +199,26 @@ type Repository = {
 
 // TODO - add tests, GitLab, BitBucket, others.
 function parseRepositoryUrl(url: string): Repository {
-  // GitHub
-  if (url.match(/^(https?|git)\:\/\/github.com\/.*$/g)) {
-    const [owner, repo] = url.replace(/^(https?|git)\:\/\/github\.com\/?/, '').replace(/\/$/, '').replace(/\.git$/, '').split('/');
 
+  // GitHub
+  function gitHub(owner: string, repo: string): Repository {
     return {
       kind: 'github',
       displayText: `${owner}/${repo}`,
       browserUrl: `https://github.com/${owner}/${repo}`,
       gitUrl: `git@github.com:${owner}/${repo}.git`
     }
+  }
+
+  if (url.match(/^git@github.com:.*$/g)) {
+    const [owner, repo] = url.replace(/^git@github\.com\/?/, '').replace(/\/$/, '').replace(/\.git$/, '').split('/');
+    console.log('REPO', owner, repo);
+    return gitHub(owner, repo);
+
+  } else if (url.match(/^(https?|git)\:\/\/github.com\/.*$/g)) {
+    const [owner, repo] = url.replace(/^(https?|git)\:\/\/github\.com\/?/, '').replace(/\/$/, '').replace(/\.git$/, '').split('/');
+    return gitHub(owner, repo);
+
   }
 
   // Unknown
