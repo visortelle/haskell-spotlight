@@ -68,7 +68,6 @@ const Home = (props: HomeProps) => {
         </div>
       </div>
 
-      <h2 className={s.packageListsHeader}>Community</h2>
       <div className={s.packageLists}>
 
         <div className={s.packageList}>
