@@ -17,8 +17,8 @@ export const ExtA = forwardRef((props: ExtAProps, ref: ForwardedRef<HTMLAnchorEl
       {...props}
       onClick={(e) => {
         appContext?.analytics?.gtag('event', `FeatureUsed`, {
-          event_label: props.href,
-          label: props.analytics.featureName,
+          description: props.href,
+          event_label: props.analytics.featureName,
           ...props.analytics.eventParams
         });
 
