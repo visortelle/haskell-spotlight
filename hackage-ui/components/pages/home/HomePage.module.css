@@ -49,10 +49,19 @@
 .packageLists {
   display: flex;
   margin: 0 auto;
+  margin-bottom: 72rem;
   justify-content: space-between;
   width: 100%;
   max-width: var(--max-content-width);
 }
+
+.packageListsHeader {
+  width: 100vw;
+  max-width: var(--max-content-width);
+  margin: auto;
+  margin-bottom: 24rem;
+}
+
 
 .packageList {
   display: flex;
@@ -76,88 +85,6 @@
   margin-top: auto;
 }
 
-.statsContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  flex-direction: column;
-  margin-bottom: 48rem;
-}
-
-.statsContainer::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  width: 100%;
-  max-width: var(--max-content-width);
-  height: 4rem;
-  background-color: var(--surface-color);
-  border-radius: 4rem;
-}
-
-.stats {
-  display: flex;
-  padding: 32rem 0;
-  flex: 1 1 auto;
-  width: 100%;
-  max-width: var(--max-content-width);
-  justify-content: space-between;
-}
-
-.statsText {
-  padding: 0 24rem;
-  padding-left: 0;
-}
-
-.statsTextParagraph {
-  padding: 0;
-  margin: 0;
-  margin-bottom: 8rem;
-}
-
-.statsGroup {
-  display: flex;
-  padding: 0 24rem;
-  padding-right: 0;
-  text-align: right;
-  margin-bottom: 18rem;
-  justify-content: flex-end;
-}
-
-.statsGroup:last-child {
-  margin-bottom: 0;
-}
-
-.statsGroupContent {
-  display: flex;
-  flex-direction: column;
-}
-
-.statsGroupIcon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 18rem;
-}
-
-.statsGroupIcon svg {
-  width: 48rem;
-  height: 48rem;
-  fill: var(--text-color);
-  opacity: 0.66;
-}
-
-.statsAmount {
-  font-size: 32rem;
-  font-weight: bold;
-}
-
-.statsUnit {
-  font-size: 16rem;
-  opacity: 0.66;
-}
-
 @media (max-width: 1000px) {
   .greetingHeader {
     font-size: 32rem;
@@ -171,11 +98,8 @@
     display: none;
   }
 
-  .statsContainer {
-    display: none;
-  }
-
-  .packageLists {
+  .packageLists,
+  .packageListsHeader {
     padding: 0 24rem;
   }
 }

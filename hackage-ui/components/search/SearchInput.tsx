@@ -133,7 +133,7 @@ const SearchInput = () => {
           setIsFocused(true);
         }}
         onInputRef={setInputRef}
-        placeholder={(isFocused && !isDirty) ? `Type ":" to show help` : `Click or press "/" to search…`}
+        placeholder={(isFocused && !isDirty && !showSearchResults) ? `Type ":" to show help` : `Click or press "/" to search…`}
         value={query}
         focusOnMount
       />

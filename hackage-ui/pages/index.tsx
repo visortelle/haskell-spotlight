@@ -1,7 +1,7 @@
 import { NextPage, GetStaticPropsResult } from 'next';
 import Head from 'next/head';
 import React from 'react';
-import { Package } from '../components/package-list/PackageList';
+import { Item } from '../components/widgets/VerticalList';
 import HomePage, { HomeProps } from '../components/pages/home/HomePage';
 import axios from 'axios';
 import cheerio from 'cheerio';
@@ -33,14 +33,14 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<HomeProps>>
 
   const packageListsSize = 10;
 
-  let topPackages: Array<Package> = [];
+  let topPackages: Array<Item> = [];
   try {
     topPackages = await fetchTopPackages(packageListsSize);
   } catch (err) {
     console.log(err);
   }
 
-  let recentlyUpdatedPackages: Array<Package> = [];
+  let recentlyUpdatedPackages: Array<Item> = [];
   try {
     recentlyUpdatedPackages = await fetchRecentlyUpdatedPackages(packageListsSize);
   } catch (err) {
@@ -49,19 +49,31 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<HomeProps>>
 
   return {
     props: {
-      stats: {
-        downloadsTotal: 0,
-        packagesTotal: pkgs.length
+      packages: {
+        recentlyUpdated: recentlyUpdatedPackages,
+        top: topPackages,
+        totalCount: pkgs.length
       },
-      topPackages,
-      recentlyUpdatedPackages,
+      editorsPick: [
+        {
+          title: 'State of the Haskell ecosystem',
+          href: 'https://github.com/Gabriel439/post-rfc/blob/main/sotu.md',
+          description: 'Gabriella Gonzalez',
+          descriptionHref: 'https://mobile.twitter.com/gabriellag439'
+        }
+      ],
+      community: {
+        latest: [],
+        hot: [],
+        jobs: []
+      },
       packageListsSize
     },
-    revalidate: 10
+    revalidate: 30
   }
 }
 
-async function fetchTopPackages(count: number): Promise<Package[]> {
+async function fetchTopPackages(count: number): Promise<Item[]> {
   let html = '';
 
   try {
@@ -79,15 +91,15 @@ async function fetchTopPackages(count: number): Promise<Package[]> {
     console.log(err);
   }
 
-  const pkgs: Package[] = tds ? tds.map((_, td) => {
+  const items: Item[] = tds ? tds.map((_, td) => {
     const name = $('a', td).first().text();
-    return { name };
+    return { title: name };
   }).toArray() : [];
 
-  return pkgs;
+  return items;
 }
 
-async function fetchRecentlyUpdatedPackages(count: number): Promise<Package[]> {
+async function fetchRecentlyUpdatedPackages(count: number): Promise<Item[]> {
   let html = '';
 
   try {
@@ -105,14 +117,14 @@ async function fetchRecentlyUpdatedPackages(count: number): Promise<Package[]> {
     console.log(err);
   }
 
-  const pkgs: Package[] = tds ? tds.map((_, td) => {
+  const items: Item[] = tds ? tds.map((_, td) => {
     const nameAndVersion = $('a', td).html() as string;
     const version = nameAndVersion.replace(/.*-(?=.+$)/, '');
     const name = nameAndVersion.slice(0, nameAndVersion.length - version.length - 1);
-    return { name, version };
+    return { title: name, description: version };
   }).toArray() : [];
 
-  return pkgs;
+  return items;
 }
 
 export default Page;

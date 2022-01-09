@@ -8,14 +8,22 @@ import GitHubIcon from '!!raw-loader!../../icons/github.svg';
 import TwitterIcon from '!!raw-loader!../../icons/twitter.svg';
 import Footer from "../../layout/Footer";
 import SvgIcon from "../../icons/SVGIcon";
-import PackageList, { Package } from "../../package-list/PackageList";
+import VerticalList, { Item } from "../../widgets/VerticalList";
 import AppContext from "../../AppContext";
 import { useContext, useEffect } from "react";
 
 export type HomeProps = {
-  stats: StatsProps,
-  topPackages: Package[],
-  recentlyUpdatedPackages: Package[]
+  editorsPick: Item[]
+  packages: {
+    recentlyUpdated: Item[],
+    top: Item[],
+    totalCount: number
+  },
+  community: {
+    latest: Item[],
+    hot: Item[],
+    jobs: [],
+  },
   packageListsSize: number,
 }
 
@@ -37,65 +45,10 @@ const Home = (props: HomeProps) => {
         </div>
       </div>
       <div className={s.gettingStarted}>
-        <div>
-          <Button onClick={() => { }} type="promoButton" overrides={{ style: { width: '200rem' } }} analytics={{ featureName: 'Install Cabal', eventParams: { screen_name: screenName } }}>
-            Install Cabal
-          </Button>
-        </div>
-        <div style={{ width: '48rem' }}></div>
-        <div>
-          <Button onClick={() => { }} type="promoButton" overrides={{ style: { width: '200rem' } }} analytics={{ featureName: 'Getting Started', eventParams: { screen_name: screenName } }}>
-            Getting Started
-          </Button>
-        </div>
-      </div>
-
-      <div className={s.statsContainer}>
-        <Stats {...props.stats} />
-      </div>
-
-      <div className={s.packageLists}>
-        <div className={s.packageList}>
-          <h3 className={s.packageListHeader}>Most Downloaded</h3>
-          <PackageList pkgs={props.topPackages} getHref={(pkg) => `/package/${pkg.name}`} count={props.packageListsSize} analytics={{ screenName }} />
-        </div>
-
-        <div className={s.packageList}>
-          <h3 className={s.packageListHeader}>Just Updated</h3>
-          <PackageList pkgs={props.recentlyUpdatedPackages} getHref={(pkg) => `/package/${pkg.name}`} count={props.packageListsSize} analytics={{ screenName }} />
-        </div>
-
-        <div className={s.packageList}>
-          <h3 className={s.packageListHeader}>Recently Visited</h3>
-          <PackageList pkgs={[]} getHref={() => '#'} count={0} analytics={{ screenName }} />
-        </div>
-      </div>
-
-      <div className={s.footer}>
-        <Footer />
-      </div>
-    </div>
-  );
-}
-
-export type StatsProps = {
-  downloadsTotal: number,
-  packagesTotal: number
-}
-
-const Stats = (props: StatsProps) => {
-  return (
-    <div className={s.stats}>
-      <div className={s.statsText}>
-        <p className={s.statsTextParagraph}>
-          This project is an alternative UI implementation for <a href="https://hackage.haskell.org">Hackage</a>.
-        </p>
-        <p className={s.statsTextParagraph}>The project is under construction.</p>
-        <h3 style={{ marginBottom: '8rem' }}>You can help us to make it better</h3>
-        <div className={s.statsTextParagraph}>
+        <div style={{ display: 'flex' }}>
           <SidebarButton
             onClick={() => { }} href="https://github.com/visortelle/hackage-ui/issues/"
-            overrides={{ style: { backgroundColor: 'var(--text-color)', marginBottom: '12rem', width: '240rem', justifyContent: 'flex-start' } }}
+            overrides={{ style: { flex: 'initial', backgroundColor: 'var(--text-color)', marginBottom: '12rem', justifyContent: 'flex-start', padding: '12rem 24rem', fontSize: '18rem', marginRight: '24rem' } }}
           >
             <SvgIcon svg={GitHubIcon} />
             <div>Contribute on GitHub</div>
@@ -103,36 +56,71 @@ const Stats = (props: StatsProps) => {
 
           <SidebarButton
             onClick={() => { }} href="https://twitter.com/HackageUI"
-            overrides={{ style: { backgroundColor: '#00ACEE', marginBottom: '12rem', width: '240rem', justifyContent: 'flex-start' } }}
+            overrides={{ style: { flex: 'initial', backgroundColor: '#00ACEE', marginBottom: '12rem', justifyContent: 'flex-start', padding: '12rem 24rem', fontSize: '18rem' } }}
           >
             <SvgIcon svg={TwitterIcon} />
             <div>Follow us on Twitter</div>
           </SidebarButton>
         </div>
-
+        <div style={{ width: '48rem' }}></div>
         <div>
-          Also you can sponsor the project or propose a job in Haskell project to <a href="mailto:visortelle@gmail.com">the author 🙂</a>
+
         </div>
       </div>
-      <div className={s.statsGroups}>
-        <div className={s.statsGroup}>
-          <div className={s.statsGroupContent}>
-            <span className={s.statsAmount}>{(props.downloadsTotal && props.downloadsTotal.toLocaleString('en-US')) || 'N/A'}</span>
-            <span className={s.statsUnit}>Downloads</span>
-          </div>
-          <div className={s.statsGroupIcon}>
-            <SvgIcon svg={DownloadIcon} />
-          </div>
+
+      <h2 className={s.packageListsHeader}>Community</h2>
+      <div className={s.packageLists}>
+
+        <div className={s.packageList}>
+          <h3 className={s.packageListHeader}>⭐️ Editor&apos;s Pick</h3>
+          <VerticalList items={props.editorsPick} getHref={(item) => `/package/${item.title}`} count={props.packageListsSize} analytics={{ screenName }} />
         </div>
-        <div className={s.statsGroup}>
-          <div className={s.statsGroupContent}>
-            <span className={s.statsAmount}>{(props.packagesTotal && props.packagesTotal.toLocaleString('en-US') || 'N/A')}</span>
-            <span className={s.statsUnit}>Packages published</span>
-          </div>
-          <div className={s.statsGroupIcon}>
-            <SvgIcon svg={PackageIcon} />
-          </div>
+
+        <div className={s.packageList}>
+          <h3 className={s.packageListHeader}>Haskell Jobs</h3>
+          <VerticalList items={[]} getHref={(item) => `/package/${item.title}`} count={10} analytics={{ screenName }} />
         </div>
+      </div>
+
+
+      <h2 className={s.packageListsHeader}>Community</h2>
+      <div className={s.packageLists}>
+
+        <div className={s.packageList}>
+          <h3 className={s.packageListHeader}>🔥 Hot</h3>
+          <VerticalList items={props.community.latest} getHref={(item) => `/package/${item.title}`} count={props.packageListsSize} analytics={{ screenName }} />
+        </div>
+
+        <div className={s.packageList}>
+          <h3 className={s.packageListHeader}>⏰ Latest</h3>
+          <VerticalList items={props.community.latest} getHref={(item) => `/package/${item.title}`} count={props.packageListsSize} analytics={{ screenName }} />
+        </div>
+
+      </div>
+
+      <h2 className={s.packageListsHeader}>
+        📦 Packages
+        <span style={{ opacity: '0.66', marginLeft: '8rem', fontSize: '18rem' }}>{props.packages.totalCount} total</span> {/* TODO - make it a link to the all packages list */}
+      </h2>
+      <div className={s.packageLists}>
+        <div className={s.packageList}>
+          <h3 className={s.packageListHeader}>Most Downloaded</h3>
+          <VerticalList items={props.packages.top} getHref={(item) => `/package/${item.title}`} count={props.packageListsSize} analytics={{ screenName }} />
+        </div>
+
+        <div className={s.packageList}>
+          <h3 className={s.packageListHeader}>Just Updated</h3>
+          <VerticalList items={props.packages.recentlyUpdated} getHref={(item) => `/package/${item.title}`} count={props.packageListsSize} analytics={{ screenName }} />
+        </div>
+
+        <div className={s.packageList}>
+          <h3 className={s.packageListHeader}>Recently Visited</h3>
+          <VerticalList items={[]} getHref={() => '#'} count={0} analytics={{ screenName }} />
+        </div>
+      </div>
+
+      <div className={s.footer}>
+        <Footer />
       </div>
     </div>
   );

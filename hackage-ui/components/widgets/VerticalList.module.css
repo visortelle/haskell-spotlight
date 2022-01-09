@@ -1,8 +1,8 @@
-.packageList {
+.verticalList {
   width: 100%;
 }
 
-.package {
+.contentEntry {
   display: flex;
   justify-content: space-between;
   height: 60rem;
@@ -18,12 +18,12 @@
   animation-timing-function: ease-in-out;
 }
 
-.package:hover {
+.content:hover {
   transition: var(--transition-short);
   border: 1rem solid var(--purple-color-2);
 }
 
-.package:last-child {
+.content:last-child {
   margin-bottom: 0;
 }
 
@@ -57,15 +57,17 @@
   opacity: 0.66;
 }
 
-.packageInfo {
+.contentEntryMain {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  overflow: hidden;
   color: var(--text-color);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
-.openPackageIcon {
+.openIcon {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -73,22 +75,28 @@
   opacity: 0.66;
 }
 
-.openPackageIcon svg {
+.openIcon svg {
   width: 18rem;
   height: 18rem;
 }
 
-.packageName {
+.title {
   white-space: nowrap;
   font-size: 16rem;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: inline;
 }
 
-.packageVersion {
+.description {
   opacity: 0.66;
   font-size: 12rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+a.description:hover {
+  opacity: 1;
+  text-decoration: underline;
 }

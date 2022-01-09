@@ -18,7 +18,7 @@ type Props = {
 
 export const defaultMenuProps: Props = {
   items: [
-    { id: 'browse-all-packages', href: '#browser-all-packages', title: 'Browse All Packages' },
+    { id: 'propose-an-idea', href: 'https://github.com/visortelle/hackage-ui/issues/1', title: 'Propose an idea' },
   ]
 };
 
