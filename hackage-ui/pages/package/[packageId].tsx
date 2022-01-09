@@ -1,6 +1,7 @@
 import { NextPage, GetStaticPropsResult, GetStaticPropsContext } from 'next';
 import Head from 'next/head';
-import PackagePage, { PackageProps, Versions, License, Homepage } from '../../components/pages/package/Package';
+import PackagePage from '../../components/pages/package/Package';
+import { PackageProps, Versions, License, Homepage } from '../../components/pages/package/common';
 import axios from 'axios';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/a11y-dark.css';
