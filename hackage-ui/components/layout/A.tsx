@@ -3,6 +3,7 @@
 import { LinkHTMLAttributes, forwardRef, ForwardedRef, useContext } from 'react';
 import Link, { LinkProps } from 'next/link';
 import AppContext from '../AppContext';
+import omit from 'lodash/omit';
 
 type ExtAProps = LinkHTMLAttributes<HTMLAnchorElement> & { analytics: { featureName: string, eventParams: Gtag.EventParams } };
 type AProps = ExtAProps & LinkProps;
@@ -14,7 +15,7 @@ export const ExtA = forwardRef((props: ExtAProps, ref: ForwardedRef<HTMLAnchorEl
   return (
     <a
       ref={ref}
-      {...props}
+      {...omit(props, 'analytics')}
       onClick={(e) => {
         appContext.analytics?.gtag('event', `FeatureUsed`, {
           description: props.href,

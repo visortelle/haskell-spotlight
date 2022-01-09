@@ -10,7 +10,7 @@
   background-color: var(--purple-color-2);
   position: relative;
   overflow: hidden;
-  padding-bottom: 64rem;
+  padding-bottom: 8rem;
 }
 
 .greeting:after {
@@ -46,6 +46,10 @@
   padding: 32rem 24rem;
 }
 
+.content {
+  padding-top: 48rem;
+}
+
 .packageLists {
   display: flex;
   margin: 0 auto;
@@ -60,8 +64,34 @@
   max-width: var(--max-content-width);
   margin: auto;
   margin-bottom: 24rem;
+  display: flex;
+  align-items: center;
 }
 
+.packageListsHeaderLink {
+  display: flex;
+  align-items: flex-end;
+  font-weight: normal;
+  font-size: 14rem;
+  justify-content: center;
+  border-radius: 6rem;
+  background-color: var(--purple-color-2);
+  color: #fff;
+  padding: 8rem 18rem;
+  margin-left: 24rem;
+  box-shadow: 0rem 2rem 4rem rgb(0 0 0 / 27%);
+}
+
+.packageListsHeaderIcon {
+  position: relative;
+  top: -1rem;
+}
+.packageListsHeaderIcon svg {
+  width: 18rem;
+  height: 18rem;
+  margin-right: 8rem;
+  fill: #fff;
+}
 
 .packageList {
   display: flex;
