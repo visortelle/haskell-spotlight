@@ -41,7 +41,7 @@ const Home = (props: HomeProps) => {
 
       <div className={s.greeting}>
         <div className={s.greetingContent}>
-          <h1 className={s.greetingHeader}>The Haskell community’s<br /> package registry</h1>
+          <h1 className={s.greetingHeader}>The Haskell community’s<br /> Home Page</h1>
         </div>
       </div>
       <div className={s.gettingStarted}>
