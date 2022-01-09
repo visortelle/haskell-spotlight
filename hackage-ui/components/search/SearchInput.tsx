@@ -41,17 +41,21 @@ const SearchResults = (props: SearchResultsProps) => {
       queryType = 'recentSearches';
     } else if (query?.match(/^\:r$/g)) {
       queryType = 'allRecentSearches';
-    } else if (query?.match(/^\:\?.*$/g)) {
+    } else if (query?.match(/^\:\??.*$/g)) {
       queryType = 'showHelp';
     };
   } else {
-    queryType = 'hackage';
+    if (query.length === 0) {
+      queryType = 'showHelp';
+    } else {
+      queryType = 'hackage';
+    }
   }
 
   return (
     <div className={s.searchResultsContainer}>
       <div className={s.searchResults}>
-        {!query || queryType === 'showHelp' && (<Help />)}
+        {queryType === 'showHelp' && (<Help />)}
         {query && queryType === 'hackage' && <HackageSearchResults query={query.trim()} />}
         {query && queryType === 'hoogle' && <HoogleSearchResults query={query.replace(/^\:t /, '').trim()} />}
         {query && queryType === 'recentSearches' && <RecentSearches query={query.replace(/^\:r ?/, '').trim()} onSelect={props.setQuery} />}
