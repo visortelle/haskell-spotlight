@@ -4,8 +4,6 @@ export const gaTrackingId = 'G-3LYZX9KW55';
 
 export type State = null | 'enabled' | 'disabled';
 
-const lsKey = 'google-analytics';
-
 export const disable = (): void => {
   gtag('consent', 'update', { ad_storage: 'denied', analytics_storage: 'denied' });
 };

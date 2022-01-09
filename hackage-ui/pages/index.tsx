@@ -2,7 +2,7 @@ import { NextPage, GetStaticPropsResult } from 'next';
 import Head from 'next/head';
 import React from 'react';
 import { Package } from '../components/package-list/PackageList';
-import HomePage, { HomeProps } from '../components/pages/Home';
+import HomePage, { HomeProps } from '../components/pages/home/Home';
 import axios from 'axios';
 import cheerio from 'cheerio';
 

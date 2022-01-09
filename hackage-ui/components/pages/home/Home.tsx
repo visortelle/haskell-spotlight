@@ -1,15 +1,15 @@
-import GlobalMenu, { defaultMenuProps } from "../layout/GlobalMenu";
+import GlobalMenu, { defaultMenuProps } from "../../layout/GlobalMenu";
 import s from './Home.module.css';
-import Button from "../forms/Button";
-import SidebarButton from "../forms/SidebarButton"; // Temporary here.
+import Button from "../../forms/Button";
+import SidebarButton from "../../forms/SidebarButton"; // Temporary here.
 import PackageIcon from '!!raw-loader!../icons/package.svg';
 import DownloadIcon from '!!raw-loader!../icons/download.svg';
 import GitHubIcon from '!!raw-loader!../icons/github.svg';
 import TwitterIcon from '!!raw-loader!../icons/twitter.svg';
-import Footer from "../layout/Footer";
-import SvgIcon from "../icons/SVGIcon";
-import PackageList, { Package } from "../package-list/PackageList";
-import AppContext from "../AppContext";
+import Footer from "../../layout/Footer";
+import SvgIcon from "../../icons/SVGIcon";
+import PackageList, { Package } from "../../package-list/PackageList";
+import AppContext from "../../AppContext";
 import { useContext, useEffect } from "react";
 
 export type HomeProps = {

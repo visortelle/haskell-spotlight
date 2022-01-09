@@ -1,83 +1,27 @@
 import { useState, useEffect, useContext } from "react";
-import AppContext from "../AppContext";
-import GlobalMenu, { defaultMenuProps } from "../layout/GlobalMenu";
-import SidebarButton from "../forms/SidebarButton";
-import Footer from "../layout/Footer";
-import s from './Package.module.css';
-import SvgIcon from "../icons/SVGIcon";
-import CopyButton from "../forms/CopyButton";
+import AppContext from "../../AppContext";
+import s from './Sidebar.module.css';
+import SvgIcon from "../../icons/SVGIcon";
+import CopyButton from "../../forms/CopyButton";
 import { format as formatTimeAgo } from 'timeago.js';
 import ReactTooltip from 'react-tooltip';
-import licenseIcon from '!!raw-loader!../icons/license.svg';
-import homepageIcon from '!!raw-loader!../icons/link.svg';
-import repositoryIcon from '!!raw-loader!../icons/github.svg';
-import bugReportIcon from '!!raw-loader!../icons/bug-report.svg';
-import updatedAtIcon from '!!raw-loader!../icons/updated-at.svg';
-import { ExtA } from "../layout/A";
+import licenseIcon from '!!raw-loader!../../icons/license.svg';
+import homepageIcon from '!!raw-loader!../../icons/link.svg';
+import repositoryIcon from '!!raw-loader!../../icons/github.svg';
+import bugReportIcon from '!!raw-loader!../../icons/bug-report.svg';
+import updatedAtIcon from '!!raw-loader!../../icons/updated-at.svg';
+import SidebarButton from "../../forms/SidebarButton";
+import { ExtA } from "../../layout/A";
+import { PackageProps } from './common';
 
-export type Versions = {
-  current: string,
-  available: string[],
-}
-
-export type License = {
-  name: string,
-  url: string | null
-}
-
-export type Homepage = {
-  text: string,
-  url: string
-}
-
-export type PackageProps = {
-  id: string,
-  name: string,
-  license: License | null,
-  homepage: Homepage | null,
-  repositoryUrl: string | null,
-  bugReportsUrl: string | null,
-  versions: Versions,
-  shortDescription: string | null,
-  longDescriptionHtml: string | null,
-  // Date in ISO 8601
-  updatedAt: string | null
-}
-
-const tooltipId = 'package-tooltip';
-const screenName = 'HackagePackagePage';
-
-const Package = (props: PackageProps) => {
-  return (
-    <div className={s.page}>
-      <GlobalMenu {...defaultMenuProps} />
-      <div className={s.packageContainer}>
-        <div className={s.package}>
-          <div className={s.content}>
-            <div className={s.briefInfo}>
-              <div className={s.packageName}>
-                <small style={{ position: 'relative', top: '2rem' }}>📦</small>&nbsp;<h1 className={s.packageNameH1}>{props.name}</h1><span className={s.packageVersion}>{props.versions.current}</span>
-              </div>
-              {props.shortDescription && <div className={s.shortDescription}>{props.shortDescription}</div>}
-              {props.longDescriptionHtml && <div className={s.longDescription} dangerouslySetInnerHTML={{ __html: props.longDescriptionHtml }}></div>}
-            </div>
-          </div>
-        </div>
-        <div className={s.sidebarContainer}>
-          <Sidebar package={props} />
-        </div>
-      </div>
-      <div className={s.footer}>
-        <Footer />
-      </div>
-    </div>
-  );
-}
+const tooltipId = 'package-sidebar-tooltip';
 
 type SidebarProps = {
-  package: PackageProps
+  package: PackageProps,
+  analytics: { screenName: string }
 }
-const Sidebar = (props: SidebarProps) => {
+
+export const Sidebar = (props: SidebarProps) => {
   const appContext = useContext(AppContext);
   const repository = props.package.repositoryUrl ? parseRepositoryUrl(props.package.repositoryUrl) : null;
   const copyToInstall = `${props.package.name} >= ${props.package.versions.current}`;
@@ -85,7 +29,7 @@ const Sidebar = (props: SidebarProps) => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    appContext.analytics?.gtag('event', 'screen_view', { screen_name: screenName });
+    appContext.analytics?.gtag('event', 'screen_view', { screen_name: props.analytics.screenName });
     appContext.analytics?.gtag('event', 'view_item', { items: [{ id: props.package.id, name: props.package.name, category: 'hackage_package' }] });
     setIsMounted(true);
   }, []);
@@ -114,7 +58,7 @@ const Sidebar = (props: SidebarProps) => {
           >
             <div className={s.sidebarEntryIcon}><SvgIcon svg={licenseIcon} /></div>
             {props.package.license?.url ? (
-              <ExtA style={{ color: 'inherit' }} href={props.package.license.url} analytics={{ featureName: 'PackageLicenseLink', eventParams: { screen_name: screenName } }}>
+              <ExtA style={{ color: 'inherit' }} href={props.package.license.url} analytics={{ featureName: 'PackageLicenseLink', eventParams: { screen_name: props.analytics.screenName } }}>
                 {props.package.license.name}
               </ExtA>
             ) : (
@@ -143,7 +87,7 @@ const Sidebar = (props: SidebarProps) => {
             <ExtA
               className={s.sidebarEntryLink}
               href={props.package.homepage.url}
-              analytics={{ featureName: 'GoToPackageHomepage', eventParams: { screen_name: screenName } }}
+              analytics={{ featureName: 'GoToPackageHomepage', eventParams: { screen_name: props.analytics.screenName } }}
             >
               {props.package.homepage.text.replace(/^https?\:\/\//, '').replace(/\/$/, '')}
             </ExtA>
@@ -168,7 +112,7 @@ const Sidebar = (props: SidebarProps) => {
               <div className={s.sidebarEntry}>
                 <ExtA
                   href={repository.browserUrl}
-                  analytics={{ featureName: 'GoToPackageRepository', eventParams: { screen_name: screenName } }}
+                  analytics={{ featureName: 'GoToPackageRepository', eventParams: { screen_name: props.analytics.screenName } }}
                 >
                   {repository.displayText}
                 </ExtA>
@@ -247,4 +191,4 @@ function parseRepositoryUrl(url: string): Repository {
   }
 }
 
-export default Package;
+export default Sidebar;
