@@ -1,24 +1,25 @@
-import { ReactNode } from 'react';
 import s from './VerticalList.module.css';
 import ArrowRightIcon from '!!raw-loader!../../components/icons/arrow-right.svg';
 import SvgIcon from '../icons/SVGIcon';
-import { ExtA } from '../layout/A';
+import A, { ExtA } from '../layout/A';
 
 export type Item = {
   title: string,
   href?: string,
   description?: string,
-  descriptionHref?: string
 }
 
 export type Props = {
   items: 'loading' | Item[],
   getHref: (item: Item) => string,
   count: number,
-  analytics: { screenName: string }
+  analytics: { screenName: string },
+  linksType: 'internal' | 'external'
 }
 
 const VerticalList = (props: Props) => {
+  const Link = props.linksType === 'external' ? ExtA : A;
+
   return (
     <div className={s.verticalList}>
       {props.items === 'loading' && (
@@ -29,7 +30,7 @@ const VerticalList = (props: Props) => {
       )}
       {props.items !== 'loading' && props.items.length > 0 && props.items.map((c) => {
         return (
-          <ExtA
+          <Link
             key={`${c.title}@${c.description || 'no-description'}`}
             className={s.contentEntry}
             href={c.href ? c.href : props.getHref(c)}
@@ -37,22 +38,12 @@ const VerticalList = (props: Props) => {
           >
             <div className={s.contentEntryMain}>
               <div className={s.title}>{c.title}</div>
-              {c.description && c.descriptionHref ? (
-                <ExtA
-                  className={s.description}
-                  href={c.descriptionHref}
-                  analytics={{ featureName: 'VerticalItemDescriptionClick', eventParams: {} }}
-                >
-                  {c.description}
-                </ExtA>
-              ) : (
-                <div className={s.description}>{c.description}</div>
-              )}
+              <div className={s.description}>{c.description}</div>
             </div>
             <div className={s.openIcon}>
               <SvgIcon svg={ArrowRightIcon} />
             </div>
-          </ExtA>
+          </Link>
         );
       })}
     </div>

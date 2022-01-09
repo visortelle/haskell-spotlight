@@ -59,7 +59,6 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<HomeProps>>
           title: 'State of the Haskell ecosystem',
           href: 'https://github.com/Gabriel439/post-rfc/blob/main/sotu.md',
           description: 'by Gabriella Gonzalez',
-          descriptionHref: 'https://mobile.twitter.com/gabriellag439'
         },
         {
           title: '🧙‍♂️ Mentor for beginner Haskeller available',

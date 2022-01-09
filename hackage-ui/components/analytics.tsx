@@ -21,7 +21,7 @@ export const Analytics = (props: { onChange: (state: AnalyticsState) => void }) 
   useEffect(() => {
     props.onChange({
       categories,
-      gtag: (global as any).gtag
+      gtag: (global as any).gtag || (() => { })
     });
   }, []);
 
@@ -38,8 +38,10 @@ const RouterEventListener = () => {
       return;
     }
 
-    gtag('set', 'page_path', document.location.origin + document.location.pathname);
-    gtag('event', 'page_view');
+    if (typeof (global as any).gtag === 'function') {
+      gtag('set', 'page_path', document.location.origin + document.location.pathname);
+      gtag('event', 'page_view');
+    }
   };
 
   useEffect(() => {

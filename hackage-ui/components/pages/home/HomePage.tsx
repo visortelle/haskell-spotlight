@@ -1,9 +1,6 @@
 import GlobalMenu, { defaultMenuProps } from "../../layout/GlobalMenu";
 import s from './HomePage.module.css';
-import Button from "../../forms/Button";
 import SidebarButton from "../../forms/SidebarButton"; // Temporary here.
-import PackageIcon from '!!raw-loader!../../icons/package.svg';
-import DownloadIcon from '!!raw-loader!../../icons/download.svg';
 import GitHubIcon from '!!raw-loader!../../icons/github.svg';
 import TwitterIcon from '!!raw-loader!../../icons/twitter.svg';
 import Footer from "../../layout/Footer";
@@ -72,12 +69,12 @@ const Home = (props: HomeProps) => {
 
         <div className={s.packageList}>
           <h3 className={s.packageListHeader}>⭐️ Editor&apos;s Pick</h3>
-          <VerticalList items={props.editorsPick} getHref={(item) => `/package/${item.title}`} count={props.packageListsSize} analytics={{ screenName }} />
+          <VerticalList items={props.editorsPick} getHref={(item) => `/package/${item.title}`} count={props.packageListsSize} analytics={{ screenName }} linksType="external" />
         </div>
 
         <div className={s.packageList}>
           <h3 className={s.packageListHeader}>Haskell Jobs</h3>
-          <VerticalList items={[]} getHref={(item) => `/package/${item.title}`} count={10} analytics={{ screenName }} />
+          <VerticalList items={[]} getHref={(item) => `/package/${item.title}`} count={10} analytics={{ screenName }} linksType="external" />
         </div>
       </div>
 
@@ -87,12 +84,12 @@ const Home = (props: HomeProps) => {
 
         <div className={s.packageList}>
           <h3 className={s.packageListHeader}>🔥 Hot</h3>
-          <VerticalList items={props.community.latest} getHref={(item) => `/package/${item.title}`} count={props.packageListsSize} analytics={{ screenName }} />
+          <VerticalList items={props.community.latest} getHref={(item) => `/package/${item.title}`} count={props.packageListsSize} analytics={{ screenName }} linksType="external" />
         </div>
 
         <div className={s.packageList}>
           <h3 className={s.packageListHeader}>⏰ Latest</h3>
-          <VerticalList items={props.community.latest} getHref={(item) => `/package/${item.title}`} count={props.packageListsSize} analytics={{ screenName }} />
+          <VerticalList items={props.community.latest} getHref={(item) => `/package/${item.title}`} count={props.packageListsSize} analytics={{ screenName }} linksType="external" />
         </div>
 
       </div>
@@ -104,17 +101,17 @@ const Home = (props: HomeProps) => {
       <div className={s.packageLists}>
         <div className={s.packageList}>
           <h3 className={s.packageListHeader}>Most Downloaded</h3>
-          <VerticalList items={props.packages.top} getHref={(item) => `/package/${item.title}`} count={props.packageListsSize} analytics={{ screenName }} />
+          <VerticalList items={props.packages.top} getHref={(item) => `/package/${item.title}`} count={props.packageListsSize} analytics={{ screenName }} linksType="internal" />
         </div>
 
         <div className={s.packageList}>
           <h3 className={s.packageListHeader}>Just Updated</h3>
-          <VerticalList items={props.packages.recentlyUpdated} getHref={(item) => `/package/${item.title}`} count={props.packageListsSize} analytics={{ screenName }} />
+          <VerticalList items={props.packages.recentlyUpdated} getHref={(item) => `/package/${item.title}`} count={props.packageListsSize} analytics={{ screenName }} linksType="internal" />
         </div>
 
         <div className={s.packageList}>
           <h3 className={s.packageListHeader}>Recently Visited</h3>
-          <VerticalList items={[]} getHref={() => '#'} count={0} analytics={{ screenName }} />
+          <VerticalList items={[]} getHref={() => '#'} count={0} analytics={{ screenName }} linksType="internal" />
         </div>
       </div>
 

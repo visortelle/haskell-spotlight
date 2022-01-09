@@ -39,12 +39,10 @@ export const DefaultAppContextProvider = ({ children }: { children: ReactNode })
 
   const notifySuccess = useCallback((content: ReactNode) => toast.success(content), []);
   const notifyError = useCallback((content: ReactNode) => {
-    if (value.analytics) {
-      value.analytics.gtag('event', 'error', {
-        category: value.analytics.categories.issues,
-        label: content?.toString() || 'unknown error',
-      });
-    }
+    value.analytics?.gtag('event', 'error', {
+      category: value.analytics.categories.issues,
+      label: content?.toString() || 'unknown error',
+    });
 
     toast.error(content);
   }, [value.analytics]);

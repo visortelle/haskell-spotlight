@@ -33,7 +33,7 @@ const Button = (props: ButtonProps) => {
       tabIndex={props.tabIndex}
       onClick={() => {
         props.onClick();
-        appContext?.analytics?.gtag('event', `ButtonClicked-${props.analytics.featureName}`, {
+        appContext.analytics?.gtag('event', `ButtonClicked-${props.analytics.featureName}`, {
           ...props.analytics.eventParams
         });
       }}
