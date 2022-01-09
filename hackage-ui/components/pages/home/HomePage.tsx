@@ -1,5 +1,5 @@
 import GlobalMenu, { defaultMenuProps } from "../../layout/GlobalMenu";
-import s from './Home.module.css';
+import s from './HomePage.module.css';
 import Button from "../../forms/Button";
 import SidebarButton from "../../forms/SidebarButton"; // Temporary here.
 import PackageIcon from '!!raw-loader!../../icons/package.svg';
