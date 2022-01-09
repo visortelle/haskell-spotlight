@@ -41,7 +41,7 @@ const SearchResults = (props: SearchResultsProps) => {
       queryType = 'recentSearches';
     } else if (query?.match(/^\:r$/g)) {
       queryType = 'allRecentSearches';
-    } else if (query?.match(/^\:\??.*$/g)) {
+    } else if (query?.match(/^\:$/g)) {
       queryType = 'showHelp';
     };
   } else {
@@ -133,7 +133,7 @@ const SearchInput = () => {
           setIsFocused(true);
         }}
         onInputRef={setInputRef}
-        placeholder={isFocused ? `Type :? to show help` : `Click or press "/" to search…`}
+        placeholder={(isFocused && !isDirty) ? `Type ":" to show help` : `Click or press "/" to search…`}
         value={query}
         focusOnMount
       />
@@ -154,7 +154,6 @@ const Help = () => {
       <p><code className="hljs">servant</code> to search for packages in Hackage.</p>
       <p><code className="hljs">:t a -&gt; a</code> to search by type signature or function name in Hoogle.</p>
       <p><code className="hljs">:r smth</code> to show your recent searches.</p>
-      <p><code className="hljs">:?</code> to show this help info.</p>
     </div>
   );
 }
