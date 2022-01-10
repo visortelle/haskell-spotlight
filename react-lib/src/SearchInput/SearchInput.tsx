@@ -1,16 +1,25 @@
-import { RefObject, useEffect, useState, useCallback, useContext, useRef } from "react";
-import AppContext from "../AppContext";
-import Input from "../forms/Input";
+import React, { RefObject, useEffect, useState, useCallback, useContext, useRef } from "react";
+import { AppContext } from "../AppContext/AppContext";
+import Input from "./Input";
 import s from './SearchInput.module.css';
 import { useDebounce } from 'use-debounce';
-import { useRouter } from 'next/router';
+import { NextRouter } from 'next/router';
 import HackageSearchResults from './HackageSearchResults';
 import HoogleSearchResults from './HoogleSearchResults';
 import RecentSearches from './RecentSearches';
 
+export const SearchResultsClassName = `Haskell-8f731b8c-7900-4d8b`; // Whatever.
+
+type Api = {
+  hackageApiUrl: string,
+  hoogleApiUrl: string
+}
+
 type SearchResultsProps = {
   query: string,
-  setQuery: (query: string) => void
+  setQuery: (query: string) => void,
+  api: Api,
+  asEmbeddedWidget?: boolean
 }
 
 const SearchResults = (props: SearchResultsProps) => {
@@ -25,12 +34,7 @@ const SearchResults = (props: SearchResultsProps) => {
     appContext.analytics?.gtag('event', 'search', {
       search_term: query,
     });
-
-    console.log('context', appContext);
-
-    console.log('query changed:', query);
   }, [query]);
-
 
   let queryType: 'hackage' | 'hoogle' | 'recentSearches' | 'allRecentSearches' | 'showHelp' | 'unknown' = 'unknown';
 
@@ -53,11 +57,17 @@ const SearchResults = (props: SearchResultsProps) => {
   }
 
   return (
-    <div className={s.searchResultsContainer}>
+    <div className={`${s.searchResultsContainer} ${SearchResultsClassName}`}>
       <div className={s.searchResults}>
         {queryType === 'showHelp' && (<Help />)}
-        {query && queryType === 'hackage' && <HackageSearchResults query={query.trim()} />}
-        {query && queryType === 'hoogle' && <HoogleSearchResults query={query.replace(/^\:t /, '').trim()} />}
+        {query && queryType === 'hackage' && (
+          <HackageSearchResults
+            query={query.trim()}
+            apiUrl={props.api.hackageApiUrl}
+            asEmbeddedWidget={props.asEmbeddedWidget}
+          />
+        )}
+        {query && queryType === 'hoogle' && <HoogleSearchResults query={query.replace(/^\:t /, '').trim()} apiUrl={props.api.hoogleApiUrl} />}
         {query && queryType === 'recentSearches' && <RecentSearches query={query.replace(/^\:r ?/, '').trim()} onSelect={props.setQuery} />}
         {query && queryType === 'allRecentSearches' && <RecentSearches query={''} onSelect={props.setQuery} />}
       </div>
@@ -65,8 +75,10 @@ const SearchResults = (props: SearchResultsProps) => {
   );
 }
 
-const SearchInput = () => {
-  const router = useRouter();
+export type SearchInputProps = { router?: NextRouter, api: Api, asEmbeddedWidget?: boolean };
+
+export const SearchInput = (props: SearchInputProps) => {
+  const { router } = props;
   const [query, _setQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [focusedTimes, setFocusedTimes] = useState(0);
@@ -75,16 +87,15 @@ const SearchInput = () => {
   const [inputRef, setInputRef] = useState<RefObject<HTMLInputElement>>();
 
   const setQuery = useCallback((query: string) => {
-    router.replace({ query: { ...router.query, search: query } }, undefined, { shallow: true });
+    router?.replace({ query: { ...router.query, search: query } }, undefined, { shallow: true });
     _setQuery(query);
   }, [router]);
 
   useEffect(() => {
-    if (!isDirty && router.query?.search !== query) {
+    if (router && !isDirty && router.query?.search !== query) {
       _setQuery(router.query.search as string || '');
     }
-  }, [query, isDirty, setQuery, router.query.search]);
-
+  }, [query, isDirty, setQuery, router?.query.search]);
 
   const handleKeyUp = useCallback((event: KeyboardEvent) => {
     if (ref.current && !ref.current.contains(event.target as Node) && event.key === 'Tab') {
@@ -102,6 +113,10 @@ const SearchInput = () => {
   }, [isFocused, inputRef]);
 
   const handleMouseDown = useCallback((event: MouseEvent) => {
+    if (props.asEmbeddedWidget) {
+      return;
+    }
+
     if (ref.current && !ref.current.contains(event.target as Node)) {
       setIsFocused(false);
     }
@@ -118,8 +133,14 @@ const SearchInput = () => {
   }, [handleKeyUp, handleMouseDown]);
 
   const showSearchResults =
-    (isFocused && query?.length) ||
-    (isFocused && (isDirty || focusedTimes > 1)); // don't show search results after page load
+    props.asEmbeddedWidget ||
+    Boolean((isFocused && query?.length) ||
+      (isFocused && (isDirty || focusedTimes > 1))); // don't show search results after page load
+
+  let placeholder = ':t a -> b';
+  if (!props.asEmbeddedWidget) {
+    placeholder = (isFocused && !isDirty && !showSearchResults) ? `Type ":" to show help` : `Click or press "/" to search…`
+  }
 
   return (
     <div className={s.searchInput} ref={ref}>
@@ -133,11 +154,11 @@ const SearchInput = () => {
           setIsFocused(true);
         }}
         onInputRef={setInputRef}
-        placeholder={(isFocused && !isDirty && !showSearchResults) ? `Type ":" to show help` : `Click or press "/" to search…`}
+        placeholder={placeholder}
         value={query}
         focusOnMount
       />
-      {showSearchResults && <SearchResults query={query} setQuery={setQuery} />}
+      {showSearchResults && <SearchResults query={query} setQuery={setQuery} api={props.api} asEmbeddedWidget={props.asEmbeddedWidget} />}
     </div>
   );
 }
@@ -157,5 +178,3 @@ const Help = () => {
     </div>
   );
 }
-
-export default SearchInput;

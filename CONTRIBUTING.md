@@ -5,9 +5,9 @@
 You need NodeJS >= 14.x.x
 
 - Clone the repository.
-- Go to directory with `package.json`.
-- `npm run dev`.
-- Before publish a PR, please check that it builds without errors and works in production mode: `npm run build && npm start`
+- `cd ./hackage-ui`.
+- See `Makefile`.
+- Before publish a PR, please ensure that it builds without errors in production mode: `npm run build && npm start`.
 
 If you want to implement some significant change, it's better to create a GitHub issue and discuss it first.
 

@@ -1,7 +1,7 @@
 import s from './VerticalList.module.css';
 import ArrowRightIcon from '!!raw-loader!../../components/icons/arrow-right.svg';
 import SvgIcon from '../icons/SVGIcon';
-import A, { ExtA } from '../layout/A';
+import * as lib from '@hackage-ui/react-lib';
 
 export type Item = {
   title: string,
@@ -18,7 +18,7 @@ export type Props = {
 }
 
 const VerticalList = (props: Props) => {
-  const Link = props.linksType === 'external' ? ExtA : A;
+  const Link = props.linksType === 'external' ? lib.links.ExtA : lib.links.A;
 
   return (
     <div className={s.verticalList}>

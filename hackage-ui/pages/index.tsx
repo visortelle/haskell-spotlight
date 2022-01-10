@@ -56,14 +56,23 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<HomeProps>>
       },
       editorsPick: [
         {
-          title: 'State of the Haskell ecosystem',
-          href: 'https://github.com/Gabriel439/post-rfc/blob/main/sotu.md',
-          description: 'by Gabriella Gonzalez',
+          title: '💪 Became a Haskell Foundation volunteer!',
+          href: 'https://github.com/haskellfoundation/volunteering/issues/new?assignees=&labels=Volunteer+Available&template=volunteer-available.yml',
+          description: 'Find a Haskell project opportunity for you!',
+        },
+
+        {
+          title: '🛠 Announcement for the Compiler Tooling Task Force',
+          href: 'https://discourse.haskell.org/t/announcement-for-the-compiler-tooling-task-force/3893'
         },
         {
-          title: '🧙‍♂️ Mentor for beginner Haskeller available',
-          href: 'https://github.com/haskellfoundation/volunteering/issues/8',
-          description: 'One one hour session per month, 30 minutes of code review per week.',
+          title: '🔐 A new future for cryptography in Haskell',
+          href: 'https://discourse.haskell.org/t/a-new-future-for-cryptography-in-haskell/3888/28'
+        },
+        {
+          title: '📃 State of the Haskell ecosystem',
+          href: 'https://github.com/Gabriel439/post-rfc/blob/main/sotu.md',
+          description: 'by Gabriella Gonzalez',
         },
         {
           title: 'Volunteer Available. Frontend, DevOps. ',

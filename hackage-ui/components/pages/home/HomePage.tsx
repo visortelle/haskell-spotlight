@@ -1,15 +1,16 @@
 import GlobalMenu, { defaultMenuProps } from "../../layout/GlobalMenu";
 import s from './HomePage.module.css';
 import SidebarButton from "../../forms/SidebarButton"; // Temporary here.
-import GitHubIcon from '!!raw-loader!../../icons/github.svg';
-import TwitterIcon from '!!raw-loader!../../icons/twitter.svg';
-import DiscourseIcon from '!!raw-loader!../../icons/discourse.svg';
-import Footer from "../../layout/Footer";
 import SvgIcon from "../../icons/SVGIcon";
+import gitHubIcon from '!!raw-loader!../../icons/github.svg';
+import twitterIcon from '!!raw-loader!../../icons/twitter.svg';
+import discourseIcon from '!!raw-loader!../../icons/discourse.svg';
+import redditIcon from '!!raw-loader!../../icons/reddit.svg';
+import haskellMonochromeIcon from '!!raw-loader!../../icons/haskell-monochrome.svg';
+import Footer from "../../layout/Footer";
 import VerticalList, { Item } from "../../widgets/VerticalList";
-import AppContext from "../../AppContext";
+import * as lib from "@hackage-ui/react-lib";
 import { useContext, useEffect } from "react";
-import { ExtA } from "../../layout/A";
 
 export type HomeProps = {
   editorsPick: Item[]
@@ -29,7 +30,8 @@ export type HomeProps = {
 const screenName = 'HomePage';
 
 const Home = (props: HomeProps) => {
-  const appContext = useContext(AppContext);
+  const appContext = useContext(lib.appContext.AppContext);
+
   useEffect(() => {
     appContext.analytics?.gtag('event', 'screen_view', { screen_name: screenName });
   }, []);
@@ -47,7 +49,7 @@ const Home = (props: HomeProps) => {
               onClick={() => { }} href="https://github.com/visortelle/hackage-ui/issues/"
               overrides={{ style: { flex: 'initial', backgroundColor: 'var(--text-color)', marginBottom: '12rem', justifyContent: 'flex-start', padding: '12rem 24rem', fontSize: '18rem', marginRight: '24rem' } }}
             >
-              <SvgIcon svg={GitHubIcon} />
+              <SvgIcon svg={gitHubIcon} />
               <div>Contribute on GitHub</div>
             </SidebarButton>
 
@@ -55,7 +57,7 @@ const Home = (props: HomeProps) => {
               onClick={() => { }} href="https://twitter.com/HackageUI"
               overrides={{ style: { flex: 'initial', backgroundColor: '#00ACEE', marginBottom: '12rem', justifyContent: 'flex-start', padding: '12rem 24rem', fontSize: '18rem' } }}
             >
-              <SvgIcon svg={TwitterIcon} />
+              <SvgIcon svg={twitterIcon} />
               <div>Follow us on Twitter</div>
             </SidebarButton>
           </div>
@@ -66,11 +68,20 @@ const Home = (props: HomeProps) => {
       <div className={s.content}>
 
         <h2 className={s.packageListsHeader}>
-          Community
-          <ExtA href="https://discourse.haskell.org/" analytics={{ featureName: 'GoToDiscourse', eventParams: {} }} className={s.packageListsHeaderLink}>
-            <div className={s.packageListsHeaderIcon}><SvgIcon svg={DiscourseIcon} /></div>discourse.haskell.org
-          </ExtA>
+          Community&nbsp;&nbsp;
+          <lib.links.ExtA href="https://haskell.foundation/" analytics={{ featureName: 'GoToHaskellFoundation', eventParams: {} }} className={s.packageListsHeaderLink}>
+            <div className={s.packageListsHeaderIcon} style={{ fill: '#fff' }}><SvgIcon svg={haskellMonochromeIcon} /></div>Haskell Foundation
+          </lib.links.ExtA>
+
+          <lib.links.ExtA href="https://discourse.haskell.org/" analytics={{ featureName: 'GoToDiscourse', eventParams: {} }} className={s.packageListsHeaderLink} style={{ background: '#fff', color: 'var(--text-color)' }}>
+            <div className={s.packageListsHeaderIcon} style={{ fill: 'var(--text-color)' }}><SvgIcon svg={discourseIcon} /></div>Discourse
+          </lib.links.ExtA>
+
+          <lib.links.ExtA href="https://www.reddit.com/r/haskell" analytics={{ featureName: 'GoToReddit', eventParams: {} }} className={s.packageListsHeaderLink} style={{ background: '#fff', color: 'var(--text-color)' }}>
+            <div className={s.packageListsHeaderIcon} style={{ fill: 'var(--text-color)' }}><SvgIcon svg={redditIcon} /></div>Reddit
+          </lib.links.ExtA>
         </h2>
+
         <div className={s.packageLists}>
 
           <div className={s.packageList}>

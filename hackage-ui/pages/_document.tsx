@@ -1,6 +1,6 @@
 import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { gaTrackingId } from '../components/analytics';
+import * as lib from '@hackage-ui/react-lib';
 
 class MyDocument extends Document {
   render() {
@@ -10,14 +10,14 @@ class MyDocument extends Document {
           <meta charSet="utf-8" />
 
           {/* Global Site Tag (gtag.js) - Google Analytics */}
-          <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`} />
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=${lib.analytics.gaTrackingId}`} />
           <script
             dangerouslySetInnerHTML={{
               __html: `
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', '${gaTrackingId}', { send_page_view: false, cookie_flags: 'SameSite=None;Secure' })
+                gtag('config', '${lib.analytics.gaTrackingId}', { send_page_view: false, cookie_flags: 'SameSite=None;Secure' })
                 gtag('consent', 'default', { ad_storage: 'denied', analytics_storage: 'granted' });
             `}}
           />

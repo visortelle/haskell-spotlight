@@ -1,0 +1,80 @@
+.content {
+  padding: 12px 18px;
+  padding-left: 60px;
+  background-color: var(--purple-color-2);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  width: 100vw;
+  max-width: 600px;
+  display: flex;
+  position: relative;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: var(--transition-short);
+  background-color: var(--purple-color-2);
+  position: absolute;
+  border-radius: 8px;
+  left: 12px;
+  top: 7px;
+  bottom: 8px;
+  width: 42px;
+  height: 42px;
+  transition: var(--transition-short);
+}
+
+.logo:hover {
+  opacity: 1;
+  background-color: var(--purple-color-1);
+  transition: var(--transition-short);
+}
+
+.logo:hover svg {
+  cursor: pointer;
+  fill: var(--purple-color-2);
+  transition: var(--transition-short);
+}
+
+.logo svg {
+  width: 32px;
+  height: 32px;
+  fill: var(--purple-color-1);
+  transition: var(--transition-short);
+}
+
+.progressIndicator {
+  width: calc(100% - 4px);
+  height: 4px;
+  background-color: var(--purple-color-2);
+  position: absolute;
+  top: 0px;
+  left: 2px;
+  right: 0;
+  border-radius: 8px / 4px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.progressIndicatorRunning {
+  background-color: var(--purple-color-1);
+  animation: pulse 400ms infinite normal;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0;
+    width: 0%;
+  }
+  10% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    width: calc(100% - 4px);
+  }
+}

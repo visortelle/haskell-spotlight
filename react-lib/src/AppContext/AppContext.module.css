@@ -1,0 +1,18 @@
+.toastContainer {
+  max-width: calc(100vw - 24rem) !important;
+  padding: 8rem !important;
+}
+
+.toast {
+  font-family: "Fira Sans" !important;
+  border-radius: 8rem !important;
+  box-shadow: 0rem 2rem 4rem rgb(0 0 0 / 27%) !important;
+  font-size: 14rem !important;
+  margin-bottom: 8rem !important;
+}
+
+.toastBody {
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 export const gaTrackingId = 'G-3LYZX9KW55';
 
@@ -17,7 +17,7 @@ export type AnalyticsState = {
   categories: typeof categories
 }
 
-export const Analytics = (props: { onChange: (state: AnalyticsState) => void }) => {
+export const Analytics = (props: { useNextJSRouting: boolean, onChange: (state: AnalyticsState) => void }) => {
   useEffect(() => {
     props.onChange({
       categories,
@@ -25,9 +25,13 @@ export const Analytics = (props: { onChange: (state: AnalyticsState) => void }) 
     });
   }, []);
 
-  return (
-    <RouterEventListener />
-  );
+  if (props.useNextJSRouting) {
+    return (
+      <RouterEventListener />
+    );
+  }
+
+  return null;
 }
 
 const RouterEventListener = () => {

@@ -1,0 +1,12 @@
+#haskell-extension-root {
+  width: 640px;
+  height: auto;
+  position: fixed;
+  top: 8px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 2147483647;
+  display: flex;
+  font-size: 16px;;
+}

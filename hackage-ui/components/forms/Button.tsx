@@ -1,7 +1,6 @@
 import { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode, useContext } from 'react';
 import s from './Button.module.css';
-import { ExtA } from '../layout/A';
-import AppContext from '../AppContext';
+import * as lib from '@hackage-ui/react-lib';
 
 export type ButtonProps = {
   children: ReactNode,
@@ -14,10 +13,10 @@ export type ButtonProps = {
 } & { analytics: { featureName: string, eventParams: Gtag.EventParams } };
 
 const Button = (props: ButtonProps) => {
-  const appContext = useContext(AppContext);
+  const appContext = useContext(lib.appContext.AppContext);
 
   return props.href ? (
-    <ExtA
+    <lib.links.ExtA
       className={`${s[props.type]} ${props.kind === 'danger' ? s.danger : ''}`}
       href={props.href}
       tabIndex={props.tabIndex}
@@ -25,7 +24,7 @@ const Button = (props: ButtonProps) => {
       {...props.overrides as AnchorHTMLAttributes<HTMLAnchorElement>}
     >
       {props.children}
-    </ExtA>
+    </lib.links.ExtA>
   ) : (
     <button
       type="button"

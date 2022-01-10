@@ -1,0 +1,73 @@
+{
+  "name": "@hackage-ui/react-lib",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": true,
+  "peerDependencies": {
+    "react": ">=17",
+    "react-dom": ">=17"
+  },
+  "dependencies": {
+    "@types/gtag.js": "0.0.8",
+    "@types/lodash": "^4.14.178",
+    "axios": "^0.24.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
+    "express": "^4.17.1",
+    "fuse.js": "^6.5.3",
+    "lodash": "^4.17.21",
+    "next": "^12.0.7",
+    "react": ">=17",
+    "react-dom": ">=17",
+    "react-toastify": "^8.1.0",
+    "stream-browserify": "^3.0.0",
+    "url-parse": "^1.5.3",
+    "use-debounce": "^7.0.1",
+    "uuid": "^8.3.2",
+    "webextension-polyfill": "^0.8.0",
+    "ws": "^8.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16.9.1",
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.2",
+    "@types/terser-webpack-plugin": "^5.0.4",
+    "@types/webextension-polyfill": "^0.8.0",
+    "@types/webpack": "^5.28.0",
+    "@types/webpack-dev-server": "^3.11.5",
+    "@types/ws": "^7.4.7",
+    "autoprefixer": "^10.4.2",
+    "chokidar-cli": "^3.0.0",
+    "css-loader": "^6.2.0",
+    "cssnano": "^5.0.15",
+    "glob": "^7.1.7",
+    "html-webpack-plugin": "^5.3.2",
+    "jest": "^27.2.0",
+    "process": "^0.11.10",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-string": "^3.0.0",
+    "style-loader": "^3.2.1",
+    "terser-webpack-plugin": "^5.1.4",
+    "ts-jest": "^27.0.5",
+    "ts-loader": "^9.2.6",
+    "ts-node": "^10.1.0",
+    "tsconfig-paths": "^3.10.1",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.4",
+    "webpack": "^5.63.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.4.0"
+  },
+  "scripts": {
+    "build": "rm -rf build && tsdx build",
+    "dev": "tsdx watch"
+  }
+}

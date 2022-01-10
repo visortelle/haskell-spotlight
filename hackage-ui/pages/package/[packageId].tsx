@@ -59,7 +59,7 @@ export async function getStaticProps(props: GetStaticPropsContext): Promise<GetS
 export async function getStaticPaths() {
   return {
     paths: [],
-    fallback: 'blocking',
+    fallback: 'blocking'
   };
 }
 
