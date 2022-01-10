@@ -131,4 +131,3 @@ export const DefaultAppContextProvider = ({ children }: { children: ReactNode })
     </>
   )
 };
-

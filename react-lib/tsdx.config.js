@@ -7,7 +7,7 @@ module.exports = {
   rollup(config, options) {
     config.plugins.push(
       stringPlugin.string({
-        include: "**/*.svg",
+        include: "**/*.svg"
       })
     );
     config.plugins.push(
@@ -18,9 +18,7 @@ module.exports = {
             preset: "default"
           })
         ],
-        inject: false,
-        // only write out CSS for the first bundle (avoids pointless extra files):
-        extract: !!options.writeMeta
+        inject: true
       })
     );
     return config;
