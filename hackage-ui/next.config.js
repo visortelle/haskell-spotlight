@@ -1,7 +1,4 @@
-
-const path = require('path');
-
-const isBuildWidgets = process.env.BUILD_WIDGETS;
+const path = require("path");
 
 /** @type {import('next').NextConfig} */
 module.exports = {
@@ -20,10 +17,6 @@ module.exports = {
   reactStrictMode: true,
   webpack: (_config) => {
     let config = fixMultipleReactInstancesIssue(_config);
-
-    if (isBuildWidgets) {
-      return webpackBuildWidgets(config);
-    }
 
     return {
       ...config,
@@ -53,25 +46,4 @@ function fixMultipleReactInstancesIssue(config) {
     "react-dom"
   );
   return config;
-}
-
-function webpackBuildWidgets(config) {
-  return {
-    ...config,
-    mode: "development",
-    optimization: {},
-    output: {
-      ...config.output,
-      // chunkFilename: '[name].js',
-      chunkFormat: "commonjs",
-    },
-    entry: () => {
-      return config.entry().then((entry) => {
-        return {
-          ...entry,
-          SearchInputWidget: "./components/search/SearchInputWidget.tsx",
-        };
-      });
-    },
-  };
 }

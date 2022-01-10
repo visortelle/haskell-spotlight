@@ -70,7 +70,7 @@ const Home = (props: HomeProps) => {
         <h2 className={s.packageListsHeader}>
           Community
           <lib.links.ExtA href="https://haskell.foundation/" analytics={{ featureName: 'GoToHaskellFoundation', eventParams: {} }} className={s.packageListsHeaderLink}>
-            <div className={s.packageListsHeaderIcon} style={{ fill: 'var(--purple-color-1)' }}><SvgIcon svg={haskellMonochromeIcon} /></div>Haskell Foundation
+            <div className={s.packageListsHeaderIcon} style={{ fill: '#fff' }}><SvgIcon svg={haskellMonochromeIcon} /></div>Haskell Foundation
           </lib.links.ExtA>
 
           <lib.links.ExtA href="https://discourse.haskell.org/" analytics={{ featureName: 'GoToDiscourse', eventParams: {} }} className={s.packageListsHeaderLink} style={{ background: '#fff', color: 'var(--text-color)' }}>
