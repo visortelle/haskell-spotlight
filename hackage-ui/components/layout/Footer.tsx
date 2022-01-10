@@ -2,7 +2,7 @@ import s from './Footer.module.css';
 import SvgIcon from '../icons/SVGIcon';
 import githubIcon from '!!raw-loader!../icons/github.svg';
 import twitterIcon from '!!raw-loader!../icons/twitter.svg';
-import discourseIcon from '!!raw-loader!../icons/discourse.svg';
+import discourseIcon from '!!raw-loader!../icons/discourse-monochrome.svg';
 import { ExtA } from '../layout/A';
 import { ReactNode } from 'react';
 

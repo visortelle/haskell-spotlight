@@ -78,7 +78,7 @@
   background-color: var(--purple-color-2);
   color: #fff;
   padding: 8rem 18rem;
-  margin-left: 24rem;
+  margin-left: 12rem;
   box-shadow: 0rem 2rem 4rem rgb(0 0 0 / 27%);
 }
 
@@ -90,7 +90,6 @@
   width: 18rem;
   height: 18rem;
   margin-right: 8rem;
-  fill: #fff;
 }
 
 .packageList {

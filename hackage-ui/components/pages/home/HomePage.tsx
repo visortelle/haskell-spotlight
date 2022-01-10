@@ -1,11 +1,13 @@
 import GlobalMenu, { defaultMenuProps } from "../../layout/GlobalMenu";
 import s from './HomePage.module.css';
 import SidebarButton from "../../forms/SidebarButton"; // Temporary here.
-import GitHubIcon from '!!raw-loader!../../icons/github.svg';
-import TwitterIcon from '!!raw-loader!../../icons/twitter.svg';
-import DiscourseIcon from '!!raw-loader!../../icons/discourse.svg';
-import Footer from "../../layout/Footer";
 import SvgIcon from "../../icons/SVGIcon";
+import gitHubIcon from '!!raw-loader!../../icons/github.svg';
+import twitterIcon from '!!raw-loader!../../icons/twitter.svg';
+import discourseIcon from '!!raw-loader!../../icons/discourse.svg';
+import redditIcon from '!!raw-loader!../../icons/reddit.svg';
+import haskellMonochromeIcon from '!!raw-loader!../../icons/haskell-monochrome.svg';
+import Footer from "../../layout/Footer";
 import VerticalList, { Item } from "../../widgets/VerticalList";
 import AppContext from "../../AppContext";
 import { useContext, useEffect } from "react";
@@ -47,7 +49,7 @@ const Home = (props: HomeProps) => {
               onClick={() => { }} href="https://github.com/visortelle/hackage-ui/issues/"
               overrides={{ style: { flex: 'initial', backgroundColor: 'var(--text-color)', marginBottom: '12rem', justifyContent: 'flex-start', padding: '12rem 24rem', fontSize: '18rem', marginRight: '24rem' } }}
             >
-              <SvgIcon svg={GitHubIcon} />
+              <SvgIcon svg={gitHubIcon} />
               <div>Contribute on GitHub</div>
             </SidebarButton>
 
@@ -55,7 +57,7 @@ const Home = (props: HomeProps) => {
               onClick={() => { }} href="https://twitter.com/HackageUI"
               overrides={{ style: { flex: 'initial', backgroundColor: '#00ACEE', marginBottom: '12rem', justifyContent: 'flex-start', padding: '12rem 24rem', fontSize: '18rem' } }}
             >
-              <SvgIcon svg={TwitterIcon} />
+              <SvgIcon svg={twitterIcon} />
               <div>Follow us on Twitter</div>
             </SidebarButton>
           </div>
@@ -67,8 +69,16 @@ const Home = (props: HomeProps) => {
 
         <h2 className={s.packageListsHeader}>
           Community
-          <ExtA href="https://discourse.haskell.org/" analytics={{ featureName: 'GoToDiscourse', eventParams: {} }} className={s.packageListsHeaderLink}>
-            <div className={s.packageListsHeaderIcon}><SvgIcon svg={DiscourseIcon} /></div>discourse.haskell.org
+          <ExtA href="https://haskell.foundation/" analytics={{ featureName: 'GoToHaskellFoundation', eventParams: {} }} className={s.packageListsHeaderLink}>
+            <div className={s.packageListsHeaderIcon} style={{ fill: '#fff' }}><SvgIcon svg={haskellMonochromeIcon} /></div>Haskell Foundation
+          </ExtA>
+
+          <ExtA href="https://discourse.haskell.org/" analytics={{ featureName: 'GoToDiscourse', eventParams: {} }} className={s.packageListsHeaderLink} style={{ background: '#fff', color: 'var(--text-color)' }}>
+            <div className={s.packageListsHeaderIcon} style={{ fill: 'var(--text-color)' }}><SvgIcon svg={discourseIcon} /></div>Discourse
+          </ExtA>
+
+          <ExtA href="https://www.reddit.com/r/haskell" analytics={{ featureName: 'GoToReddit', eventParams: {} }} className={s.packageListsHeaderLink} style={{ background: '#fff', color: 'var(--text-color)' }}>
+            <div className={s.packageListsHeaderIcon} style={{ fill: 'var(--text-color)' }}><SvgIcon svg={redditIcon} /></div>Reddit
           </ExtA>
         </h2>
         <div className={s.packageLists}>
