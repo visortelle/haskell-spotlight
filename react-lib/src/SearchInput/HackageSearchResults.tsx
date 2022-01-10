@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { useEffect, useState, useContext } from "react";
-import AppContext from '../AppContext';
-import A from '../layout/A';
+import React, { useEffect, useState, useContext } from "react";
+import { AppContext } from '../AppContext/AppContext';
+import { A } from '../A/A';
 import s from './HackageSearchResults.module.css';
 import Header from './Header';
 import NothingFound from './NothingFound';

@@ -1,4 +1,4 @@
-import { MouseEventHandler } from 'react';
+import React, { MouseEventHandler } from 'react';
 import SVGIcon from '../icons/SVGIcon';
 import s from './HeaderButton.module.css';
 

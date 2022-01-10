@@ -1,9 +1,9 @@
-import { RefObject, useEffect, useState, useCallback, useContext, useRef } from "react";
-import AppContext from "../AppContext";
-import Input from "../forms/Input";
+import React, { RefObject, useEffect, useState, useCallback, useContext, useRef } from "react";
+import { AppContext } from "../AppContext/AppContext";
+import Input from "./Input";
 import s from './SearchInput.module.css';
 import { useDebounce } from 'use-debounce';
-import { useRouter } from 'next/router';
+import { NextRouter } from 'next/router';
 import HackageSearchResults from './HackageSearchResults';
 import HoogleSearchResults from './HoogleSearchResults';
 import RecentSearches from './RecentSearches';
@@ -65,8 +65,8 @@ const SearchResults = (props: SearchResultsProps) => {
   );
 }
 
-const SearchInput = () => {
-  const router = useRouter();
+export const SearchInput = (props: { router?: NextRouter }) => {
+  const { router } = props;
   const [query, _setQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [focusedTimes, setFocusedTimes] = useState(0);
@@ -75,16 +75,15 @@ const SearchInput = () => {
   const [inputRef, setInputRef] = useState<RefObject<HTMLInputElement>>();
 
   const setQuery = useCallback((query: string) => {
-    router.replace({ query: { ...router.query, search: query } }, undefined, { shallow: true });
+    router?.replace({ query: { ...router.query, search: query } }, undefined, { shallow: true });
     _setQuery(query);
   }, [router]);
 
   useEffect(() => {
-    if (!isDirty && router.query?.search !== query) {
+    if (router && !isDirty && router.query?.search !== query) {
       _setQuery(router.query.search as string || '');
     }
-  }, [query, isDirty, setQuery, router.query.search]);
-
+  }, [query, isDirty, setQuery, router?.query.search]);
 
   const handleKeyUp = useCallback((event: KeyboardEvent) => {
     if (ref.current && !ref.current.contains(event.target as Node) && event.key === 'Tab') {
@@ -157,5 +156,3 @@ const Help = () => {
     </div>
   );
 }
-
-export default SearchInput;

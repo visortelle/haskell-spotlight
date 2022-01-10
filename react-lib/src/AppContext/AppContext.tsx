@@ -1,9 +1,9 @@
-import React, { ReactNode, useCallback, useEffect, useState } from 'react';
+import React, { ReactNode, useCallback, useState } from 'react';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import s from './AppContext.module.css';
-import { Analytics, AnalyticsState } from './analytics';
+import { Analytics, AnalyticsState } from '../Analytics/Analytics';
+
 export type SearchHistory = string[];
 
 export type AppContextValue = {
@@ -32,7 +32,7 @@ const defaultAppContextValue: AppContextValue = {
   analytics: undefined
 }
 
-const AppContext = React.createContext<AppContextValue>(defaultAppContextValue);
+export const AppContext = React.createContext<AppContextValue>(defaultAppContextValue);
 
 export const DefaultAppContextProvider = ({ children }: { children: ReactNode }) => {
   const [value, setValue] = useState<AppContextValue>(defaultAppContextValue);
@@ -132,4 +132,3 @@ export const DefaultAppContextProvider = ({ children }: { children: ReactNode })
   )
 };
 
-export default AppContext;

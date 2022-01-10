@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import { DefaultAppContextProvider } from '../components/AppContext';
+import { appContext } from '@hackage-ui/react-lib';
+import 'react-toastify/dist/ReactToastify.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return <>
@@ -8,9 +9,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></meta>
     </Head>
 
-    <DefaultAppContextProvider>
+    <appContext.DefaultAppContextProvider>
       <Component {...pageProps} />
-    </DefaultAppContextProvider>
+    </appContext.DefaultAppContextProvider>
   </>
 }
 

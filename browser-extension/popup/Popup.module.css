@@ -1,0 +1,33 @@
+.popup {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+  box-shadow: 0 0 10px rgb(0 0 0 / 50%);
+  position: relative;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.screen {
+  overflow: hidden;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  flex: 1 1;
+  width: 100%;
+  height: 100%;
+}

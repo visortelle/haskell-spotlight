@@ -3,11 +3,11 @@ import SvgIcon from '../icons/SVGIcon';
 import githubIcon from '!!raw-loader!../icons/github.svg';
 import twitterIcon from '!!raw-loader!../icons/twitter.svg';
 import discourseIcon from '!!raw-loader!../icons/discourse-monochrome.svg';
-import { ExtA } from '../layout/A';
+import * as lib from '@hackage-ui/react-lib';
 import { ReactNode } from 'react';
 
 const FooterLink = (props: { href: string, children: ReactNode }) => {
-  return <ExtA {...props} analytics={{ featureName: 'FooterLink', eventParams: { screen_name: 'All' } }} />
+  return <lib.links.ExtA {...props} analytics={{ featureName: 'FooterLink', eventParams: { screen_name: 'All' } }} />
 }
 
 const Footer = () => {

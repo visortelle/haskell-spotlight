@@ -1,9 +1,9 @@
-import { useContext, useState } from "react";
-import AppContext from "../AppContext";
+import React, { useContext, useState } from "react";
+import { AppContext } from "../AppContext/AppContext";
 import s from './RecentSearches.module.css';
 import Fuse from 'fuse.js'
 import SVGIcon from '../icons/SVGIcon';
-import clearIcon from '!!raw-loader!../icons/clear.svg';
+import clearIcon from '../icons/clear.svg';
 import Header from './Header';
 import HeaderButton from './HeaderButton';
 import NothingFound from './NothingFound';

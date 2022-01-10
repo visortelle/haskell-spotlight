@@ -9,9 +9,8 @@ import redditIcon from '!!raw-loader!../../icons/reddit.svg';
 import haskellMonochromeIcon from '!!raw-loader!../../icons/haskell-monochrome.svg';
 import Footer from "../../layout/Footer";
 import VerticalList, { Item } from "../../widgets/VerticalList";
-import AppContext from "../../AppContext";
+import * as lib from "@hackage-ui/react-lib";
 import { useContext, useEffect } from "react";
-import { ExtA } from "../../layout/A";
 
 export type HomeProps = {
   editorsPick: Item[]
@@ -31,7 +30,8 @@ export type HomeProps = {
 const screenName = 'HomePage';
 
 const Home = (props: HomeProps) => {
-  const appContext = useContext(AppContext);
+  const appContext = useContext(lib.appContext.AppContext);
+
   useEffect(() => {
     appContext.analytics?.gtag('event', 'screen_view', { screen_name: screenName });
   }, []);
@@ -69,18 +69,19 @@ const Home = (props: HomeProps) => {
 
         <h2 className={s.packageListsHeader}>
           Community
-          <ExtA href="https://haskell.foundation/" analytics={{ featureName: 'GoToHaskellFoundation', eventParams: {} }} className={s.packageListsHeaderLink}>
+          <lib.links.ExtA href="https://haskell.foundation/" analytics={{ featureName: 'GoToHaskellFoundation', eventParams: {} }} className={s.packageListsHeaderLink}>
             <div className={s.packageListsHeaderIcon} style={{ fill: '#fff' }}><SvgIcon svg={haskellMonochromeIcon} /></div>Haskell Foundation
-          </ExtA>
+          </lib.links.ExtA>
 
-          <ExtA href="https://discourse.haskell.org/" analytics={{ featureName: 'GoToDiscourse', eventParams: {} }} className={s.packageListsHeaderLink} style={{ background: '#fff', color: 'var(--text-color)' }}>
+          <lib.links.ExtA href="https://discourse.haskell.org/" analytics={{ featureName: 'GoToDiscourse', eventParams: {} }} className={s.packageListsHeaderLink} style={{ background: '#fff', color: 'var(--text-color)' }}>
             <div className={s.packageListsHeaderIcon} style={{ fill: 'var(--text-color)' }}><SvgIcon svg={discourseIcon} /></div>Discourse
-          </ExtA>
+          </lib.links.ExtA>
 
-          <ExtA href="https://www.reddit.com/r/haskell" analytics={{ featureName: 'GoToReddit', eventParams: {} }} className={s.packageListsHeaderLink} style={{ background: '#fff', color: 'var(--text-color)' }}>
+          <lib.links.ExtA href="https://www.reddit.com/r/haskell" analytics={{ featureName: 'GoToReddit', eventParams: {} }} className={s.packageListsHeaderLink} style={{ background: '#fff', color: 'var(--text-color)' }}>
             <div className={s.packageListsHeaderIcon} style={{ fill: 'var(--text-color)' }}><SvgIcon svg={redditIcon} /></div>Reddit
-          </ExtA>
+          </lib.links.ExtA>
         </h2>
+
         <div className={s.packageLists}>
 
           <div className={s.packageList}>

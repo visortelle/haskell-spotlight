@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from "react";
-import AppContext from "../../AppContext";
 import s from './Sidebar.module.css';
 import SvgIcon from "../../icons/SVGIcon";
 import CopyButton from "../../forms/CopyButton";
@@ -11,8 +10,8 @@ import repositoryIcon from '!!raw-loader!../../icons/github.svg';
 import bugReportIcon from '!!raw-loader!../../icons/bug-report.svg';
 import updatedAtIcon from '!!raw-loader!../../icons/updated-at.svg';
 import SidebarButton from "../../forms/SidebarButton";
-import { ExtA } from "../../layout/A";
 import { PackageProps } from './common';
+import * as lib from '@hackage-ui/react-lib';
 
 const tooltipId = 'package-sidebar-tooltip';
 
@@ -22,7 +21,7 @@ type SidebarProps = {
 }
 
 export const Sidebar = (props: SidebarProps) => {
-  const appContext = useContext(AppContext);
+  const appContext = useContext(lib.appContext.AppContext);
   const repository = props.package.repositoryUrl ? parseRepositoryUrl(props.package.repositoryUrl) : null;
   const copyToInstall = `${props.package.name} >= ${props.package.versions.current}`;
 
@@ -58,9 +57,9 @@ export const Sidebar = (props: SidebarProps) => {
           >
             <div className={s.sidebarEntryIcon}><SvgIcon svg={licenseIcon} /></div>
             {props.package.license?.url ? (
-              <ExtA style={{ color: 'inherit' }} href={props.package.license.url} analytics={{ featureName: 'PackageLicenseLink', eventParams: { screen_name: props.analytics.screenName } }}>
+              <lib.links.ExtA style={{ color: 'inherit' }} href={props.package.license.url} analytics={{ featureName: 'PackageLicenseLink', eventParams: { screen_name: props.analytics.screenName } }}>
                 {props.package.license.name}
-              </ExtA>
+              </lib.links.ExtA>
             ) : (
               <span>{props.package.license.name}</span>
             )}
@@ -84,13 +83,13 @@ export const Sidebar = (props: SidebarProps) => {
           </h3>
           <div className={s.sidebarEntry}>
             <div className={s.sidebarEntryIcon}><SvgIcon svg={homepageIcon} /></div>
-            <ExtA
+            <lib.links.ExtA
               className={s.sidebarEntryLink}
               href={props.package.homepage.url}
               analytics={{ featureName: 'GoToPackageHomepage', eventParams: { screen_name: props.analytics.screenName } }}
             >
               {props.package.homepage.text.replace(/^https?\:\/\//, '').replace(/\/$/, '')}
-            </ExtA>
+            </lib.links.ExtA>
           </div>
         </div>
       }
@@ -110,12 +109,12 @@ export const Sidebar = (props: SidebarProps) => {
 
             {repository.browserUrl && repository.kind === 'unknown' && (
               <div className={s.sidebarEntry}>
-                <ExtA
+                <lib.links.ExtA
                   href={repository.browserUrl}
                   analytics={{ featureName: 'GoToPackageRepository', eventParams: { screen_name: props.analytics.screenName } }}
                 >
                   {repository.displayText}
-                </ExtA>
+                </lib.links.ExtA>
               </div>
             )}
 

@@ -1,14 +1,14 @@
 import axios from 'axios';
-import { useEffect, useState, useContext } from "react";
-import AppContext from '../AppContext';
+import React, { useEffect, useState, useContext } from "react";
+import { AppContext } from '../AppContext/AppContext';
 import s from './HoogleSearchResults.module.css';
 import groupBy from 'lodash/groupBy';
-import A from '../layout/A';
+import { A } from '../A/A';
 import Header from './Header';
 import HeaderButton from './HeaderButton';
 import NothingFound from './NothingFound';
-import viewNormallyIcon from '!!raw-loader!../icons/plus.svg';
-import viewBrieflyIcon from '!!raw-loader!../icons/minus.svg';
+import viewNormallyIcon from '../icons/plus.svg';
+import viewBrieflyIcon from '../icons/minus.svg';
 import zipObject from 'lodash/zipObject';
 import mapValues from 'lodash/mapValues';
 

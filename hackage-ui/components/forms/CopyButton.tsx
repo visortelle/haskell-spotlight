@@ -1,8 +1,8 @@
-import AppContext from '../AppContext';
 import { useContext } from 'react';
 import contentCopyIcon from '!!raw-loader!../icons/content-copy.svg';
 import SvgIcon from '../icons/SVGIcon';
 import s from './CopyButton.module.css';
+import * as lib from '@hackage-ui/react-lib';
 
 export type CopyButtonProps = {
   analyticsId: string,
@@ -11,7 +11,7 @@ export type CopyButtonProps = {
 }
 
 export const CopyButton = (props: CopyButtonProps) => {
-  const appContext = useContext(AppContext);
+  const appContext = useContext(lib.appContext.AppContext);
 
   return (
     <div

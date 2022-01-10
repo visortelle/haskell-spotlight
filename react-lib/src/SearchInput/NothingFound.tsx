@@ -1,6 +1,6 @@
-import { ReactNode, useState, useEffect, useContext } from 'react'
+import React, { ReactNode, useState, useEffect, useContext } from 'react'
 import s from './NothingFound.module.css'
-import AppContext from '../AppContext';
+import { AppContext } from '../AppContext/AppContext';
 
 type NothingFoundProps = {
   children: ReactNode,

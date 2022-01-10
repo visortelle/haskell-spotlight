@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 export const gaTrackingId = 'G-3LYZX9KW55';
 

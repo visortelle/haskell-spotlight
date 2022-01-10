@@ -1,10 +1,9 @@
 import { useEffect, useState, useContext } from 'react';
 import s from './GlobalMenu.module.css';
 import Logo from '../branding/Logo';
-import SearchInput from '../search/SearchInput';
-import AppContext from '../AppContext';
+import * as lib from '@hackage-ui/react-lib';
 import { SettingsButton } from '../forms/Settings';
-import A from './A';
+import { useRouter } from 'next/router';
 
 const heightPx = 60;
 
@@ -23,8 +22,9 @@ export const defaultMenuProps: Props = {
 };
 
 const GlobalMenu = (props: Props) => {
+  const router = useRouter();
   const [atTop, setAtTop] = useState(false);
-  const appContext = useContext(AppContext);
+  const appContext = useContext(lib.appContext.AppContext);
 
   function handleScroll(): void {
     let scrollY = window.scrollY;
@@ -57,16 +57,17 @@ const GlobalMenu = (props: Props) => {
       >
         <div className={`${s.progressIndicator} ${Object.keys(appContext.tasks).length > 0 ? s.progressIndicatorRunning : ''}`}></div>
         <div className={s.content}>
-          <A href="/" className={s.logo} analytics={{ featureName: 'GlobalMenuLogo', eventParams: { screen_name: 'All' } }}>
+          <lib.links.A href="/" className={s.logo} analytics={{ featureName: 'GlobalMenuLogo', eventParams: { screen_name: 'All' } }}>
             <Logo fontSize={18} />
-          </A>
+          </lib.links.A>
 
           <div className={s.searchInput}>
-            <SearchInput
+            <lib.searchInput.SearchInput
               key={
                 // Refresh search input state on each location change
                 (global as any)?.document ? (document.location.origin + document.location.pathname) : '_'
               }
+              router={router}
             />
           </div>
 
@@ -75,7 +76,7 @@ const GlobalMenu = (props: Props) => {
             {props.items.map(item => {
               return (
                 <li key={item.id} className={s.menuItem}>
-                  <A className={s.menuItemLink} href={item.href} analytics={{ featureName: `GlobalMenuItem`, eventParams: { screen_name: 'All' } }}>{item.title}</A>
+                  <lib.links.A className={s.menuItemLink} href={item.href} analytics={{ featureName: `GlobalMenuItem`, eventParams: { screen_name: 'All' } }}>{item.title}</lib.links.A>
                 </li>
               );
             })}

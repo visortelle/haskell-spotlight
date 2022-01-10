@@ -1,8 +1,8 @@
 // Regular html <a /> tag, but that works properly with NextJS.
 
-import { LinkHTMLAttributes, forwardRef, ForwardedRef, useContext } from 'react';
+import React, { LinkHTMLAttributes, forwardRef, ForwardedRef, useContext } from 'react';
 import Link, { LinkProps } from 'next/link';
-import AppContext from '../AppContext';
+import { AppContext } from '../AppContext/AppContext';
 import omit from 'lodash/omit';
 
 type ExtAProps = LinkHTMLAttributes<HTMLAnchorElement> & { analytics: { featureName: string, eventParams: Gtag.EventParams } };
@@ -30,7 +30,7 @@ export const ExtA = forwardRef((props: ExtAProps, ref: ForwardedRef<HTMLAnchorEl
   );
 });
 
-const A = (props: AProps) => {
+export const A = (props: AProps) => {
   return (
     <Link
       href={props.href || '#'}
@@ -46,5 +46,3 @@ const A = (props: AProps) => {
     </Link>
   );
 }
-
-export default A;
