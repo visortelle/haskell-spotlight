@@ -2,14 +2,12 @@
 
 .PHONY: dev
 dev: ## Start development.
-	npm start
+	npm run dev
 
 .PHONY: build
 build: ## Build the project.
-	cd ../hackage-ui && npm run build
 	npm ci
 	npm run build
-	# xcrun safari-web-extension-converter --project-location ./build/safari ./build
 
 .PHONY: help
 help:
