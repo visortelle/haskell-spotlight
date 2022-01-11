@@ -34,7 +34,7 @@ export type HoogleSearchResults = Record<HoogleItemKey, HoogleItemEntry[]>;
 
 export type ViewMode = 'brief' | 'normal';
 
-const HoogleSearchResults = ({ query }: { query: string }) => {
+const HoogleSearchResults = ({ query, apiUrl }: { query: string, apiUrl: string }) => {
   // Hoogle sometimes returns duplicate entries. Maybe a Hoogle bug, maybe I missed something.
   function deduplicate(arr: any[]) {
     return Array.from(new Set(arr.map(el => JSON.stringify(el)))).map(el => JSON.parse(el));
@@ -70,7 +70,7 @@ const HoogleSearchResults = ({ query }: { query: string }) => {
         appContext.startTask(taskId, `search on Hoogle: ${query}`);
 
         resData = await (await axios.get(
-          `/api/hoogle?mode=json&format=text&hoogle=${encodeURIComponent(query)}&start=1&count=1000`,
+          `${apiUrl}?mode=json&format=text&hoogle=${encodeURIComponent(query)}&start=1&count=1000`,
           { headers: { 'Content-Type': 'application/json' } }
         )).data;
       } catch (err) {

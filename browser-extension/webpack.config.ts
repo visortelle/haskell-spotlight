@@ -78,16 +78,17 @@ export default ({
                     "postcss-selector-replace",
                     { before: [":root"], after: [":host"] },
                   ],
-                  function () {
-                    return {
-                      postcssPlugin: "whatever",
-                      Root(root: any, postcss: any) {
-                        return root.walkDecls((decl: any) => {
-                          console.log('decl', decl);
-                        })
-                      },
-                    };
-                  }
+                  [
+                    // Replace :root to :host as extension renders to shadow dom.
+                    "postcss-rem-to-pixel",
+                    {
+                      rootValue: 1,
+                      unitPrecision: 5,
+                      propList: ["*", "border-radius"],
+                      replace: true,
+                      mediaQuery: true
+                    },
+                  ],
                 ],
               },
             },

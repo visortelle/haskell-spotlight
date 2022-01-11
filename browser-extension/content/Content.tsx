@@ -8,12 +8,14 @@ import styles from './Content.module.css';
 import * as s from './Content.module.css';
 import haskellLogo from '!!raw-loader!./haskell-monochrome.svg'
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { ErrorBoundary } from 'react-error-boundary'
 
 const Content = (props: { rootElement: HTMLElement }) => {
   const stylesContainerRef = useRef(null);
   const contentRef = useRef(null);
   const [isReady, setIsReady] = useState(false);
   const [isShow, setIsShow] = useState(false);
+  const [explode, setExplode] = useState(false);
 
   const toggleVisibility = useCallback((event: KeyboardEvent) => {
     if (event.ctrlKey && event.key === 'h') {
@@ -46,7 +48,6 @@ const Content = (props: { rootElement: HTMLElement }) => {
     };
   });
 
-
   useEffect(() => {
     document.addEventListener('keyup', toggleVisibility);
 
@@ -56,8 +57,13 @@ const Content = (props: { rootElement: HTMLElement }) => {
   }, []);
 
   useEffect(() => {
+    let extraStyles = document.createElement('style');
+    extraStyles.appendChild(document.createTextNode("")); // WebKit hack
+    (stylesContainerRef.current as HTMLElement).appendChild(extraStyles);
+    extraStyles.sheet.insertRule(`.${lib.searchInput.SearchResultsClassName} { top: 72px !important; max-height: calc(100vh - 82px) !important; }`);
+
     normalizeStyles.use({ target: stylesContainerRef.current });
-    fontsStyles.use({ target: stylesContainerRef.current });
+    fontsStyles.use({ target: document.head });
     globalsStyles.use({ target: stylesContainerRef.current });
     reactLibStyles.use({ target: stylesContainerRef.current });
     reactToastifyStyles.use({ target: stylesContainerRef.current });
@@ -67,28 +73,39 @@ const Content = (props: { rootElement: HTMLElement }) => {
   }, [stylesContainerRef]);
 
   return (
-    <div>
-      <div ref={stylesContainerRef}></div>
-      {isReady && isShow && (
-        <div ref={contentRef} className={s.content}>
-          <a href="http://hackage-ui.vercel.app/" target='__blank' className={s.logo} dangerouslySetInnerHTML={{ __html: haskellLogo }}></a>
-          <lib.searchInputWidget.SearchInputWidget
-            searchInputProps={{
-              onClickOutside: (event: MouseEvent) => {
-                if (event.target !== props.rootElement) {
-                  setIsShow(false);
+    <ErrorBoundary
+      FallbackComponent={() => { return (<div>Something went wrong...</div>) }}
+      onReset={() => setExplode(false)}
+      resetKeys={[explode]}
+    >
+      <div>
+        <div ref={stylesContainerRef}></div>
+        {isReady && isShow && (
+          <div ref={contentRef} className={s.content}>
+            <a href="http://hackage-ui.vercel.app/" target='__blank' className={s.logo} dangerouslySetInnerHTML={{ __html: haskellLogo }}></a>
+            <lib.searchInputWidget.SearchInputWidget
+              searchInputProps={{
+                onClickOutside: (event: MouseEvent) => {
+                  if (event.target !== props.rootElement) {
+                    setIsShow(false);
+                  }
+                },
+                api: {
+                  hackageApiUrl: 'https://hackage-ui.vercel.app/api/hackage',
+                  hoogleApiUrl: 'https://hackage-ui.vercel.app/api/hoogle'
                 }
-              }
-            }}
-            containerProps={{
-              style: {
-                flex: '1'
-              }
-            }}
-          />
-        </div>
-      )}
-    </div>
+
+              }}
+              containerProps={{
+                style: {
+                  flex: '1'
+                }
+              }}
+            />
+          </div>
+        )}
+      </div>
+    </ErrorBoundary>
   );
 }
 

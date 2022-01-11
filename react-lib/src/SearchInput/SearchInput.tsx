@@ -8,9 +8,18 @@ import HackageSearchResults from './HackageSearchResults';
 import HoogleSearchResults from './HoogleSearchResults';
 import RecentSearches from './RecentSearches';
 
+
+export const SearchResultsClassName = `Haskell-8f731b8c-7900-4d8b`; // Whatever.
+
+type Api = {
+  hackageApiUrl: string,
+  hoogleApiUrl: string
+}
+
 type SearchResultsProps = {
   query: string,
-  setQuery: (query: string) => void
+  setQuery: (query: string) => void,
+  api: Api
 }
 
 const SearchResults = (props: SearchResultsProps) => {
@@ -49,11 +58,11 @@ const SearchResults = (props: SearchResultsProps) => {
   }
 
   return (
-    <div className={s.searchResultsContainer}>
+    <div className={`${s.searchResultsContainer} ${SearchResultsClassName}`}>
       <div className={s.searchResults}>
         {queryType === 'showHelp' && (<Help />)}
-        {query && queryType === 'hackage' && <HackageSearchResults query={query.trim()} />}
-        {query && queryType === 'hoogle' && <HoogleSearchResults query={query.replace(/^\:t /, '').trim()} />}
+        {query && queryType === 'hackage' && <HackageSearchResults query={query.trim()} apiUrl={props.api.hackageApiUrl} />}
+        {query && queryType === 'hoogle' && <HoogleSearchResults query={query.replace(/^\:t /, '').trim()} apiUrl={props.api.hoogleApiUrl} />}
         {query && queryType === 'recentSearches' && <RecentSearches query={query.replace(/^\:r ?/, '').trim()} onSelect={props.setQuery} />}
         {query && queryType === 'allRecentSearches' && <RecentSearches query={''} onSelect={props.setQuery} />}
       </div>
@@ -61,7 +70,7 @@ const SearchResults = (props: SearchResultsProps) => {
   );
 }
 
-export type SearchInputProps = { router?: NextRouter, onClickOutside?: (event: MouseEvent) => void };
+export type SearchInputProps = { router?: NextRouter, onClickOutside?: (event: MouseEvent) => void, api: Api };
 
 export const SearchInput = (props: SearchInputProps) => {
   const { router } = props;
@@ -138,7 +147,7 @@ export const SearchInput = (props: SearchInputProps) => {
         value={query}
         focusOnMount
       />
-      {showSearchResults && <SearchResults query={query} setQuery={setQuery} />}
+      {showSearchResults && <SearchResults query={query} setQuery={setQuery} api={props.api} />}
     </div>
   );
 }

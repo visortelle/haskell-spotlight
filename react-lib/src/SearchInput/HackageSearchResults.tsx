@@ -8,7 +8,7 @@ import NothingFound from './NothingFound';
 
 export type HackageSearchResults = { name: string }[];
 
-const HackageSearchResults = ({ query }: { query: string }) => {
+const HackageSearchResults = ({ query, apiUrl }: { query: string, apiUrl: string }) => {
   const appContext = useContext(AppContext);
   const [searchResults, setSearchResults] = useState<HackageSearchResults>([]);
 
@@ -27,7 +27,7 @@ const HackageSearchResults = ({ query }: { query: string }) => {
         appContext.startTask(taskId, `search on Hackage: ${query}`);
 
         resData = await (await axios.get(
-          `/api/hackage/packages/search?terms=${encodeURIComponent(searchTerms)}`,
+          `${apiUrl}/packages/search?terms=${encodeURIComponent(searchTerms)}`,
           { headers: { 'Content-Type': 'application/json' } }
         )).data;
       } catch (err) {

@@ -68,6 +68,10 @@ const GlobalMenu = (props: Props) => {
                 (global as any)?.document ? (document.location.origin + document.location.pathname) : '_'
               }
               router={router}
+              api={{
+                hackageApiUrl: '/api/hackage',
+                hoogleApiUrl: '/api/hoogle'
+              }}
             />
           </div>
 
