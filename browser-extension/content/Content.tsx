@@ -86,13 +86,19 @@ const Content = (props: { rootElement: HTMLElement }) => {
             <lib.searchInputWidget.SearchInputWidget
               searchInputProps={{
                 onClickOutside: (event: MouseEvent) => {
+                  console.log('a', props.rootElement);
+                  console.log('b', event.target);
+                  console.log('eq', props.rootElement === event.target);
+
                   if (event.target !== props.rootElement) {
                     setIsShow(false);
                   }
                 },
                 api: {
-                  hackageApiUrl: 'https://hackage-ui.vercel.app/api/hackage',
-                  hoogleApiUrl: 'https://hackage-ui.vercel.app/api/hoogle'
+                  // hackageApiUrl: 'https://hackage-ui.vercel.app/api/hackage',
+                  // hoogleApiUrl: 'https://hackage-ui.vercel.app/api/hoogle'
+                  hackageApiUrl: 'https://hackage-ui-6l1daso7s-visortelle.vercel.app/api/hackage',
+                  hoogleApiUrl: 'https://hackage-ui-6l1daso7s-visortelle.vercel.app/api/hoogle',
                 }
 
               }}
