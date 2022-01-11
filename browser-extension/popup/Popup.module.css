@@ -1,33 +1,38 @@
 .popup {
-  background-color: var(--background-color);
-  color: var(--text-color);
+  background: #f6eedc;
+  color: #777;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  font-size: 18px;
 }
 
-.menu {
+.header {
+  font-weight: bold;
+  font-size: 32px;
+  margin-bottom: 18px;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  margin-top: auto;
-  box-shadow: 0 0 10px rgb(0 0 0 / 50%);
-  position: relative;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  overflow: hidden;
-  z-index: 10;
+  text-align: center;
+  padding: 18px;
+  background: #5e5086;
+  color: #fff;
+  text-shadow: 1px 3px 2px rgb(0 0 0 / 27%);
 }
 
-.screen {
-  overflow: hidden;
+.kbd {
+  font-weight: bold;
+  font-size: 24px;
+  background: #5e5086;
+  color: #fff;
+  padding: 0 12px;
+  border-radius: 8px;
   display: flex;
-  position: absolute;
   justify-content: center;
-  flex: 1 1;
-  width: 100%;
-  height: 100%;
+  align-items: center;
+  height: 64px;
+  min-width: 64px;
+  border-bottom: 6px solid #453a62;
+  border-right: 4px solid #453a62;
 }

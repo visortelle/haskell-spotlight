@@ -1,12 +1,14 @@
 import { render } from "../content/render";
 
+export const shadowDomRootId = "haskell-extension-root";
+
 function entrypoint(): void {
   const renderTarget = document.createElement("div");
-  renderTarget.id = "haskell-extension-root";
+  renderTarget.id = shadowDomRootId;
   document.body.appendChild(renderTarget);
 
+  renderTarget.attachShadow({ mode: "open" });
   render({ to: renderTarget });
-  console.log("contentscript entrypoint");
 }
 
 document.addEventListener("DOMContentLoaded", entrypoint);

@@ -1,6 +1,7 @@
 import path from "path";
 import { Configuration, ProvidePlugin } from "webpack";
 import TerserPlugin from "terser-webpack-plugin";
+import * as postcss from 'postcss';
 
 export default ({
   mode,
@@ -44,7 +45,19 @@ export default ({
       {
         test: /\.css$/i,
         use: [
-          "style-loader",
+          {
+            loader: "style-loader",
+            options: {
+              injectType: "lazyStyleTag",
+              insert: function insertIntoTarget(
+                element: any,
+                options: { target: any }
+              ) {
+                var parent = options.target || (global as any).document.head;
+                parent.appendChild(element);
+              },
+            },
+          },
           {
             loader: "css-loader",
             options: {
@@ -52,6 +65,30 @@ export default ({
                 auto: true,
                 namedExport: true,
                 localIdentName: "[local]--[hash:base64:5]",
+              },
+            },
+          },
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [
+                  [
+                    // Replace :root to :host as extension renders to shadow dom.
+                    "postcss-selector-replace",
+                    { before: [":root"], after: [":host"] },
+                  ],
+                  function () {
+                    return {
+                      postcssPlugin: "whatever",
+                      Root(root: any, postcss: any) {
+                        return root.walkDecls((decl: any) => {
+                          console.log('decl', decl);
+                        })
+                      },
+                    };
+                  }
+                ],
               },
             },
           },
@@ -72,6 +109,8 @@ export default ({
   },
   resolve: {
     alias: {
+      react: path.resolve(__dirname, ".", "node_modules", "react"),
+      "react-dom": path.resolve(__dirname, ".", "node_modules", "react-dom"),
       src: path.resolve(__dirname),
       build: path.resolve(__dirname, "./build"),
     },
