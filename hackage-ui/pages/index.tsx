@@ -70,7 +70,7 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<HomeProps>>
           href: 'https://discourse.haskell.org/t/a-new-future-for-cryptography-in-haskell/3888/28'
         },
         {
-          title: '📃State of the Haskell ecosystem',
+          title: '📃 State of the Haskell ecosystem',
           href: 'https://github.com/Gabriel439/post-rfc/blob/main/sotu.md',
           description: 'by Gabriella Gonzalez',
         },

@@ -1,7 +1,7 @@
 {
-  "name": "@tealtools/tealcash-extension",
+  "name": "@hackage-ui/browser-extensin",
   "version": "0.1.0",
-  "license": "LicenseRef-Teal-Tools-Proprietary",
+  "license": "MIT",
   "private": true,
   "main": "build/index.js",
   "files": [

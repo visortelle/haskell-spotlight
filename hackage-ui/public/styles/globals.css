@@ -5,6 +5,9 @@
 :root,
 :host {
   font-size: 1px;
+  font-family: "Fira Sans", sans-serif;
+  color: var(--text-color);
+  line-height: 1.4;
   --background-color: #f6eedc;
   --background-color-backdrop: rgba(94, 80, 134, 0.8);
   --surface-color: #dfd8c7;
@@ -26,14 +29,10 @@
 
 html,
 body {
+  font-size: 16rem;
   padding: 0;
   margin: 0;
-  font-family: "Fira Sans", sans-serif;
-
   background-color: var(--background-color);
-  color: var(--text-color);
-  font-size: 16rem;
-  line-height: 1.4;
   min-height: 100vh;
   font-variant-ligatures: none;
 }
