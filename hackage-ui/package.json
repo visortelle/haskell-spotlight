@@ -2,10 +2,11 @@
   "name": "hackage-ui",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "npm run prepare && next dev",
+    "build": "npm run prepare && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "cp -r ../styles ./public/"
   },
   "dependencies": {
     "axios": "^0.24.0",

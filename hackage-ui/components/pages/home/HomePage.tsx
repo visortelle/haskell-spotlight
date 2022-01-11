@@ -68,7 +68,7 @@ const Home = (props: HomeProps) => {
       <div className={s.content}>
 
         <h2 className={s.packageListsHeader}>
-          Community
+          Community&nbsp;&nbsp;
           <lib.links.ExtA href="https://haskell.foundation/" analytics={{ featureName: 'GoToHaskellFoundation', eventParams: {} }} className={s.packageListsHeaderLink}>
             <div className={s.packageListsHeaderIcon} style={{ fill: '#fff' }}><SvgIcon svg={haskellMonochromeIcon} /></div>Haskell Foundation
           </lib.links.ExtA>

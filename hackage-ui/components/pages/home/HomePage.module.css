@@ -60,12 +60,12 @@
 }
 
 .packageListsHeader {
-  width: 100vw;
   max-width: var(--max-content-width);
   margin: auto;
   margin-bottom: 24rem;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .packageListsHeaderLink {
@@ -78,7 +78,8 @@
   background-color: var(--purple-color-2);
   color: #fff;
   padding: 8rem 18rem;
-  margin-left: 12rem;
+  margin-right: 12rem;
+  margin-bottom: 4rem;
   box-shadow: 0rem 2rem 4rem rgb(0 0 0 / 27%);
 }
 

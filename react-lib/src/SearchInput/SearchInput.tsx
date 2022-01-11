@@ -25,10 +25,6 @@ const SearchResults = (props: SearchResultsProps) => {
     appContext.analytics?.gtag('event', 'search', {
       search_term: query,
     });
-
-    console.log('context', appContext);
-
-    console.log('query changed:', query);
   }, [query]);
 
 
@@ -65,7 +61,9 @@ const SearchResults = (props: SearchResultsProps) => {
   );
 }
 
-export const SearchInput = (props: { router?: NextRouter }) => {
+export type SearchInputProps = { router?: NextRouter, onClickOutside?: (event: MouseEvent) => void };
+
+export const SearchInput = (props: SearchInputProps) => {
   const { router } = props;
   const [query, _setQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
@@ -103,6 +101,10 @@ export const SearchInput = (props: { router?: NextRouter }) => {
   const handleMouseDown = useCallback((event: MouseEvent) => {
     if (ref.current && !ref.current.contains(event.target as Node)) {
       setIsFocused(false);
+
+      if (props.onClickOutside) {
+        props.onClickOutside(event);
+      }
     }
   }, [ref]);
 
@@ -117,8 +119,8 @@ export const SearchInput = (props: { router?: NextRouter }) => {
   }, [handleKeyUp, handleMouseDown]);
 
   const showSearchResults =
-    (isFocused && query?.length) ||
-    (isFocused && (isDirty || focusedTimes > 1)); // don't show search results after page load
+    Boolean((isFocused && query?.length) ||
+      (isFocused && (isDirty || focusedTimes > 1))); // don't show search results after page load
 
   return (
     <div className={s.searchInput} ref={ref}>

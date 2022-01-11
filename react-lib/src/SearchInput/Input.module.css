@@ -12,7 +12,7 @@
   border: none;
   display: flex;
   flex: 1 0 auto;
-  font-size: 14px;
+  font-size: 14rem;
   color: var(--text-color);
   caret-color: var(--text-color);
   transition: var(--transition-short);

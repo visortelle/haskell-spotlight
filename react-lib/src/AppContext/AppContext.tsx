@@ -1,8 +1,9 @@
 import React, { ReactNode, useCallback, useState } from 'react';
-import { toast } from 'react-toastify';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import s from './AppContext.module.css';
 import { Analytics, AnalyticsState } from '../Analytics/Analytics';
+
+export const toastContainerId = 'hackage-ui-toast-container';
 
 export type SearchHistory = string[];
 
@@ -34,17 +35,17 @@ const defaultAppContextValue: AppContextValue = {
 
 export const AppContext = React.createContext<AppContextValue>(defaultAppContextValue);
 
-export const DefaultAppContextProvider = ({ children }: { children: ReactNode }) => {
+export const DefaultAppContextProvider = ({ useNextJSRouting, children }: { useNextJSRouting: boolean, children: ReactNode }) => {
   const [value, setValue] = useState<AppContextValue>(defaultAppContextValue);
 
-  const notifySuccess = useCallback((content: ReactNode) => toast.success(content), []);
+  const notifySuccess = useCallback((content: ReactNode) => toast.success(content, { containerId: toastContainerId }), []);
   const notifyError = useCallback((content: ReactNode) => {
     value.analytics?.gtag('event', 'error', {
       category: value.analytics.categories.issues,
       label: content?.toString() || 'unknown error',
     });
 
-    toast.error(content);
+    toast.error(content, { containerId: toastContainerId });
   }, [value.analytics]);
 
   const startTask = useCallback((id: string, comment?: string) => {
@@ -99,7 +100,7 @@ export const DefaultAppContextProvider = ({ children }: { children: ReactNode })
 
   return (
     <>
-      <Analytics onChange={(analytics) => setValue({ ...value, analytics })} />
+      <Analytics useNextJSRouting={useNextJSRouting} onChange={(analytics) => setValue({ ...value, analytics })} />
       <AppContext.Provider
         value={{
           ...value,
@@ -114,6 +115,8 @@ export const DefaultAppContextProvider = ({ children }: { children: ReactNode })
         }}
       >
         <ToastContainer
+          enableMultiContainer
+          containerId={toastContainerId}
           position="top-right"
           autoClose={3000}
           newestOnTop={true}

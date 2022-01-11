@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import { DefaultAppContextProvider } from "../AppContext/AppContext";
-import { SearchInput } from "./SearchInput";
+import { SearchInput, SearchInputProps } from "./SearchInput";
 
-const SearchInputWidget = () => {
+export const SearchInputWidget = (props: { containerProps?: HTMLAttributes<HTMLDivElement>, searchInputProps: SearchInputProps }) => {
   return (
-    <DefaultAppContextProvider>
-      <SearchInput />
+    <DefaultAppContextProvider useNextJSRouting={false}>
+      <div {...props.containerProps}>
+        <SearchInput {...props.searchInputProps} />
+      </div>
     </DefaultAppContextProvider>
   );
 }
-
-export default SearchInputWidget;
