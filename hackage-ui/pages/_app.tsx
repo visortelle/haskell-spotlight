@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { appContext } from '@hackage-ui/react-lib';
+import '@hackage-ui/react-lib/dist/react-lib.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
