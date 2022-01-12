@@ -90,9 +90,9 @@ const Content = (props: { rootElement: HTMLElement }) => {
                   console.log('b', event.target);
                   console.log('eq', props.rootElement === event.target);
 
-                  if (event.target !== props.rootElement) {
-                    setIsShow(false);
-                  }
+                  // if (event.target !== props.rootElement) {
+                  //   setIsShow(false);
+                  // }
                 },
                 api: {
                   // hackageApiUrl: 'https://hackage-ui.vercel.app/api/hackage',

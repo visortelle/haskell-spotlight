@@ -1,5 +1,6 @@
 .searchInput {
   position: relative;
+  font-size: 16rem;
 }
 
 .searchResultsContainer {

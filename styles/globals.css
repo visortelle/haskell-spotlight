@@ -8,6 +8,7 @@
   font-family: "Fira Sans", sans-serif;
   color: var(--text-color);
   line-height: 1.4;
+  font-variant-ligatures: none;
   --background-color: #f6eedc;
   --background-color-backdrop: rgba(94, 80, 134, 0.8);
   --surface-color: #dfd8c7;
@@ -24,7 +25,7 @@
   --accent-color-blue: #5084ff;
   --accent-color-purple: #9d50ff;
   --max-content-width: 1000px;
-  --toastify-icon-color-success: var(--purple-color-2);
+  --toastify-icon-color-success: var(--purple-color-2) !important;
 }
 
 html,
@@ -33,7 +34,6 @@ body {
   margin: 0;
   background-color: var(--background-color);
   min-height: 100vh;
-  font-variant-ligatures: none;
 }
 
 a {
