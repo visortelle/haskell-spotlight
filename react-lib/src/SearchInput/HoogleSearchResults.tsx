@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { AppContext } from '../AppContext/AppContext';
 import s from './HoogleSearchResults.module.css';
 import groupBy from 'lodash/groupBy';
-import { A } from '../A/A';
+import { A, ExtA } from '../A/A';
 import Header from './Header';
 import HeaderButton from './HeaderButton';
 import NothingFound from './NothingFound';
@@ -34,7 +34,13 @@ export type HoogleSearchResults = Record<HoogleItemKey, HoogleItemEntry[]>;
 
 export type ViewMode = 'brief' | 'normal';
 
-const HoogleSearchResults = ({ query, apiUrl }: { query: string, apiUrl: string }) => {
+export type HoogleSearchResultsProps = {
+  query: string,
+  apiUrl: string,
+  asEmbeddedWidget?: boolean
+};
+
+const HoogleSearchResults = ({ query, apiUrl, asEmbeddedWidget }: HoogleSearchResultsProps) => {
   // Hoogle sometimes returns duplicate entries. Maybe a Hoogle bug, maybe I missed something.
   function deduplicate(arr: any[]) {
     return Array.from(new Set(arr.map(el => JSON.stringify(el)))).map(el => JSON.parse(el));
@@ -96,6 +102,8 @@ const HoogleSearchResults = ({ query, apiUrl }: { query: string, apiUrl: string 
     // It may cause infinite recursive calls. Fix it if you know how.
   }, [query]);
 
+  const Link = asEmbeddedWidget ? ExtA : A;
+
   return (
     <div className={s.searchResults}>
       {query.length > 0 && Object.keys(searchResults).length === 0 && (
@@ -134,13 +142,14 @@ const HoogleSearchResults = ({ query, apiUrl }: { query: string, apiUrl: string 
                   svgIcon={itemViewMode === 'normal' ? viewBrieflyIcon : viewNormallyIcon}
                 />
               </div>
-              <A
+              <Link
                 href={rewriteUrl(hoogleItem[0].url)}
+                target={asEmbeddedWidget ? '__blank' : '__self'}
                 className={`${s.hoogleItemLink} ${s.link} ${itemViewMode === 'brief' ? s.hoogleItemLinkBrief : ''}`}
                 analytics={{ featureName: 'HoogleSearchResultItem', eventParams: {} }}
               >
                 <strong className={s.hoogleItemTypeName}>{typeName}</strong>{typeDef ? <strong>&nbsp;::&nbsp;</strong> : ''}<span>{typeDef}</span>
-              </A>
+              </Link>
               <div className={s.hoogleItemContent}>
                 {docs && (
                   <div className={`${s.hoogleItemDocs} ${itemViewMode === 'brief' ? s.hoogleItemDocsBrief : ''}`}>
@@ -153,23 +162,25 @@ const HoogleSearchResults = ({ query, apiUrl }: { query: string, apiUrl: string 
 
                     return (
                       <div key={packageKey} className={s.hoogleItemPackage}>
-                        <A
+                        <Link
                           href={rewriteUrl(pkg[0].package.url)}
+                          target={asEmbeddedWidget ? '__blank' : '__self'}
                           className={s.link}
                           analytics={{ featureName: 'HoogleSearchResultItem', eventParams: {} }}
                         >
                           <small style={{ marginRight: '0.5em' }}>📦</small>{pkg[0].package.name}
-                        </A>
+                        </Link>
                         <div className={s.hoogleItemModules}>
                           {pkg.map(item => (
-                            <A
+                            <Link
                               key={`${packageKey}@${item.module.name}`}
                               href={rewriteUrl(item.module.url)}
+                              target={asEmbeddedWidget ? '__blank' : '__self'}
                               className={s.link}
                               analytics={{ featureName: 'HoogleSearchResultModule', eventParams: {} }}
                             >
                               {item.module.name}
-                            </A>
+                            </Link>
                           ))}
                         </div>
                       </div>

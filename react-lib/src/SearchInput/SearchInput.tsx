@@ -19,7 +19,8 @@ type Api = {
 type SearchResultsProps = {
   query: string,
   setQuery: (query: string) => void,
-  api: Api
+  api: Api,
+  asEmbeddedWidget?: boolean
 }
 
 const SearchResults = (props: SearchResultsProps) => {
@@ -35,7 +36,6 @@ const SearchResults = (props: SearchResultsProps) => {
       search_term: query,
     });
   }, [query]);
-
 
   let queryType: 'hackage' | 'hoogle' | 'recentSearches' | 'allRecentSearches' | 'showHelp' | 'unknown' = 'unknown';
 
@@ -61,7 +61,13 @@ const SearchResults = (props: SearchResultsProps) => {
     <div className={`${s.searchResultsContainer} ${SearchResultsClassName}`}>
       <div className={s.searchResults}>
         {queryType === 'showHelp' && (<Help />)}
-        {query && queryType === 'hackage' && <HackageSearchResults query={query.trim()} apiUrl={props.api.hackageApiUrl} />}
+        {query && queryType === 'hackage' && (
+          <HackageSearchResults
+            query={query.trim()}
+            apiUrl={props.api.hackageApiUrl}
+            asEmbeddedWidget={props.asEmbeddedWidget}
+          />
+        )}
         {query && queryType === 'hoogle' && <HoogleSearchResults query={query.replace(/^\:t /, '').trim()} apiUrl={props.api.hoogleApiUrl} />}
         {query && queryType === 'recentSearches' && <RecentSearches query={query.replace(/^\:r ?/, '').trim()} onSelect={props.setQuery} />}
         {query && queryType === 'allRecentSearches' && <RecentSearches query={''} onSelect={props.setQuery} />}
@@ -70,7 +76,7 @@ const SearchResults = (props: SearchResultsProps) => {
   );
 }
 
-export type SearchInputProps = { router?: NextRouter, onClickOutside?: (event: MouseEvent) => void, api: Api };
+export type SearchInputProps = { router?: NextRouter, api: Api, asEmbeddedWidget?: boolean };
 
 export const SearchInput = (props: SearchInputProps) => {
   const { router } = props;
@@ -108,12 +114,12 @@ export const SearchInput = (props: SearchInputProps) => {
   }, [isFocused, inputRef]);
 
   const handleMouseDown = useCallback((event: MouseEvent) => {
+    if (props.asEmbeddedWidget) {
+      return;
+    }
+
     if (ref.current && !ref.current.contains(event.target as Node)) {
       setIsFocused(false);
-
-      if (props.onClickOutside) {
-        props.onClickOutside(event);
-      }
     }
   }, [ref]);
 
@@ -128,8 +134,14 @@ export const SearchInput = (props: SearchInputProps) => {
   }, [handleKeyUp, handleMouseDown]);
 
   const showSearchResults =
+    props.asEmbeddedWidget ||
     Boolean((isFocused && query?.length) ||
       (isFocused && (isDirty || focusedTimes > 1))); // don't show search results after page load
+
+  let placeholder = ':t a -> b';
+  if (!props.asEmbeddedWidget) {
+    placeholder = (isFocused && !isDirty && !showSearchResults) ? `Type ":" to show help` : `Click or press "/" to search…`
+  }
 
   return (
     <div className={s.searchInput} ref={ref}>
@@ -143,11 +155,11 @@ export const SearchInput = (props: SearchInputProps) => {
           setIsFocused(true);
         }}
         onInputRef={setInputRef}
-        placeholder={(isFocused && !isDirty && !showSearchResults) ? `Type ":" to show help` : `Click or press "/" to search…`}
+        placeholder={placeholder}
         value={query}
         focusOnMount
       />
-      {showSearchResults && <SearchResults query={query} setQuery={setQuery} api={props.api} />}
+      {showSearchResults && <SearchResults query={query} setQuery={setQuery} api={props.api} asEmbeddedWidget={props.asEmbeddedWidget} />}
     </div>
   );
 }

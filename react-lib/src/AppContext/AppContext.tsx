@@ -49,6 +49,7 @@ export const DefaultAppContextProvider = ({ useNextJSRouting, children }: { useN
   }, [value.analytics]);
 
   const startTask = useCallback((id: string, comment?: string) => {
+    console.log('start task');
     setValue({
       ...value,
       tasks: { ...value.tasks, [id]: comment }

@@ -1,14 +1,21 @@
 import axios from 'axios';
 import React, { useEffect, useState, useContext } from "react";
 import { AppContext } from '../AppContext/AppContext';
-import { A } from '../A/A';
+import { A, ExtA } from '../A/A';
 import s from './HackageSearchResults.module.css';
 import Header from './Header';
 import NothingFound from './NothingFound';
 
-export type HackageSearchResults = { name: string }[];
+export type HackageSearchResult = { name: string };
+export type HackageSearchResults = HackageSearchResult[];
 
-const HackageSearchResults = ({ query, apiUrl }: { query: string, apiUrl: string }) => {
+export type HackageSearchResultsProps = {
+  query: string,
+  apiUrl: string,
+  asEmbeddedWidget?: boolean
+};
+
+const HackageSearchResults = ({ query, apiUrl, asEmbeddedWidget }: HackageSearchResultsProps) => {
   const appContext = useContext(AppContext);
   const [searchResults, setSearchResults] = useState<HackageSearchResults>([]);
 
@@ -50,6 +57,7 @@ const HackageSearchResults = ({ query, apiUrl }: { query: string, apiUrl: string
     // It may cause infinite recursive calls. Fix it if you know how.
   }, [query, appContext.tasks.length]);
 
+  const Link = asEmbeddedWidget ? ExtA : A;
   return (
     <div className={s.searchResults}>
       {searchResults.length === 0 && (
@@ -61,14 +69,15 @@ const HackageSearchResults = ({ query, apiUrl }: { query: string, apiUrl: string
       <div className={s.searchResultsContainer}>
         {searchResults.map(pkg => {
           return (
-            <A
+            <Link
               key={pkg.name}
               className={s.searchResult}
-              href={`/package/${pkg.name}`}
+              target={asEmbeddedWidget ? '__blank' : '_self'}
+              href={asEmbeddedWidget ? `https://hackage.haskell.org/package/${pkg.name}` : `/package/${pkg.name}`}
               analytics={{ featureName: 'HackageSearchResult', eventParams: {} }}
             >
               {pkg.name}
-            </A>
+            </Link>
           );
         })}
       </div>
