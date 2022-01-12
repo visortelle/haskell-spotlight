@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
   "name": "Haskell Spotlight",
-  "short_name": "Haskell short name",
-  "description": "Haskell description",
+  "short_name": "Haskell Spotlight",
+  "description": "Search on Hackage, Hoogle and more soon.",
   "homepage_url": "https://github.com/visortelle/hackage-ui",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "icons": { "192": "images/icon-192.png" },
   "content_scripts": [
     {
