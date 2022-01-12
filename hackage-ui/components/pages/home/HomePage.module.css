@@ -66,6 +66,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  font-size: 24px;
 }
 
 .packageListsHeaderLink {
