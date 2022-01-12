@@ -20,6 +20,7 @@ const Content = (props: { rootElement: HTMLElement }) => {
 
   const toggleVisibility = useCallback((event: KeyboardEvent) => {
     if (event.ctrlKey && event.key === 'h') {
+      event.preventDefault();
       setIsShow((isShow) => !isShow);
     }
   }, [isShow, setIsShow]);
@@ -27,6 +28,7 @@ const Content = (props: { rootElement: HTMLElement }) => {
   // Prevent global page hotkeys when the search input is in focus.
   const handleKeyboardEvents = useCallback((event: KeyboardEvent) => {
     if (event.key === 'Escape') {
+      event.preventDefault();
       setIsShow(false);
     }
 
