@@ -1,3 +1,5 @@
 /build
-/build.zip
 /node_modules
+
+# I manually make compress it to zip when publish the extension to stores.
+*.zip
