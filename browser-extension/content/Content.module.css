@@ -1,5 +1,6 @@
 .content {
   padding: 12px 18px;
+  padding-left: 60px;
   background-color: var(--purple-color-2);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
   border-radius: 8px;
@@ -13,13 +14,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 8px;
+  transition: var(--transition-short);
+  background-color: var(--purple-color-2);
+  position: absolute;
+  border-radius: 8px;
+  left: 12px;
+  top: 8px;
+  bottom: 8px;
+  width: 42px;
+  height: 42px;
+  transition: var(--transition-short);
+}
+
+.logo:hover {
+  opacity: 1;
+  background-color: var(--purple-color-1);
   transition: var(--transition-short);
 }
 
 .logo:hover svg {
-  fill: #fff;
   cursor: pointer;
+  fill: var(--purple-color-2);
   transition: var(--transition-short);
 }
 

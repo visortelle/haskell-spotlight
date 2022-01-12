@@ -34,10 +34,6 @@ const Content = (props: { rootElement: HTMLElement }) => {
   }, []);
 
   const handleClickOutside = useCallback((event: MouseEvent) => {
-    console.log('rootElement:', props.rootElement);
-    console.log('event.target:', event.target);
-    console.log('eq', props.rootElement === event.target);
-
     if (props.rootElement === event.target || props.rootElement.contains(event.target as Node)) {
       return;
     }
@@ -87,7 +83,6 @@ const Content = (props: { rootElement: HTMLElement }) => {
     setIsReady(true);
   }, [stylesContainerRef]);
 
-  console.log('Content app context', appContext.tasks);
   return (
     <ErrorBoundary
       FallbackComponent={() => { return (<div>Something went wrong...</div>) }}
@@ -99,17 +94,14 @@ const Content = (props: { rootElement: HTMLElement }) => {
         {isReady && isShow && (
           <div ref={contentRef} className={s.content}>
             <div className={`${s.progressIndicator} ${Object.keys(appContext.tasks).length > 0 ? s.progressIndicatorRunning : ''}`}></div>
-            <a href="http://hackage-ui.vercel.app/" target='__blank' className={s.logo} dangerouslySetInnerHTML={{ __html: haskellLogo }}></a>
+            <a href="https://github.com/visortelle/hackage-ui" target='__blank' className={s.logo} dangerouslySetInnerHTML={{ __html: haskellLogo }}></a>
             <div style={{ flex: 1 }}>
               <lib.searchInput.SearchInput
                 asEmbeddedWidget={true}
                 api={{
-                  // hackageApiUrl: 'https://hackage-ui.vercel.app/api/hackage',
-                  // hoogleApiUrl: 'https://hackage-ui.vercel.app/api/hoogle'
-                  hackageApiUrl: 'https://hackage-ui-6l1daso7s-visortelle.vercel.app/api/hackage',
-                  hoogleApiUrl: 'https://hackage-ui-6l1daso7s-visortelle.vercel.app/api/hoogle',
-                }
-                }
+                  hackageApiUrl: 'https://hackage-ui.vercel.app/api/hackage',
+                  hoogleApiUrl: 'https://hackage-ui.vercel.app/api/hoogle'
+                }}
               />
             </div>
           </div>

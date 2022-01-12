@@ -6,7 +6,7 @@ You need NodeJS >= 14.x.x
 
 - Clone the repository.
 - `cd ./hackage-ui`.
-- `make`.
+- See `Makefile`.
 - Before publish a PR, please ensure that it builds without errors in production mode: `npm run build && npm start`.
 
 If you want to implement some significant change, it's better to create a GitHub issue and discuss it first.

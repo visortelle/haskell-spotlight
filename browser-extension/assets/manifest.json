@@ -26,11 +26,8 @@
   },
   "permissions": [
     "activeTab",
-    "clipboardWrite",
     "declarativeContent",
-    "notifications",
     "storage",
-    "tabs",
     "unlimitedStorage",
     "webRequest"
   ]

@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { AppContext } from "../AppContext/AppContext";
+import React, { useContext, useEffect, useState } from "react";
+import { AppContext, SearchHistory } from "../AppContext/AppContext";
 import s from './RecentSearches.module.css';
 import Fuse from 'fuse.js'
 import SVGIcon from '../icons/SVGIcon';
@@ -15,7 +15,15 @@ type RecentSearchesProps = {
 
 const RecentSearches = (props: RecentSearchesProps) => {
   const appContext = useContext(AppContext);
-  const searchHistory = appContext.readSearchHistory();
+  const [searchHistory, setSearchHistory] = useState<SearchHistory>([]);
+
+  useEffect(() => {
+    (async () => {
+      const searchHistory = await appContext.readSearchHistory();
+      setSearchHistory(searchHistory);
+    })()
+  }, []);
+
   const showHistory = searchHistory.length > 0;
   const [_, forceUpdate] = useState({});
 
@@ -37,8 +45,7 @@ const RecentSearches = (props: RecentSearchesProps) => {
             svgIcon={clearIcon}
             onClick={(e) => {
               e.stopPropagation();
-              appContext.purgeSearchHistory();
-              forceUpdate({});
+              appContext.purgeSearchHistory().then(() => forceUpdate({}));
             }}
           />
         </Header>

@@ -8,7 +8,6 @@ import HackageSearchResults from './HackageSearchResults';
 import HoogleSearchResults from './HoogleSearchResults';
 import RecentSearches from './RecentSearches';
 
-
 export const SearchResultsClassName = `Haskell-8f731b8c-7900-4d8b`; // Whatever.
 
 type Api = {

@@ -2,6 +2,7 @@ import React, { ReactNode, useCallback, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import s from './AppContext.module.css';
 import { Analytics, AnalyticsState } from '../Analytics/Analytics';
+import browser from "webextension-polyfill";
 
 export const toastContainerId = 'hackage-ui-toast-container';
 
@@ -14,9 +15,9 @@ export type AppContextValue = {
   startTask: (id: string, comment?: string) => void,
   finishTask: (id: string) => void,
   writeSearchHistoryEntry: (query: string) => void
-  readSearchHistory: () => SearchHistory,
+  readSearchHistory: () => Promise<SearchHistory>,
   removeSearchHistoryEntry: (query: string) => void,
-  purgeSearchHistory: () => void,
+  purgeSearchHistory: () => Promise<void>,
   analytics?: AnalyticsState,
 }
 
@@ -27,16 +28,46 @@ const defaultAppContextValue: AppContextValue = {
   startTask: () => { },
   finishTask: () => { },
   writeSearchHistoryEntry: () => { },
-  readSearchHistory: () => [],
+  readSearchHistory: () => new Promise(() => []),
   removeSearchHistoryEntry: () => [],
-  purgeSearchHistory: () => { },
-  analytics: undefined
+  purgeSearchHistory: () => new Promise(() => undefined),
+  analytics: undefined,
 }
 
 export const AppContext = React.createContext<AppContextValue>(defaultAppContextValue);
 
-export const DefaultAppContextProvider = ({ useNextJSRouting, children }: { useNextJSRouting: boolean, children: ReactNode }) => {
+export const DefaultAppContextProvider = ({ useNextJSRouting, children, asWebExtension }: { useNextJSRouting: boolean, children: ReactNode, asWebExtension: boolean }) => {
   const [value, setValue] = useState<AppContextValue>(defaultAppContextValue);
+
+  const storageSetItem = useCallback((k, v: string) => {
+    console.log('SET k', k);
+    console.log('SET v', v);
+    if (asWebExtension) {
+      // https://developer.chrome.com/docs/extensions/reference/storage/#type-StorageArea
+      // Debug: chrome://sync-internals/
+      browser.storage.local.set({ [k]: v });
+      return;
+    }
+    localStorage.setItem(k, v);
+  }, [asWebExtension]);
+
+  const storageRemoveItem = useCallback(async (k) => {
+    if (asWebExtension) {
+      // https://developer.chrome.com/docs/extensions/reference/storage/#type-StorageArea
+      // Debug: chrome://sync-internals/
+      return await browser.storage.local.remove(k);
+    }
+    localStorage.removeItem(k);
+  }, [asWebExtension]);
+
+  const storageGetItem = useCallback(async (k) => {
+    if (asWebExtension) {
+      // https://developer.chrome.com/docs/extensions/reference/storage/#type-StorageArea
+      // Debug: chrome://sync-internals/
+      return (await browser.storage.local.get(k))[k];
+    }
+    return localStorage.getItem(k);
+  }, [asWebExtension]);
 
   const notifySuccess = useCallback((content: ReactNode) => toast.success(content, { containerId: toastContainerId }), []);
   const notifyError = useCallback((content: ReactNode) => {
@@ -49,17 +80,17 @@ export const DefaultAppContextProvider = ({ useNextJSRouting, children }: { useN
   }, [value.analytics]);
 
   const startTask = useCallback((id: string, comment?: string) => {
-    console.log('start task');
     setValue({
       ...value,
       tasks: { ...value.tasks, [id]: comment }
     });
   }, [value]);
 
-  const searchHistoryLsKey = 'searchHistory';
-  const readSearchHistory = useCallback(() => {
+  const searchHistoryStorageKey = 'haskellSearchHistory';
+  const readSearchHistory = useCallback(async () => {
     let searchHistory: SearchHistory = [];
-    const jsonStr = localStorage.getItem(searchHistoryLsKey);
+    const jsonStr = await storageGetItem(searchHistoryStorageKey);
+    console.log('STR!', jsonStr);
 
     try {
       searchHistory = jsonStr === null ? [] : JSON.parse(jsonStr);
@@ -68,28 +99,30 @@ export const DefaultAppContextProvider = ({ useNextJSRouting, children }: { useN
         throw new Error('Search history is stored in wrong format. It should be an array of strings.');
       }
     } catch (_) {
-      const historyBackupKey = `${searchHistoryLsKey}_backup_${new Date().toISOString()}`
-      localStorage.setItem(historyBackupKey, jsonStr || '[]');
-      notifyError(`Your search history is corrupted. You can get a backup by running 'localStorage.getItem(${historyBackupKey})' in browser console.`);
+      const searchHistoryBackupKey = `${searchHistoryStorageKey}_backup_${new Date().toISOString()}`
+      storageSetItem(searchHistoryBackupKey, jsonStr || '[]');
+      searchHistory = [];
+      await storageSetItem(searchHistoryStorageKey, JSON.stringify(searchHistory));
+      notifyError(`Your search history is corrupted. You can get a backup by running 'localStorage.getItem(${searchHistoryBackupKey})' in browser console.`);
     } finally {
       return searchHistory;
     }
   }, [notifyError]);
 
-  const writeSearchHistoryEntry = useCallback((query: string) => {
-    const searchHistory = readSearchHistory();
+  const writeSearchHistoryEntry = useCallback(async (query: string) => {
+    const searchHistory = await readSearchHistory();
     const newSearchHistory = Array.from(new Set([query].concat(searchHistory).slice(0, 1000)));
-    localStorage.setItem(searchHistoryLsKey, JSON.stringify(newSearchHistory));
+    storageSetItem(searchHistoryStorageKey, JSON.stringify(newSearchHistory));
   }, [readSearchHistory]);
 
-  const removeSearchHistoryEntry = useCallback((query: string) => {
-    const searchHistory = readSearchHistory();
+  const removeSearchHistoryEntry = useCallback(async (query: string) => {
+    const searchHistory = await readSearchHistory();
     const newSearchHistory = searchHistory.filter(entry => entry !== query);
-    localStorage.setItem(searchHistoryLsKey, JSON.stringify(newSearchHistory));
+    storageSetItem(searchHistoryStorageKey, JSON.stringify(newSearchHistory));
   }, [readSearchHistory]);
 
-  const purgeSearchHistory = useCallback(() => {
-    localStorage.removeItem(searchHistoryLsKey);
+  const purgeSearchHistory = useCallback(async () => {
+    await storageRemoveItem(searchHistoryStorageKey);
   }, []);
 
   const finishTask = useCallback((id: string) => {
