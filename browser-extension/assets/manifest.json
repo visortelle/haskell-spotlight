@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
-  "name": "Haskell Omnibox",
+  "name": "Haskell Spotlight",
   "short_name": "Haskell short name",
   "description": "Haskell description",
-  "homepage_url": "https://hackage-ui.vercel.app",
+  "homepage_url": "https://github.com/visortelle/hackage-ui",
   "version": "1.0.0",
   "icons": { "192": "images/icon-192.png" },
   "content_scripts": [

@@ -16,7 +16,7 @@ export type AppContextValue = {
   finishTask: (id: string) => void,
   writeSearchHistoryEntry: (query: string) => void
   readSearchHistory: () => Promise<SearchHistory>,
-  removeSearchHistoryEntry: (query: string) => void,
+  removeSearchHistoryEntry: (query: string) => Promise<void>,
   purgeSearchHistory: () => Promise<void>,
   analytics?: AnalyticsState,
 }
@@ -29,7 +29,7 @@ const defaultAppContextValue: AppContextValue = {
   finishTask: () => { },
   writeSearchHistoryEntry: () => { },
   readSearchHistory: () => new Promise(() => []),
-  removeSearchHistoryEntry: () => [],
+  removeSearchHistoryEntry: () => new Promise(() => undefined),
   purgeSearchHistory: () => new Promise(() => undefined),
   analytics: undefined,
 }
@@ -40,8 +40,6 @@ export const DefaultAppContextProvider = ({ useNextJSRouting, children, asWebExt
   const [value, setValue] = useState<AppContextValue>(defaultAppContextValue);
 
   const storageSetItem = useCallback((k, v: string) => {
-    console.log('SET k', k);
-    console.log('SET v', v);
     if (asWebExtension) {
       // https://developer.chrome.com/docs/extensions/reference/storage/#type-StorageArea
       // Debug: chrome://sync-internals/
@@ -90,19 +88,20 @@ export const DefaultAppContextProvider = ({ useNextJSRouting, children, asWebExt
   const readSearchHistory = useCallback(async () => {
     let searchHistory: SearchHistory = [];
     const jsonStr = await storageGetItem(searchHistoryStorageKey);
-    console.log('STR!', jsonStr);
 
     try {
-      searchHistory = jsonStr === null ? [] : JSON.parse(jsonStr);
+      searchHistory = jsonStr === (null || undefined) ? [] : JSON.parse(jsonStr);
 
       if (searchHistory && !Array.isArray(searchHistory)) {
         throw new Error('Search history is stored in wrong format. It should be an array of strings.');
       }
     } catch (_) {
       const searchHistoryBackupKey = `${searchHistoryStorageKey}_backup_${new Date().toISOString()}`
-      storageSetItem(searchHistoryBackupKey, jsonStr || '[]');
+      await storageSetItem(searchHistoryBackupKey, jsonStr || '[]');
+
       searchHistory = [];
       await storageSetItem(searchHistoryStorageKey, JSON.stringify(searchHistory));
+
       notifyError(`Your search history is corrupted. You can get a backup by running 'localStorage.getItem(${searchHistoryBackupKey})' in browser console.`);
     } finally {
       return searchHistory;
@@ -112,17 +111,17 @@ export const DefaultAppContextProvider = ({ useNextJSRouting, children, asWebExt
   const writeSearchHistoryEntry = useCallback(async (query: string) => {
     const searchHistory = await readSearchHistory();
     const newSearchHistory = Array.from(new Set([query].concat(searchHistory).slice(0, 1000)));
-    storageSetItem(searchHistoryStorageKey, JSON.stringify(newSearchHistory));
+    return storageSetItem(searchHistoryStorageKey, JSON.stringify(newSearchHistory));
   }, [readSearchHistory]);
 
   const removeSearchHistoryEntry = useCallback(async (query: string) => {
     const searchHistory = await readSearchHistory();
     const newSearchHistory = searchHistory.filter(entry => entry !== query);
-    storageSetItem(searchHistoryStorageKey, JSON.stringify(newSearchHistory));
+    return storageSetItem(searchHistoryStorageKey, JSON.stringify(newSearchHistory));
   }, [readSearchHistory]);
 
   const purgeSearchHistory = useCallback(async () => {
-    await storageRemoveItem(searchHistoryStorageKey);
+    return await storageRemoveItem(searchHistoryStorageKey);
   }, []);
 
   const finishTask = useCallback((id: string) => {

@@ -15,7 +15,7 @@ export default () => {
 
   return (
     <div className={s.popup}>
-      <div className={s.header}>Haskell Omnibox</div>
+      <div className={s.header}>Haskell Spotlight</div>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ fontSize: '18px', fontWeight: 'bold', textAlign: 'center' }}>Close this popup and press</div>
         <div style={{ display: 'flex', marginTop: '8px', justifyContent: 'center' }}>

@@ -17,21 +17,22 @@ const RecentSearches = (props: RecentSearchesProps) => {
   const appContext = useContext(AppContext);
   const [searchHistory, setSearchHistory] = useState<SearchHistory>([]);
 
+  // Change React element key is a way to do a component force update.
+  const [key, setKey] = useState(0);
+
   useEffect(() => {
     (async () => {
       const searchHistory = await appContext.readSearchHistory();
       setSearchHistory(searchHistory);
     })()
-  }, []);
+  }, [key]);
 
   const showHistory = searchHistory.length > 0;
-  const [_, forceUpdate] = useState({});
-
   const fuse = new Fuse(searchHistory);
   const withFilter = props.query.length === 0 ? searchHistory : fuse.search(props.query).map(item => item.item);
 
   return (
-    <div className={s.searchResults}>
+    <div className={s.searchResults} key={key}>
       {!showHistory && (
         <NothingFound waitBeforeShow={0}>
           Search history is empty.
@@ -45,7 +46,7 @@ const RecentSearches = (props: RecentSearchesProps) => {
             svgIcon={clearIcon}
             onClick={(e) => {
               e.stopPropagation();
-              appContext.purgeSearchHistory().then(() => forceUpdate({}));
+              appContext.purgeSearchHistory().then(() => setKey(key + 1));
             }}
           />
         </Header>
@@ -60,8 +61,7 @@ const RecentSearches = (props: RecentSearchesProps) => {
                 title="Delete search history entry"
                 onClick={(e) => {
                   e.stopPropagation();
-                  appContext.removeSearchHistoryEntry(historyEntry);
-                  forceUpdate({});
+                  appContext.removeSearchHistoryEntry(historyEntry).then(() => setKey(key + 1));
                 }}
               >
                 <SVGIcon svg={clearIcon} />
