@@ -5,6 +5,32 @@ import normalizeStyles from '../../styles/normalize.css';
 import globalsStyles from '../../styles/globals.css';
 import fontsStyles from '../../styles/fonts.css';
 
+export type KeybindingToStorage = {
+  key: string,
+  modifier: string
+}
+
+export type KeybindingsToStorage = Record<string, KeybindingToStorage>
+
+const keybindingsToStorage: KeybindingsToStorage = {
+  toggleSpotlight: {
+    key: 'haskell-spotlight-toggle-spotlight-key',
+    modifier: 'haskell-spotlight-toggle-spotlight-modifier',
+  }
+}
+
+type Keybinding = {
+  key: string,
+  modifier: 'shiftKey' | 'ctrlKey' | 'altKey' | 'metaKey'
+}
+
+const defaultKeyBindings: Record<string, Keybinding> = {
+  toggleSpotlight: {
+    key: '',
+    modifier: 'ctrlKey'
+  }
+}
+
 export default () => {
   useEffect(() => {
     normalizeStyles.use();
