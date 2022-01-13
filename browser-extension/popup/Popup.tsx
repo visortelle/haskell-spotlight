@@ -44,7 +44,7 @@ export default () => {
   return (
     <div className={s.popup}>
       <div className={s.header}>Haskell Spotlight</div>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: '1 1' }}>
         <div style={{ fontSize: '14px', textAlign: 'center', padding: '0 18px' }}>
           {state === 'awaitingForNewKeyBinding' && <span>Click on the area bellow to change hot key.</span>}
           {state === 'awaitingForUserInput' && <span>Press key combination.</span>}
@@ -78,7 +78,7 @@ export default () => {
         )}
 
         <a
-          style={{ display: 'flex', margin: '12px auto 24px auto', fontSize: '16px', fontWeight: 'bold', color: '#5e5086' }}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '12px 12px 32px 12px', fontSize: '16px', fontWeight: 'bold', color: '#5e5086' }}
           href="https://github.com/visortelle/hackage-ui"
           target="__blank"
         >
