@@ -4,6 +4,7 @@ import Input from "./Input";
 import s from './SearchInput.module.css';
 import { useDebounce } from 'use-debounce';
 import { NextRouter } from 'next/router';
+import Header from './Header';
 import HackageSearchResults from './HackageSearchResults';
 import HoogleSearchResults from './HoogleSearchResults';
 import RecentSearches from './RecentSearches';
@@ -19,7 +20,7 @@ type SearchResultsProps = {
   query: string,
   setQuery: (query: string) => void,
   api: Api,
-  asEmbeddedWidget?: boolean
+  asEmbeddedWidget?: boolean,
 }
 
 const SearchResults = (props: SearchResultsProps) => {
@@ -59,7 +60,7 @@ const SearchResults = (props: SearchResultsProps) => {
   return (
     <div className={`${s.searchResultsContainer} ${SearchResultsClassName}`}>
       <div className={s.searchResults}>
-        {queryType === 'showHelp' && (<Help />)}
+        {queryType === 'showHelp' && (<Help onExampleClick={props.setQuery} />)}
         {query && queryType === 'hackage' && (
           <HackageSearchResults
             query={query.trim()}
@@ -163,7 +164,7 @@ export const SearchInput = (props: SearchInputProps) => {
   );
 }
 
-const Help = () => {
+const Help = (props: { onExampleClick: (query: string) => void }) => {
   const appContext = useContext(AppContext);
   useEffect(() => {
     appContext.analytics?.gtag('event', 'FeatureUsed', { event_label: 'SearchInputHelpPopup' });
@@ -171,10 +172,51 @@ const Help = () => {
 
   return (
     <div className={s.help}>
-      <h3 className={s.helpHeader}>Search Examples</h3>
-      <p><code className="hljs">servant</code> to search for packages in Hackage.</p>
-      <p><code className="hljs">:t a -&gt; a</code> to search by type signature or function name in Hoogle.</p>
-      <p><code className="hljs">:r smth</code> to show your recent searches.</p>
+      <Header>Help</Header>
+      <div className={s.helpContainer}>
+        <div className={s.helpSection}>
+          <div className={s.helpSectionHeader}>
+            Search Anything
+          </div>
+          <div className={s.helpExamples}>
+            <ClickableExample query="map" onClick={props.onExampleClick} />
+            <ClickableExample query="Int -> String" onClick={props.onExampleClick} />
+            <ClickableExample query="Ord a => [a] -> [a]" onClick={props.onExampleClick} />
+            <ClickableExample query="Data.Set.insert" onClick={props.onExampleClick} />
+            <ClickableExample query="+bytestring concat" onClick={props.onExampleClick} />
+          </div>
+        </div>
+
+        <div className={s.helpSection}>
+          <div className={s.helpSectionHeader}>
+            Search Packages
+          </div>
+          <div className={s.helpExamples}>
+            <ClickableExample query=":p" onClick={props.onExampleClick} />
+            <ClickableExample query=":p servant" onClick={props.onExampleClick} />
+          </div>
+        </div>
+
+        <div className={s.helpSection}>
+          <div className={s.helpSectionHeader}>
+            Filter Recent Queries
+          </div>
+          <div className={s.helpExamples}>
+            <ClickableExample query=":r" onClick={props.onExampleClick} />
+            <ClickableExample query=":r ser" onClick={props.onExampleClick} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const ClickableExample = (props: { query: string, onClick: (query: string) => void }) => {
+  return (
+    <div className={s.clickableExample}>
+      <code className="hljs" onClick={() => props.onClick(props.query)}>
+        {props.query}
+      </code>
     </div>
   );
 }

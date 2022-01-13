@@ -4,6 +4,7 @@ import globalsStyles from '../../styles/globals.css';
 import fontsStyles from '../../styles/fonts.css';
 import reactLibStyles from '@hackage-ui/react-lib/dist/react-lib.css';
 import reactToastifyStyles from 'react-toastify/dist/ReactToastify.css';
+import hljsStyles from 'highlight.js/styles/kimbie-light.css';
 import styles from './Content.module.css';
 import * as s from './Content.module.css';
 import haskellLogo from '!!raw-loader!./haskell-monochrome.svg'
@@ -80,6 +81,7 @@ const Content = (props: { rootElement: HTMLElement }) => {
     globalsStyles.use({ target: stylesContainerRef.current });
     reactLibStyles.use({ target: stylesContainerRef.current });
     reactToastifyStyles.use({ target: stylesContainerRef.current });
+    hljsStyles.use({ target: stylesContainerRef.current });
     styles.use({ target: stylesContainerRef.current });
 
     setIsReady(true);

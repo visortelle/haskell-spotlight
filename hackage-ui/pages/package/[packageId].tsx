@@ -4,7 +4,6 @@ import PackagePage from '../../components/pages/package/PackagePage';
 import { PackageProps, Versions, License, Homepage } from '../../components/pages/package/common';
 import axios from 'axios';
 import hljs from 'highlight.js';
-import 'highlight.js/styles/a11y-dark.css';
 import cheerio, { CheerioAPI } from 'cheerio';
 import unescape from 'lodash/unescape';
 

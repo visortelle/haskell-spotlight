@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { appContext } from '@hackage-ui/react-lib';
 import '@hackage-ui/react-lib/dist/react-lib.css';
 import 'react-toastify/dist/ReactToastify.css';
+import 'highlight.js/styles/kimbie-light.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return <>

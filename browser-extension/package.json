@@ -9,9 +9,11 @@
     "README.md"
   ],
   "dependencies": {
+    "@hackage-ui/react-lib": "*",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
     "express": "^4.17.1",
+    "highlight.js": "^11.4.0",
     "postcss-selector-replace": "^1.0.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -20,9 +22,8 @@
     "stream-browserify": "^3.0.0",
     "url-parse": "^1.5.3",
     "uuid": "^8.3.2",
-    "ws": "^8.2.0",
     "webextension-polyfill": "^0.8.0",
-    "@hackage-ui/react-lib": "*"
+    "ws": "^8.2.0"
   },
   "devDependencies": {
     "@swc/core": "^1.2.107",

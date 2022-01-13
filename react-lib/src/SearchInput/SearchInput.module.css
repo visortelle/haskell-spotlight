@@ -25,18 +25,55 @@
 }
 
 .help {
-  padding: 18rem 24rem;
-  background-color: var(--background-color);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.help code {
-  color: #fff;
+.helpContainer {
+  padding: 18rem 24rem;
+  overflow: auto;
 }
 
 .helpHeader {
   font-size: 18rem;
   margin: 0;
   margin-bottom: 8rem;
+}
+
+.helpSection {
+  margin-bottom: 18rem;
+}
+
+.helpSection:last-child {
+  margin-bottom: 0;
+}
+
+.helpSectionHeader {
+  margin-bottom: 8rem;
+  font-size: 16rem;
+  font-weight: bold;
+}
+
+.helpExamples {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.clickableExample {
+  display: inline-flex;
+  margin-bottom: 12rem;
+  flex: 1 1 auto;
+}
+
+.clickableExample:hover {
+  cursor: pointer;
+  opacity: 0.66;
+}
+
+.clickableExample code {
+  box-shadow: 1rem 1rem 2rem rgb(0 0 0 / 50%);
 }
 
 @media (max-width: 1000px) {

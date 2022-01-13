@@ -2,7 +2,7 @@
 
 .PHONY: dev
 dev: ## Start development.
-	npm run dev
+	npm link && npm run dev
 
 .PHONY: build
 build: ## Build the project.

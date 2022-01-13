@@ -2,6 +2,8 @@
 
 .PHONY: dev
 dev: ## Start development.
+	cd ../react-lib && make build && npm link
+	npm link @hackage-ui/react-lib
 	npm run dev
 
 .PHONY: build

@@ -38,7 +38,7 @@ const HackageSearchResults = ({ query, apiUrl, asEmbeddedWidget }: HackageSearch
           { headers: { 'Content-Type': 'application/json' } }
         )).data;
       } catch (err) {
-        appContext.notifyError('An error occured during searching on Hackage');
+        appContext.notifyError(`An error occurred while searching for packages`);
         console.log(err);
       } finally {
         appContext.finishTask(taskId);
@@ -61,10 +61,10 @@ const HackageSearchResults = ({ query, apiUrl, asEmbeddedWidget }: HackageSearch
   return (
     <div className={s.searchResults}>
       {searchResults.length === 0 && (
-        <NothingFound waitBeforeShow={1500}>Nothing found in Hackage. Try another query.</NothingFound>
+        <NothingFound waitBeforeShow={1500}>No packages found. Try another query.</NothingFound>
       )}
       {searchResults.length > 0 && (
-        <Header>Found on Hackage: {searchResults.length}</Header>
+        <Header>Packages found: {searchResults.length}</Header>
       )}
       <div className={s.searchResultsContainer}>
         {searchResults.map(pkg => {
