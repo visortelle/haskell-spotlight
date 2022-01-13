@@ -192,7 +192,7 @@ const Help = (props: { onExampleClick: (query: string) => void }) => {
             Search Packages
           </div>
           <div className={s.helpExamples}>
-            <ClickableExample query=":p" onClick={props.onExampleClick} />
+            <ClickableExample query=":p ghc" onClick={props.onExampleClick} />
             <ClickableExample query=":p servant" onClick={props.onExampleClick} />
           </div>
         </div>
