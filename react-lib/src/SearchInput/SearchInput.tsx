@@ -176,7 +176,7 @@ const Help = (props: { onExampleClick: (query: string) => void }) => {
       <div className={s.helpContainer}>
         <div className={s.helpSection}>
           <div className={s.helpSectionHeader}>
-            Search Anything
+            🔎 Search Anything
           </div>
           <div className={s.helpExamples}>
             <ClickableExample query="map" onClick={props.onExampleClick} />
@@ -189,7 +189,7 @@ const Help = (props: { onExampleClick: (query: string) => void }) => {
 
         <div className={s.helpSection}>
           <div className={s.helpSectionHeader}>
-            Search Packages
+            📦 Search Packages
           </div>
           <div className={s.helpExamples}>
             <ClickableExample query=":p ghc" onClick={props.onExampleClick} />
@@ -199,7 +199,7 @@ const Help = (props: { onExampleClick: (query: string) => void }) => {
 
         <div className={s.helpSection}>
           <div className={s.helpSectionHeader}>
-            Filter Recent Queries
+            🤔 Filter Recent Queries
           </div>
           <div className={s.helpExamples}>
             <ClickableExample query=":r" onClick={props.onExampleClick} />

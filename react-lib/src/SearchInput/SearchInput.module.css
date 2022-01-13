@@ -44,7 +44,6 @@
 }
 
 .helpSection {
-  margin-bottom: 18rem;
   flex: 1 1;
   min-width: 250rem;
 }
@@ -54,7 +53,7 @@
 }
 
 .helpSectionHeader {
-  margin-bottom: 8rem;
+  margin-bottom: 12rem;
   font-size: 16rem;
   font-weight: bold;
 }
@@ -69,6 +68,7 @@
   display: inline-flex;
   margin-bottom: 12rem;
   flex: 1 1 auto;
+  white-space: nowrap;
 }
 
 .clickableExample:hover {
@@ -84,5 +84,8 @@
   .searchResultsContainer {
     width: calc(100vw - 32rem);
     left: calc(50%);
+  }
+  .helpSection {
+    margin-bottom: 24rem;
   }
 }
