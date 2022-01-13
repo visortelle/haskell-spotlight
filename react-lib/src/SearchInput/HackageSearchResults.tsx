@@ -47,7 +47,7 @@ const HackageSearchResults = ({ query, apiUrl, asEmbeddedWidget }: HackageSearch
       const searchResults: HackageSearchResults = resData;
 
       if (searchResults.length > 0) {
-        appContext.writeSearchHistoryEntry(query);
+        appContext.writeSearchHistoryEntry(`:p ${query}`);
       }
 
       setSearchResults(searchResults);

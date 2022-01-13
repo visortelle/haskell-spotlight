@@ -89,7 +89,7 @@ const HoogleSearchResults = ({ query, apiUrl, asEmbeddedWidget }: HoogleSearchRe
       const searchResults: HoogleSearchResults = groupBy(deduplicate(resData), 'item');
 
       if (Object.keys(searchResults).length > 0) {
-        appContext.writeSearchHistoryEntry(`:t ${query}`);
+        appContext.writeSearchHistoryEntry(query);
       }
 
       setSearchResults(searchResults);

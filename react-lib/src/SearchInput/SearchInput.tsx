@@ -40,8 +40,8 @@ const SearchResults = (props: SearchResultsProps) => {
   let queryType: 'hackage' | 'hoogle' | 'recentSearches' | 'allRecentSearches' | 'showHelp' | 'unknown' = 'unknown';
 
   if (query.startsWith(':')) {
-    if (query?.match(/^\:t .*$/g)) {
-      queryType = 'hoogle';
+    if (query?.match(/^\:p .*$/g)) {
+      queryType = 'hackage';
     } else if (query?.match(/^\:r .*$/g)) {
       queryType = 'recentSearches';
     } else if (query?.match(/^\:r$/g)) {
@@ -53,7 +53,7 @@ const SearchResults = (props: SearchResultsProps) => {
     if (query.length === 0) {
       queryType = 'showHelp';
     } else {
-      queryType = 'hackage';
+      queryType = 'hoogle';
     }
   }
 
@@ -63,12 +63,12 @@ const SearchResults = (props: SearchResultsProps) => {
         {queryType === 'showHelp' && (<Help onExampleClick={props.setQuery} />)}
         {query && queryType === 'hackage' && (
           <HackageSearchResults
-            query={query.trim()}
+            query={query.replace(/^\:p /, '').trim()}
             apiUrl={props.api.hackageApiUrl}
             asEmbeddedWidget={props.asEmbeddedWidget}
           />
         )}
-        {query && queryType === 'hoogle' && <HoogleSearchResults query={query.replace(/^\:t /, '').trim()} apiUrl={props.api.hoogleApiUrl} />}
+        {query && queryType === 'hoogle' && <HoogleSearchResults query={query.trim()} apiUrl={props.api.hoogleApiUrl} />}
         {query && queryType === 'recentSearches' && <RecentSearches query={query.replace(/^\:r ?/, '').trim()} onSelect={props.setQuery} />}
         {query && queryType === 'allRecentSearches' && <RecentSearches query={''} onSelect={props.setQuery} />}
       </div>
