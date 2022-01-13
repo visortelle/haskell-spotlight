@@ -1,15 +1,11 @@
 import * as lib from '@hackage-ui/react-lib';
-import normalizeStyles from '../../styles/normalize.css';
-import globalsStyles from '../../styles/globals.css';
-import fontsStyles from '../../styles/fonts.css';
-import reactLibStyles from '@hackage-ui/react-lib/dist/react-lib.css';
-import reactToastifyStyles from 'react-toastify/dist/ReactToastify.css';
-import hljsStyles from 'highlight.js/styles/kimbie-light.css';
 import styles from './Content.module.css';
 import * as s from './Content.module.css';
 import haskellLogo from '!!raw-loader!./haskell-monochrome.svg'
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary'
+import * as k from '../popup/keybindings';
+import { applyStyles } from '../styles';
 
 const Content = (props: { rootElement: HTMLElement }) => {
   const appContext = useContext(lib.appContext.AppContext);
@@ -18,13 +14,31 @@ const Content = (props: { rootElement: HTMLElement }) => {
   const [isReady, setIsReady] = useState(false);
   const [isShow, setIsShow] = useState(false);
   const [explode, setExplode] = useState(false);
+  const [toggleKB, setToggleKB] = useState<k.KeyBinding | undefined>();
+
+  useEffect(() => {
+    (async () => {
+      const keybinding = await k.readKeyBinding('toggleSpotlight');
+      setToggleKB(() => keybinding);
+    })()
+  }, []);
 
   const toggleVisibility = useCallback((event: KeyboardEvent) => {
-    if (event.ctrlKey && event.key === 'h') {
+    const kb2: k.KeyBinding = {
+      code: event.code,
+      modifiers: {
+        altKey: event.altKey,
+        ctrlKey: event.ctrlKey,
+        metaKey: event.metaKey,
+        shiftKey: event.shiftKey
+      }
+    };
+
+    if (k.eqKeyBindings(toggleKB, kb2)) {
       event.preventDefault();
       setIsShow((isShow) => !isShow);
     }
-  }, [isShow, setIsShow]);
+  }, [isShow, setIsShow, toggleKB]);
 
   // Prevent global page hotkeys when the search input is in focus.
   const handleKeyboardEvents = useCallback((event: KeyboardEvent) => {
@@ -68,7 +82,7 @@ const Content = (props: { rootElement: HTMLElement }) => {
     return () => {
       document.removeEventListener('keyup', toggleVisibility)
     };
-  }, []);
+  }, [toggleKB]);
 
   useEffect(() => {
     let extraStyles = document.createElement('style');
@@ -76,12 +90,7 @@ const Content = (props: { rootElement: HTMLElement }) => {
     (stylesContainerRef.current as HTMLElement).appendChild(extraStyles);
     extraStyles.sheet.insertRule(`.${lib.searchInput.SearchResultsClassName} { top: 72px !important; max-height: calc(100vh - 82px) !important; }`);
 
-    normalizeStyles.use({ target: stylesContainerRef.current });
-    fontsStyles.use({ target: document.head });
-    globalsStyles.use({ target: stylesContainerRef.current });
-    reactLibStyles.use({ target: stylesContainerRef.current });
-    reactToastifyStyles.use({ target: stylesContainerRef.current });
-    hljsStyles.use({ target: stylesContainerRef.current });
+    applyStyles(stylesContainerRef.current);
     styles.use({ target: stylesContainerRef.current });
 
     setIsReady(true);

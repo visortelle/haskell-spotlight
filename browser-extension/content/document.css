@@ -6,7 +6,8 @@
   left: 0;
   right: 0;
   margin: auto;
+  justify-content: center;
   z-index: 2147483647;
   display: flex;
-  font-size: 16px;;
+  font-size: 16px;
 }

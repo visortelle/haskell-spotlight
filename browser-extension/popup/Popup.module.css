@@ -5,34 +5,90 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   font-size: 18px;
 }
 
 .header {
   font-weight: bold;
-  font-size: 32px;
-  margin-bottom: 18px;
+  font-size: 18px;
+  padding: 12px 18px;
   width: 100%;
   text-align: center;
-  padding: 18px;
   background: #5e5086;
+  margin-bottom: 18px;
   color: #fff;
   text-shadow: 1px 3px 2px rgb(0 0 0 / 27%);
 }
 
-.kbd {
+.kbdKeys {
+  display: flex;
+  margin: 12px 18px;
+  padding: 18px 12px;
+  border-radius: 12px;
+  background-color: #aaa;
+  justify-content: center;
+  transition: var(--transition-short);
+  background-color: #5e5086;
+  animation: pulse-mono 800ms infinite ease;
+}
+
+.kbdKeys:hover {
+  cursor: pointer;
+}
+
+.kbdKeys:focus,
+.kbdKeys:active {
+  outline: none;
+}
+
+.kbdKeysAwaiting {
+  background-color: #5e5086;
+  animation: pulse 400ms infinite alternate ease;
+  transition: var(--transition-short);
+}
+
+.kbdKeysCalm {
+  background-color: #aaa;
+  animation: none;
+}
+
+@keyframes pulse-mono {
+  0% {
+    background-color: #bbb;
+  }
+  100% {
+    background-color: #ddd;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #5e5086;
+  }
+  100% {
+    background-color: #453a62;
+  }
+}
+
+.kbdKey {
+  margin: 4px;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 12px;
   background: #5e5086;
   color: #fff;
-  padding: 0 12px;
+  padding: 0 12px 0 14px;
   border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 64px;
-  min-width: 64px;
+  height: 32px;
+  min-width: 32px;
+  white-space: nowrap;
   border-bottom: 6px solid #453a62;
   border-right: 4px solid #453a62;
+  filter: grayscale(1);
+}
+
+.kbdKeyActive {
+  filter: grayscale(0);
 }

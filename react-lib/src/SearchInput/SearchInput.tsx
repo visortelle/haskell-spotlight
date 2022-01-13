@@ -87,6 +87,8 @@ export const SearchInput = (props: SearchInputProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [inputRef, setInputRef] = useState<RefObject<HTMLInputElement>>();
 
+  const forceFocusHotKey = { code: 'Semicolon', char: ':' };
+
   const setQuery = useCallback((query: string) => {
     router?.replace({ query: { ...router.query, search: query } }, undefined, { shallow: true });
     _setQuery(query);
@@ -99,19 +101,25 @@ export const SearchInput = (props: SearchInputProps) => {
   }, [query, isDirty, setQuery, router?.query.search]);
 
   const handleKeyUp = useCallback((event: KeyboardEvent) => {
+    // Blur input on Tab
     if (ref.current && !ref.current.contains(event.target as Node) && event.key === 'Tab') {
+      event.preventDefault();
       setIsFocused(false);
       return;
     }
 
-    if (event.key !== '/') {
-      return;
+    // Show help info for first time user press the hot key
+    if (event.code === forceFocusHotKey.code && isFocused && !isDirty) {
+      event.preventDefault();
+      setIsDirty(true);
+      setFocusedTimes(focusedTimes + 1);
     }
 
-    if (!isFocused) {
+    // Focus on hot key
+    if (!isFocused && event.code === forceFocusHotKey.code) {
       inputRef?.current?.focus();
     }
-  }, [isFocused, inputRef]);
+  }, [isFocused, isDirty, focusedTimes, ref.current, inputRef?.current]);
 
   const handleMouseDown = useCallback((event: MouseEvent) => {
     if (props.asEmbeddedWidget) {
@@ -124,8 +132,8 @@ export const SearchInput = (props: SearchInputProps) => {
   }, [ref]);
 
   useEffect(() => {
-    window.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('keyup', handleKeyUp);
+    window.addEventListener('mousedown', handleMouseDown);
 
     return () => {
       window.removeEventListener("keyup", handleKeyUp);
@@ -138,15 +146,15 @@ export const SearchInput = (props: SearchInputProps) => {
     Boolean((isFocused && query?.length) ||
       (isFocused && (isDirty || focusedTimes > 1))); // don't show search results after page load
 
-  let placeholder = ':t a -> b';
-  if (!props.asEmbeddedWidget) {
-    placeholder = (isFocused && !isDirty && !showSearchResults) ? `Type ":" to show help` : `Click or press "/" to search…`
-  }
-
   return (
     <div className={s.searchInput} ref={ref}>
       <Input
         onChange={(v) => {
+          // Show help info for first time user press the hot key
+          if (!props.asEmbeddedWidget && v === forceFocusHotKey.char && isFocused && !isDirty) {
+            return;
+          }
+
           setIsDirty(true);
           setQuery(v)
         }}
@@ -155,7 +163,7 @@ export const SearchInput = (props: SearchInputProps) => {
           setIsFocused(true);
         }}
         onInputRef={setInputRef}
-        placeholder={placeholder}
+        placeholder={!props.asEmbeddedWidget && (!showSearchResults || !isDirty) ? `Type ":" to display search help…` : 'Search…'}
         value={query}
         focusOnMount
       />

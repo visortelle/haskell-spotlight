@@ -31,9 +31,9 @@ const Input = ({ value, placeholder, onChange, onFocus, onBlur, onInputRef, focu
         className={`${s.inputInput}`}
         type="text"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
-        onFocus={onFocus || (() => {})}
-        onBlur={onBlur || (() => {})}
+        onChange={(event) => onChange(event.target.value)}
+        onFocus={onFocus || (() => { })}
+        onBlur={onBlur || (() => { })}
         placeholder={placeholder}
         spellCheck={false}
       />
