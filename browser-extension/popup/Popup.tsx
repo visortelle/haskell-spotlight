@@ -6,6 +6,15 @@ import * as k from './keybindings';
 
 export default () => {
   const [keyBinding, setKeyBinding] = useState<k.KeyBinding | undefined>();
+  const [tmpKeyBinding, setTmpKeyBinding] = useState<k.KeyBinding>({
+    code: undefined,
+    modifiers: {
+      altKey: false,
+      ctrlKey: false,
+      metaKey: false,
+      shiftKey: false
+    }
+  });
   const [state, setState] = useState<'awaitingForNewKeyBinding' | 'awaitingForUserInput' | 'keyBindingUpdated'>('awaitingForNewKeyBinding');
 
   useEffect(() => {
@@ -18,61 +27,66 @@ export default () => {
     })()
   }, []);
 
-  const handleKeyUp: KeyboardEventHandler = (event) => {
+  const handleKeyUp: React.KeyboardEventHandler = (event): void => {
     event.preventDefault();
     event.stopPropagation();
 
-    const newKeyBinding = k.eventToKeyBinding(event);
-    if (!newKeyBinding) {
+    const isValidKb = k.validateKeyBinding(tmpKeyBinding);
+    if (!isValidKb) {
       return;
     }
 
-    setKeyBinding(newKeyBinding);
-    k.writeKeyBinding('toggleSpotlight', keyBinding).then(() => {
+    setKeyBinding(tmpKeyBinding);
+    k.writeKeyBinding('toggleSpotlight', tmpKeyBinding).then(() => {
       setState('keyBindingUpdated');
     });
   }
 
-  const handleKeyDown: KeyboardEventHandler = (event) => {
-    const newKeyBinding = k.eventToKeyBinding(event, true);
-    if (!newKeyBinding) {
+  const handleKeyDown: React.KeyboardEventHandler = (event): void => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    if (state !== 'awaitingForUserInput') {
       return;
     }
-    setKeyBinding(newKeyBinding);
+
+    const kb = k.eventToKeyBinding(event);
+    setTmpKeyBinding(kb);
   }
 
+  const kb = state === 'awaitingForUserInput' ? tmpKeyBinding : keyBinding;
   return (
-    <div className={s.popup}>
+    <div
+      className={s.popup}
+      onKeyUp={handleKeyUp}
+      onKeyDown={handleKeyDown}
+    >
       <div className={s.header}>Haskell Spotlight</div>
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: '1 1' }}>
         <div style={{ fontSize: '14px', textAlign: 'center', padding: '0 18px' }}>
-          {state === 'awaitingForNewKeyBinding' && <span>Click on the area bellow to change hot key.</span>}
+          {state === 'awaitingForNewKeyBinding' && <span>Click on the area bellow to change hotkey.</span>}
           {state === 'awaitingForUserInput' && <span>Press key combination.</span>}
-          {state === 'keyBindingUpdated' && <span>Hot key has been updated. Close the popup and try it on some web page. Try to refresh the page if nothing happens.</span>}
+          {state === 'keyBindingUpdated' && <span><br /><strong style={{ fontSize: '32px', color: '#5e5086' }}>Refresh the page to apply new hotkey.</strong></span>}
         </div>
 
-        {keyBinding && (
+        {kb && (
           <div
-            className={`${s.kbdKeys} ${state === 'keyBindingUpdated' ? s.kbdKeysCalm : ''} ${state === 'awaitingForUserInput' ? s.kbdKeysAwaiting : ''}`}
+            className={`${s.kbdKeys} ${state === 'awaitingForUserInput' ? s.kbdKeysAwaiting : ''}`}
             onClick={() => {
-              if (state !== 'awaitingForUserInput') {
+              if (state === 'awaitingForNewKeyBinding' || state === 'keyBindingUpdated') {
                 setState('awaitingForUserInput')
               } else if (state === 'awaitingForUserInput') {
-                if (k.validateKeybinding(keyBinding)) {
-                  setState('awaitingForNewKeyBinding');
-                }
+                setState('awaitingForNewKeyBinding');
               }
             }}
-            onKeyUp={handleKeyUp}
-            onKeyDown={handleKeyDown}
             tabIndex={0}
           >
-            <KbdKey name={keyBinding.code} isActive={keyBinding.code !== undefined} />
+            <KbdKey name={kb.code} isActive={kb.code !== undefined} />
             <div>
-              <KbdKey name="Alt" isActive={keyBinding.modifiers.altKey} />
-              <KbdKey name="Ctrl" isActive={keyBinding.modifiers.ctrlKey} />
-              <KbdKey name="Meta" isActive={keyBinding.modifiers.metaKey} />
-              <KbdKey name="Shift" isActive={keyBinding.modifiers.shiftKey} />
+              <KbdKey name="Alt" isActive={kb.modifiers.altKey} />
+              <KbdKey name="Ctrl" isActive={kb.modifiers.ctrlKey} />
+              <KbdKey name="Meta" isActive={kb.modifiers.metaKey} />
+              <KbdKey name="Shift" isActive={kb.modifiers.shiftKey} />
             </div>
           </div>
         )}

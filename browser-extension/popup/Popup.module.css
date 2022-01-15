@@ -31,8 +31,6 @@
   justify-content: center;
   align-items: center;
   transition: var(--transition-short);
-  background-color: #5e5086;
-  animation: pulse-mono 800ms infinite ease;
 }
 
 .kbdKeys:hover {
@@ -46,31 +44,7 @@
 
 .kbdKeysAwaiting {
   background-color: #5e5086;
-  animation: pulse 400ms infinite alternate ease;
   transition: var(--transition-short);
-}
-
-.kbdKeysCalm {
-  background-color: #aaa;
-  animation: none;
-}
-
-@keyframes pulse-mono {
-  0% {
-    background-color: #bbb;
-  }
-  100% {
-    background-color: #ddd;
-  }
-}
-
-@keyframes pulse {
-  0% {
-    background-color: #5e5086;
-  }
-  100% {
-    background-color: #453a62;
-  }
 }
 
 .kbdKey {

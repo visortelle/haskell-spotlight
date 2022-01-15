@@ -64,6 +64,8 @@ const HoogleSearchResults = ({ query, apiUrl, asEmbeddedWidget }: HoogleSearchRe
   }, [globalViewMode, setGlobalViewMode]);
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     (async () => {
       if (!query) {
         return;
@@ -77,13 +79,22 @@ const HoogleSearchResults = ({ query, apiUrl, asEmbeddedWidget }: HoogleSearchRe
 
         resData = await (await axios.get(
           `${apiUrl}?mode=json&format=text&hoogle=${encodeURIComponent(query)}&start=1&count=1000`,
-          { headers: { 'Content-Type': 'application/json' } }
+          {
+            headers: { 'Content-Type': 'application/json' },
+            signal: abortController.signal
+          }
         )).data;
       } catch (err) {
-        appContext.notifyError('An error occured during searching on Hoogle');
-        console.log(err);
+        if (!abortController.signal.aborted) {
+          appContext.notifyError('An error occured during searching on Hoogle');
+          console.log(err);
+        }
       } finally {
         appContext.finishTask(taskId);
+      }
+
+      if (abortController.signal.aborted) {
+        return;
       }
 
       const searchResults: HoogleSearchResults = groupBy(deduplicate(resData), 'item');
@@ -97,6 +108,10 @@ const HoogleSearchResults = ({ query, apiUrl, asEmbeddedWidget }: HoogleSearchRe
       const searchResultsKeys = Object.keys(searchResults);
       setViewModes(zipObject(searchResultsKeys, searchResultsKeys.map(() => globalViewMode)));
     })();
+
+    return () => {
+      abortController.abort();
+    }
 
     // XXX - don't add appContext to deps here as eslint suggests.
     // It may cause infinite recursive calls. Fix it if you know how.

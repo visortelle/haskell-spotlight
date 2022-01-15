@@ -2,7 +2,7 @@ import * as lib from '@hackage-ui/react-lib';
 import styles from './Content.module.css';
 import * as s from './Content.module.css';
 import haskellLogo from '!!raw-loader!./haskell-monochrome.svg'
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { ReactText, Ref, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary'
 import * as k from '../popup/keybindings';
 import { applyStyles } from '../styles';
@@ -10,79 +10,94 @@ import { applyStyles } from '../styles';
 const Content = (props: { rootElement: HTMLElement }) => {
   const appContext = useContext(lib.appContext.AppContext);
   const stylesContainerRef = useRef(null);
-  const contentRef = useRef(null);
+  const [contentEl, setContentEl] = useState<HTMLDivElement>(null);
   const [isReady, setIsReady] = useState(false);
   const [isShow, setIsShow] = useState(false);
   const [explode, setExplode] = useState(false);
-  const [toggleKB, setToggleKB] = useState<k.KeyBinding | undefined>();
+  const [showKB, setShowKB] = useState<k.KeyBinding | undefined>();
 
-  useEffect(() => {
-    (async () => {
-      const keybinding = await k.readKeyBinding('toggleSpotlight');
-      setToggleKB(() => keybinding);
-    })()
-  }, []);
-
-  const toggleVisibility = useCallback((event: KeyboardEvent) => {
-    const kb2: k.KeyBinding = {
-      code: event.code,
-      modifiers: {
-        altKey: event.altKey,
-        ctrlKey: event.ctrlKey,
-        metaKey: event.metaKey,
-        shiftKey: event.shiftKey
-      }
-    };
-
-    if (k.eqKeyBindings(toggleKB, kb2)) {
-      event.preventDefault();
-      setIsShow((isShow) => !isShow);
+  const preventDefaultKeyBehavior = useCallback((event: KeyboardEvent | React.KeyboardEvent) => {
+    if (!showKB) {
+      return;
     }
-  }, [isShow, setIsShow, toggleKB]);
 
-  // Prevent global page hotkeys when the search input is in focus.
+    if (!isShow && k.eqKeyBindings(showKB, k.eventToKeyBinding(event))) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }, [isShow, showKB]);
+
+  const handleDocumentKeydown = useCallback((event: KeyboardEvent) => {
+    if (!isShow && k.eqKeyBindings(showKB, k.eventToKeyBinding(event))) {
+      setIsShow(() => true);
+    }
+  }, [isShow, setIsShow, showKB]);
+
+  // Prevent global page hotkeys when the spotlight popup is in focus.
   const handleKeyboardEvents = useCallback((event: KeyboardEvent) => {
     if (event.key === 'Escape') {
-      event.preventDefault();
-      setIsShow(false);
+      setIsShow(() => false);
     }
 
-    event.stopPropagation();
-  }, []);
+    if (isShow) {
+      event.stopPropagation();
+    }
+  }, [setIsShow, isShow, showKB]);
 
   const handleClickOutside = useCallback((event: MouseEvent) => {
     if (props.rootElement === event.target || props.rootElement.contains(event.target as Node)) {
       return;
     }
 
-    setIsShow(false);
+    setIsShow(() => false);
   }, []);
 
   useEffect(() => {
-    if (!contentRef.current) {
+    (async () => {
+      const keybinding = await k.readKeyBinding('toggleSpotlight');
+      setShowKB(() => keybinding);
+    })()
+  }, []);
+
+  useEffect(() => {
+    const cleanup = () => {
+      document.removeEventListener('keydown', preventDefaultKeyBehavior);
+      document.removeEventListener('keyup', preventDefaultKeyBehavior);
+    }
+
+    if (!showKB) {
+      return;
+    }
+
+    document.addEventListener('keydown', preventDefaultKeyBehavior);
+    document.addEventListener('keyup', preventDefaultKeyBehavior);
+
+    return cleanup;
+  }, [preventDefaultKeyBehavior, showKB]);
+
+  useEffect(() => {
+    if (!contentEl) {
       return;
     }
 
     document.addEventListener('mousedown', handleClickOutside);
-    contentRef.current.addEventListener('keyup', handleKeyboardEvents);
-    contentRef.current.addEventListener('keydown', handleKeyboardEvents);
-    contentRef.current.addEventListener('keypress', handleKeyboardEvents);
+    contentEl.addEventListener('keyup', handleKeyboardEvents);
+    contentEl.addEventListener('keydown', handleKeyboardEvents);
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-      contentRef?.current?.removeEventListener('keyup', handleKeyboardEvents)
-      contentRef?.current?.removeEventListener('keydown', handleKeyboardEvents)
-      contentRef?.current?.removeEventListener('keypress', handleKeyboardEvents)
+      contentEl.removeEventListener('keyup', handleKeyboardEvents)
+      contentEl.removeEventListener('keydown', handleKeyboardEvents)
     };
-  });
+  }, [contentEl]);
 
   useEffect(() => {
-    document.addEventListener('keyup', toggleVisibility);
+    document.addEventListener('keydown', handleDocumentKeydown);
 
     return () => {
-      document.removeEventListener('keyup', toggleVisibility)
+      document.removeEventListener('keydown', handleDocumentKeydown)
     };
-  }, [toggleKB]);
+  }, [showKB]);
 
   useEffect(() => {
     let extraStyles = document.createElement('style');
@@ -93,7 +108,7 @@ const Content = (props: { rootElement: HTMLElement }) => {
     applyStyles(stylesContainerRef.current);
     styles.use({ target: stylesContainerRef.current });
 
-    setIsReady(true);
+    setIsReady(() => true);
   }, [stylesContainerRef]);
 
   return (
@@ -105,7 +120,7 @@ const Content = (props: { rootElement: HTMLElement }) => {
       <div>
         <div ref={stylesContainerRef}></div>
         {isReady && isShow && (
-          <div ref={contentRef} className={s.content}>
+          <div ref={setContentEl} className={s.content}>
             <div className={`${s.progressIndicator} ${Object.keys(appContext.tasks).length > 0 ? s.progressIndicatorRunning : ''}`}></div>
             <a href="https://github.com/visortelle/hackage-ui" target='__blank' className={s.logo} dangerouslySetInnerHTML={{ __html: haskellLogo }}></a>
             <div style={{ flex: 1 }}>

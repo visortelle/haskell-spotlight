@@ -20,6 +20,8 @@ const HackageSearchResults = ({ query, apiUrl, asEmbeddedWidget }: HackageSearch
   const [searchResults, setSearchResults] = useState<HackageSearchResults>([]);
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     (async () => {
       if (!query) {
         return;
@@ -38,10 +40,16 @@ const HackageSearchResults = ({ query, apiUrl, asEmbeddedWidget }: HackageSearch
           { headers: { 'Content-Type': 'application/json' } }
         )).data;
       } catch (err) {
-        appContext.notifyError(`An error occurred while searching for packages`);
-        console.log(err);
+        if (!abortController.signal.aborted) {
+          appContext.notifyError(`An error occurred while searching for packages`);
+          console.log(err);
+        }
       } finally {
         appContext.finishTask(taskId);
+      }
+
+      if (abortController.signal.aborted) {
+        return;
       }
 
       const searchResults: HackageSearchResults = resData;
@@ -53,9 +61,13 @@ const HackageSearchResults = ({ query, apiUrl, asEmbeddedWidget }: HackageSearch
       setSearchResults(searchResults);
     })()
 
+    return () => {
+      abortController.abort();
+    }
+
     // XXX - don't add appContext to deps here as eslint suggests.
     // It may cause infinite recursive calls. Fix it if you know how.
-  }, [query, appContext.tasks.length]);
+  }, [query]);
 
   const Link = asEmbeddedWidget ? ExtA : A;
   return (

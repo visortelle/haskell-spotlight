@@ -31,20 +31,24 @@ export const defaultKeyBindings: Record<KeyBindingId, KeyBinding> = {
   }
 }
 
-export const eventToKeyBinding = (event: React.KeyboardEvent, ignoreValidation?: boolean): k.KeyBinding => {
-  const noModifierSpecified = !(event.altKey || event.ctrlKey || event.metaKey || event.shiftKey)
+// https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values
+export const isKeyModifier = (code: string) => {
+  return code === 'AltLeft' ||
+    code === 'AltRight' ||
+    code === 'ControlLeft' ||
+    code === 'ControlRight' ||
+    code === 'MetaLeft' ||
+    code === 'MetaRight' ||
+    code === 'OSLeft' ||
+    code === 'OSRight' ||
+    code === 'ShiftLeft' ||
+    code === 'ShiftRight'
+}
 
-  const keyIsModifier =
-    event.key === 'Alt' ||
-    event.key === 'Control' ||
-    event.key === 'Meta' ||
-    event.key === 'Shift';
+export const eventToKeyBinding = (event: KeyboardEvent | React.KeyboardEvent): KeyBinding => {
+  const keyIsModifier = isKeyModifier(event.code);
 
-  if (!ignoreValidation && (noModifierSpecified || keyIsModifier)) {
-    return undefined;
-  }
-
-  return {
+  const kb = {
     code: keyIsModifier ? undefined : event.code,
     modifiers: {
       altKey: event.altKey,
@@ -53,6 +57,8 @@ export const eventToKeyBinding = (event: React.KeyboardEvent, ignoreValidation?:
       shiftKey: event.shiftKey,
     }
   };
+
+  return kb;
 }
 
 export const eqKeyBindings = (kb1: KeyBinding, kb2: KeyBinding): boolean => {
@@ -66,7 +72,7 @@ export const eqKeyBindings = (kb1: KeyBinding, kb2: KeyBinding): boolean => {
 }
 
 
-export const resetKeyBinding = async (id: KeyBindingId): Promise<void> => {
+export const setDefaultKeybinding = async (id: KeyBindingId): Promise<void> => {
   const defaultKeyBinding = defaultKeyBindings[id];
   if (defaultKeyBinding) {
     console.log(`The keybinding ${id} is invalid. We'll reset it to default.`);
@@ -74,13 +80,13 @@ export const resetKeyBinding = async (id: KeyBindingId): Promise<void> => {
   }
 }
 
-export const resetKeyBindings = async (): Promise<void> => {
-  await Promise.all(Object.keys(defaultKeyBindings).map(id => resetKeyBinding(id)));
+export const setDefaultKeyBindings = async (): Promise<void> => {
+  await Promise.all(Object.keys(defaultKeyBindings).map(id => setDefaultKeybinding(id as KeyBindingId)));
 }
 
-// XXX - Very naive validation.
-export const validateKeybinding = (kb: KeyBinding): boolean => {
-  const isValid =
+// XXX - Still quite naive validation.
+export const validateKeyBinding = (kb: KeyBinding): boolean => {
+  const schemeIsValid =
     (typeof kb.code === 'string') &&
     (typeof kb.modifiers === 'object') &&
     (typeof kb.modifiers.altKey === 'boolean') &&
@@ -88,25 +94,48 @@ export const validateKeybinding = (kb: KeyBinding): boolean => {
     (typeof kb.modifiers.metaKey === 'boolean') &&
     (typeof kb.modifiers.shiftKey === 'boolean');
 
-  return isValid;
+  if (!schemeIsValid) {
+    return false;
+  }
+
+  const noModifierSpecified = !(kb.modifiers.altKey || kb.modifiers.ctrlKey || kb.modifiers.metaKey || kb.modifiers.shiftKey);
+  if (noModifierSpecified) {
+    return false;
+  }
+
+  const keyIsModifier = isKeyModifier(kb);
+  if (keyIsModifier) {
+    return false;
+  }
+
+  return true;
 }
 
+const readKeyBindingStr = async (storageKey: KeyBindingId): Promise<string | undefined> => (await browser.storage.local.get([storageKey]))[storageKey];
+
 export const readKeyBinding = async (id: KeyBindingId): Promise<KeyBinding | undefined> => {
-  const storageKey = kbToStorage(id);
-  let keybinding: KeyBinding | undefined;
+  const storageKey = kbToStorage(id) as KeyBindingId;
+
+  let serializedKb = await readKeyBindingStr(storageKey);
+  let kb: KeyBinding;
 
   try {
-    keybinding = JSON.parse((await browser.storage.local.get(storageKey))[storageKey]);
-    if (!validateKeybinding(keybinding)) {
-      await resetKeyBindings();
-      return (await readKeyBinding(id));
+    if (!serializedKb) {
+      await setDefaultKeyBindings();
+      serializedKb = await readKeyBindingStr(storageKey);
+    }
+
+    kb = JSON.parse(serializedKb);
+    if (!validateKeyBinding(kb)) {
+      await setDefaultKeyBindings();
+      serializedKb = await readKeyBindingStr(storageKey);
     }
   } catch (err) {
-    console.log(err);
-    await resetKeyBinding(id);
-  } finally {
-    return keybinding;
+    await setDefaultKeyBindings();
+    return await readKeyBinding(id);
   }
+
+  return kb;
 }
 
 export const writeKeyBinding = async (id: KeyBindingId, kb: KeyBinding): Promise<void> => {
