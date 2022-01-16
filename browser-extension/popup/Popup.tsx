@@ -66,7 +66,7 @@ export default () => {
         <div style={{ fontSize: '14px', textAlign: 'center', padding: '0 18px' }}>
           {state === 'awaitingForNewKeyBinding' && <span>Click on the area bellow to change hotkey.</span>}
           {state === 'awaitingForUserInput' && <span>Press key combination.</span>}
-          {state === 'keyBindingUpdated' && <span><br /><strong style={{ fontSize: '32px', color: '#5e5086' }}>Refresh the page to apply new hotkey.</strong></span>}
+          {state === 'keyBindingUpdated' && <span><br /><strong style={{ fontSize: '24px', color: '#5e5086' }}>Refresh the page to apply new hotkey.</strong></span>}
         </div>
 
         {kb && (
