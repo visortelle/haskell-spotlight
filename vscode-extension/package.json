@@ -1,0 +1,91 @@
+{
+  "name": "haskell-spotlight",
+  "description": "Search on Hackage, Hoogle, and more soon.",
+  "icon": "build/icon-192.png",
+  "version": "0.0.1",
+  "publisher": "visortelle",
+  "displayName": "Haskell Spotlight",
+  "license": "MIT",
+  "preview": true,
+  "homepage": "https://github.com/visortelle/hackage-ui/blob/main/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/visortelle/hackage-ui"
+  },
+  "bugs": {
+    "url": "https://github.com/visortelle/hackage-ui/issues"
+  },
+  "engines": {
+    "vscode": "^1.47.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Other"
+  ],
+  "keywords": [
+    "haskell"
+  ],
+  "activationEvents": [
+    "onCommand:haskellSpotlight.show",
+    "onWebviewPanel:haskellSpotlight"
+  ],
+  "main": "./build/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "haskellSpotlight.show",
+        "title": "Toggle",
+        "category": "Haskell Spotlight"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "haskellSpotlight.show",
+        "key": "alt+h",
+        "mac": "alt+h"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "make build",
+    "build": "rm -rf build && webpack --config webpack.config.ts --env mode=production && cp -r ./assets/* ./build/",
+    "build:dev": "rm -rf build && webpack --config webpack.config.ts --env mode=development && cp -r ./assets/* ./build/",
+    "dev": "chokidar \"**/*\" -i \"node_modules/**/*\" -i \"build\" -c \"npm run build:dev\" --initial"
+  },
+  "devDependencies": {
+    "@hackage-ui/react-lib": "*",
+    "highlight.js": "^11.4.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-toastify": "^8.1.0",
+    "@swc/core": "^1.2.107",
+    "@types/node": "^12.12.0",
+    "@types/react": "^17.0.38",
+    "@types/react-dom": "^17.0.11",
+    "@types/vscode": "^1.47.0",
+    "@types/vscode-webview": "^1.57.0",
+    "@types/webpack": "^5.28.0",
+    "@types/webpack-dev-server": "^3.11.5",
+    "@typescript-eslint/eslint-plugin": "^4.16.0",
+    "@typescript-eslint/parser": "^4.16.0",
+    "buffer": "^6.0.3",
+    "chokidar-cli": "^3.0.0",
+    "crypto-browserify": "^3.12.0",
+    "css-loader": "^6.5.1",
+    "postcss-loader": "^6.2.1",
+    "postcss-rem-to-pixel": "^4.1.2",
+    "postcss-safe-important": "^1.2.1",
+    "postcss-selector-replace": "^1.0.2",
+    "raw-loader": "^4.0.2",
+    "stream-browserify": "^3.0.0",
+    "style-loader": "^3.3.1",
+    "swc-loader": "^0.1.15",
+    "ts-loader": "^9.2.6",
+    "ts-node": "^10.1.0",
+    "tsdx": "^0.14.1",
+    "typescript": "^4.4.4",
+    "webpack": "^5.63.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.4.0"
+  }
+}

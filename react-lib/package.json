@@ -61,10 +61,7 @@
     "tsconfig-paths": "^3.10.1",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
-    "typescript": "^4.4.4",
-    "webpack": "^5.63.0",
-    "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.4.0"
+    "typescript": "^4.4.4"
   },
   "scripts": {
     "build": "rm -rf build && tsdx build",

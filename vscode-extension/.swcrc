@@ -1,0 +1,26 @@
+{
+  "module": {
+    "type": "commonjs"
+  },
+  "jsc": {
+    "target": "es2015",
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true
+    },
+    "transform": {
+      "react": {
+        "throwIfNamespace": true,
+        "useBuiltins": true,
+        "runtime": "automatic"
+      },
+      "optimizer": {
+        "globals": {
+          "vars": {
+            "__DEBUG__": "true"
+          }
+        }
+      }
+    }
+  }
+}

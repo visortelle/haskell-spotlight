@@ -2,7 +2,7 @@ import * as lib from '@hackage-ui/react-lib';
 import styles from './Content.module.css';
 import * as s from './Content.module.css';
 import haskellLogo from '!!raw-loader!./haskell-monochrome.svg'
-import { ReactText, Ref, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary'
 import * as k from '../popup/keybindings';
 import { applyStyles } from '../styles';
