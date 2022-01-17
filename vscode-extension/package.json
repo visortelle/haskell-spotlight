@@ -1,0 +1,79 @@
+{
+  "name": "@hackage-ui/vscode-extension",
+  "description": "Haskell Spotilght VSCode extension",
+  "version": "0.0.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/visortelle/hackage-ui"
+  },
+  "engines": {
+    "vscode": "^1.47.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:haskellSpotlight.show",
+    "onWebviewPanel:haskellSpotlight"
+  ],
+  "main": "./build/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "haskellSpotlight.show",
+        "title": "Show",
+        "category": "Haskell Spotlight"
+      },
+      {
+        "command": "haskellSpotlight.hide",
+        "title": "Hide",
+        "category": "Haskell Spotlight"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "rm -rf build && webpack --config webpack.config.ts --env mode=production",
+    "build:dev": "rm -rf build && webpack --config webpack.config.ts --env mode=development",
+    "dev": "chokidar \"**/*\" -i \"node_modules/**/*\" -i \"build\" -c \"npm run build:dev\" --initial"
+  },
+  "dependencies": {
+    "@hackage-ui/react-lib": "*",
+    "highlight.js": "^11.4.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-toastify": "^8.1.0"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.2.107",
+    "@types/node": "^12.12.0",
+    "@types/react": "^17.0.38",
+    "@types/react-dom": "^17.0.11",
+    "@types/vscode": "^1.47.0",
+    "@types/vscode-webview": "^1.57.0",
+    "@types/webpack": "^5.28.0",
+    "@types/webpack-dev-server": "^3.11.5",
+    "@typescript-eslint/eslint-plugin": "^4.16.0",
+    "@typescript-eslint/parser": "^4.16.0",
+    "buffer": "^6.0.3",
+    "chokidar-cli": "^3.0.0",
+    "crypto-browserify": "^3.12.0",
+    "css-loader": "^6.5.1",
+    "postcss-loader": "^6.2.1",
+    "postcss-rem-to-pixel": "^4.1.2",
+    "postcss-safe-important": "^1.2.1",
+    "postcss-selector-replace": "^1.0.2",
+    "stream-browserify": "^3.0.0",
+    "style-loader": "^3.3.1",
+    "swc-loader": "^0.1.15",
+    "ts-loader": "^9.2.6",
+    "ts-node": "^10.1.0",
+    "tsdx": "^0.14.1",
+    "typescript": "^4.4.4",
+    "webpack": "^5.63.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.4.0"
+  }
+}
