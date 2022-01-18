@@ -18,3 +18,4 @@ https://code.visualstudio.com/api/extension-guides/webview#inspecting-and-debugg
 
 https://code.visualstudio.com/api/working-with-extensions/publishing-extension
 
+Manage in the marketplace: https://marketplace.visualstudio.com/manage/publishers/visortelle

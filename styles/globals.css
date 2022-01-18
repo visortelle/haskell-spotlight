@@ -19,9 +19,9 @@
   --purple-color-3: #8f4e8b;
   --transition-short: all 180ms ease 0s;
   --backdrop-filter-blur: blur(12px);
-  --accent-color-green: var(--purple-color-2);
+  --accent-color-green: #04c262;
   --accent-color-red: #bf4646;
-  --accent-color-yellow: #ff9042;
+  --accent-color-yellow: #f8cf06;
   --accent-color-blue: #5084ff;
   --accent-color-purple: #9d50ff;
   --max-content-width: 1000px;

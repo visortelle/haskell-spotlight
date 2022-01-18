@@ -1,0 +1,44 @@
+.briefInfo {
+  background-color: #fff;
+  padding: 32rem 24rem 18rem 24rem;
+}
+
+.packageName {
+  margin: 0;
+  margin-bottom: 8rem;
+  line-height: 1.1;
+  font-size: 32rem;
+  font-weight: bold;
+  display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  align-items: center;
+}
+
+.packageNameH1 {
+  display: inline;
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.packageVersion {
+  font-size: 24rem;
+  margin-left: 8rem;
+  font-weight: bold;
+  opacity: 0.66;
+  position: relative;
+  top: 2rem;
+}
+
+.shortDescription {
+  font-size: 18rem;
+  opacity: 0.66;
+  margin-bottom: 18rem;
+}
+
+.shortDescription:last-child {
+  margin-bottom: 0;
+}
