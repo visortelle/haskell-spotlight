@@ -2,7 +2,7 @@
   "name": "haskell-spotlight",
   "description": "Search on Hackage, Hoogle, and more soon.",
   "icon": "build/icon-192.png",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "visortelle",
   "displayName": "Haskell Spotlight",
   "license": "MIT",
