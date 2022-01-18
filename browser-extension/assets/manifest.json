@@ -27,7 +27,7 @@
   "permissions": [
     "storage",
     "unlimitedStorage",
-    "tabs",
+    "activeTab",
     "https://hackage-ui.vercel.app/api/*"
   ]
 }
