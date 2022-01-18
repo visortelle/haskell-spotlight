@@ -1,0 +1,87 @@
+.content {
+  padding: 12rem 18rem;
+  padding-left: 60rem;
+  background-color: var(--purple-color-2);
+  box-shadow: 0 2rem 12rem rgba(0, 0, 0, 0.5);
+  border-radius: 8rem;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  width: 100vw;
+  display: flex;
+  position: relative;
+  font-family: var(--vscode-font-family);
+}
+
+.content code,
+.content pre {
+  font-family: var(--vscode-editor-font-family);
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--purple-color-2);
+  position: absolute;
+  border-radius: 8rem;
+  left: 12rem;
+  top: 7rem;
+  bottom: 8rem;
+  width: 42rem;
+  height: 42rem;
+  transition: var(--transition-short);
+}
+
+.logo:hover {
+  opacity: 1;
+  background-color: var(--purple-color-1);
+  transition: var(--transition-short);
+}
+
+.logo:hover svg {
+  cursor: pointer;
+  fill: var(--purple-color-2);
+  transition: var(--transition-short);
+}
+
+.logo svg {
+  width: 32rem;
+  height: 32rem;
+  fill: var(--purple-color-1);
+  transition: var(--transition-short);
+}
+
+.progressIndicator {
+  width: calc(100% - 4rem);
+  height: 4rem;
+  background-color: var(--purple-color-2);
+  position: absolute;
+  top: 0rem;
+  left: 0;
+  right: 0;
+  border-radius: 8rem / 4rem;
+}
+
+.progressIndicatorRunning {
+  background-color: var(--purple-color-1);
+  animation: pulse 400ms infinite normal;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0;
+    width: 0%;
+  }
+  10% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/* top: 72rem !important; */
+/* max-height: calc(100vh - 82rem) !important; */

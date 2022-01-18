@@ -23,13 +23,15 @@
     "commands": [
       {
         "command": "haskellSpotlight.show",
-        "title": "Show",
+        "title": "Toggle",
         "category": "Haskell Spotlight"
-      },
+      }
+    ],
+    "keybindings": [
       {
-        "command": "haskellSpotlight.hide",
-        "title": "Hide",
-        "category": "Haskell Spotlight"
+        "command": "haskellSpotlight.show",
+        "key": "alt+h",
+        "mac": "alt+h"
       }
     ]
   },
@@ -65,6 +67,7 @@
     "postcss-rem-to-pixel": "^4.1.2",
     "postcss-safe-important": "^1.2.1",
     "postcss-selector-replace": "^1.0.2",
+    "raw-loader": "^4.0.2",
     "stream-browserify": "^3.0.0",
     "style-loader": "^3.3.1",
     "swc-loader": "^0.1.15",

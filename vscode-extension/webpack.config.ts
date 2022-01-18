@@ -71,20 +71,7 @@ export default ({
             loader: "postcss-loader",
             options: {
               postcssOptions: {
-                plugins: [
-                  [
-                    // Replace :root to :host as extension renders to shadow dom.
-                    "postcss-rem-to-pixel",
-                    {
-                      rootValue: 1,
-                      unitPrecision: 5,
-                      propList: ["*", "border-radius"],
-                      replace: true,
-                      mediaQuery: true
-                    }
-                  ],
-                  ["postcss-safe-important", {}]
-                ]
+                plugins: [["postcss-safe-important", {}]]
               }
             }
           }
