@@ -1,11 +1,18 @@
 {
-  "name": "@hackage-ui/vscode-extension",
-  "description": "Haskell Spotilght VSCode extension",
+  "name": "haskell-spotlight",
+  "description": "Search on Hackage, Hoogle, and more soon.",
+  "icon": "./src/icon-192.png",
   "version": "0.0.1",
+  "publisher": "visortelle",
+  "displayName": "Haskell Spotlight",
   "license": "MIT",
+  "preview": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/visortelle/hackage-ui"
+  },
+  "bugs": {
+    "url": "https://github.com/visortelle/hackage-ui/issues"
   },
   "engines": {
     "vscode": "^1.47.0"
@@ -13,6 +20,9 @@
   "categories": [
     "Programming Languages",
     "Other"
+  ],
+  "keywords": [
+    "haskell"
   ],
   "activationEvents": [
     "onCommand:haskellSpotlight.show",

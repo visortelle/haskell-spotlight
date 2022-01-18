@@ -13,3 +13,8 @@
 ## Debugging WebView
 
 https://code.visualstudio.com/api/extension-guides/webview#inspecting-and-debugging-webviews
+
+## Publish
+
+https://code.visualstudio.com/api/working-with-extensions/publishing-extension
+
