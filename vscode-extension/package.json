@@ -34,7 +34,7 @@
     "commands": [
       {
         "command": "haskellSpotlight.show",
-        "title": "Toggle",
+        "title": "Show",
         "category": "Haskell Spotlight"
       }
     ],
