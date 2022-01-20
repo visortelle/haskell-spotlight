@@ -1,7 +1,7 @@
 import { NextPage, GetStaticPropsResult, GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 import PackagePage from '../../components/pages/package/PackagePage';
-import { PackageProps, Versions, License, Homepage } from '../../components/pages/package/common';
+import { PackageProps, Version, Versions, PreferredVersions, License, Homepage } from '../../components/pages/package/common';
 import axios from 'axios';
 import hljs from 'highlight.js';
 import cheerio, { CheerioAPI } from 'cheerio';
@@ -25,7 +25,7 @@ export async function getStaticProps(props: GetStaticPropsContext): Promise<GetS
 
   let html = '';
   try {
-    html = await (await axios(`https://hackage.haskell.org/package/${encodeURIComponent(packageId)}`)).data;
+    html = await getPackageRawHtml(packageId);
   } catch (err) {
     console.log(err);
   }
@@ -37,12 +37,13 @@ export async function getStaticProps(props: GetStaticPropsContext): Promise<GetS
   const name = $('h1 a', docContent).html()?.trim() || '';
   const shortDescription = $('h1 small', docContent).html()?.trim() || null;
   const longDescriptionHtml = $('#description').html()?.trim() || null;
+  const versions = await getVersions(name, $);
 
   return {
     props: {
       id: packageId,
       name,
-      versions: getVersions($),
+      versions,
       license: getLicense($),
       homepage: getHomepage($),
       repositoryUrl: getRepositoryUrl($),
@@ -51,7 +52,7 @@ export async function getStaticProps(props: GetStaticPropsContext): Promise<GetS
       shortDescription,
       longDescriptionHtml
     },
-    revalidate: 10
+    revalidate: 60
   }
 }
 
@@ -79,6 +80,18 @@ const languagesToHighlight = [
   'YAML',
   'Nix'
 ];
+
+async function getPackageRawHtml(packageId: string): Promise<string> {
+  let html: string = '';
+
+  try {
+    html = await (await axios(`https://hackage.haskell.org/package/${encodeURIComponent(packageId)}`)).data;
+  } catch (err) {
+    console.log(err);
+  }
+
+  return html;
+}
 
 // XXX - We can get rid of most content of this function after the hackage-server will implement missing APIs.
 function monkeyPatchDocument($: CheerioAPI): void {
@@ -108,12 +121,51 @@ function monkeyPatchDocument($: CheerioAPI): void {
   description.html(newDescriptionHtml);
 }
 
-function getVersions($: CheerioAPI): Versions {
+async function getVersions(packageName: string, $: CheerioAPI): Promise<Versions> {
   const propertiesElement = $('#properties').get(0);
   const tableTd = $(`th:contains('Version') + td`, propertiesElement).get(0);
   const current = $(`strong`, tableTd).text().trim();
-  const available = $('*', tableTd).map((_, el) => $(el).text().trim()).toArray();
-  return { current, available };
+  const availableVersions = $('*', tableTd).map((_, el) => $(el).text().trim()).toArray();
+
+  let preferred: PreferredVersions = { normal: [], unpreferred: [], deprecated: [] };
+  let available: Version[] = [];
+
+  try {
+    const preferredData = await (await axios.get(`https://hackage.haskell.org/package/${packageName}`, { headers: { accept: 'application/json' } })).data;
+    preferred = {
+      normal: preferredData.normal || [],
+      unpreferred: preferredData.unpreferred || [],
+      deprecated: preferredData.deprecated || []
+    }
+
+    // XXX - it's terrible for performance, but probably ok for demo.
+    const _available = await (await Promise.allSettled(availableVersions.map((id) => getVersion(packageName, id))));
+    available = _available.filter(v => v.status === 'fulfilled').map(v => (v as any).value);
+  } catch (err) {
+    console.log(err);
+  } finally {
+    return { current, available, preferred: preferred };
+  }
+}
+
+async function getVersion(packageName: string, version: string): Promise<Version> {
+  let html = '';
+  try {
+    html = await getPackageRawHtml(`${packageName}-${version}`);
+  } catch (err) {
+    console.log(err);
+  }
+
+  const $ = cheerio.load(html);
+  const propertiesElement = $('#properties').get(0);
+  const releasedTd = $(`th:contains('Uploaded') + td`, propertiesElement).get(0);
+
+  return {
+    id: version,
+    license: { name: 'license_name', url: '#' },
+    releasedAt: new Date().toISOString(),
+    releasedBy: 'releaser'
+  }
 }
 
 function getLicense($: CheerioAPI): License | null {

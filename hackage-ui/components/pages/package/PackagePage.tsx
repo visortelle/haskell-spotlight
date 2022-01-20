@@ -3,7 +3,7 @@ import Footer from "../../layout/Footer";
 import s from './PackagePage.module.css';
 import { PackageProps } from "./common";
 import Sidebar from './Sidebar';
-import PackageOverview from "./tabs/PackageOverview";
+import Tabs from "./tabs/Tabs";
 
 const screenName = 'HackagePackagePage';
 
@@ -12,8 +12,19 @@ const Package = (props: PackageProps) => {
     <div className={s.page}>
       <GlobalMenu {...defaultMenuProps} />
       <div className={s.packageContainer}>
-        <Tabs {...props} />
-        <div className={s.sidebarContainer}>
+
+        <div className={s.content}>
+          <div className={s.briefInfo}>
+            <div className={s.packageName}>
+              <small style={{ position: 'relative', top: '2rem' }}>📦</small>&nbsp;<h1 className={s.packageNameH1}>{props.name}</h1><span className={s.packageVersion}>{props.versions.current}</span>
+            </div>
+            {props.shortDescription && <div className={s.shortDescription}>{props.shortDescription}</div>}
+          </div>
+
+          <Tabs {...props} />
+        </div>
+
+        <div className={s.sidebar}>
           <Sidebar package={props} analytics={{ screenName }} />
         </div>
       </div>
@@ -21,12 +32,6 @@ const Package = (props: PackageProps) => {
         <Footer />
       </div>
     </div>
-  );
-}
-
-const Tabs = (props: PackageProps) => {
-  return (
-    <PackageOverview {...props} />
   );
 }
 

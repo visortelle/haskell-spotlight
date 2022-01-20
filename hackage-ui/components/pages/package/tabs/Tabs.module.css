@@ -1,0 +1,53 @@
+.tabs {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1;
+}
+
+.tabPicker {
+  display: flex;
+  border-bottom: 2rem solid #ddd;
+  background-color: #fff;
+}
+
+.tabPickerItemContainer {
+  position: relative;
+  overflow: hidden;
+  top: 2rem;
+}
+
+.tabPickerItem {
+  padding: 12rem 24rem;
+  font-size: 14rem;
+  font-weight: bold;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tabPickerItem:hover {
+  cursor: pointer;
+  transition: var(--transition-short);
+}
+
+.tabPickerItem:hover,
+.tabPickerItemActive {
+  color: var(--purple-color-2);
+}
+
+.tabPickerActiveItemBar {
+  background-color: var(--purple-color-2);
+  width: 100%;
+  position: absolute;
+  height: 2rem;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transition: var(--transition-short);
+}
+
+.tabContent {
+  flex: 1 1;
+  display: flex;
+}

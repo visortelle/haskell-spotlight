@@ -1,60 +1,23 @@
 .package {
+  display: flex;
   flex: 1 1 auto;
+  box-shadow: 0rem 2rem 4rem rgb(0 0 0 / 27%);
+  border-radius: 12rem;
 }
 
 .content {
-  margin: 24rem auto;
-  box-shadow: 0rem 2rem 4rem rgb(0 0 0 / 27%);
-  border-radius: 12rem;
-  overflow: hidden;
-}
-
-.packageName {
-  margin: 0;
-  font-size: 32rem;
-  font-weight: bold;
   display: flex;
+  flex: 1 1;
+  margin: 0 auto;
   overflow: hidden;
-  text-overflow: ellipsis;
-  align-items: center;
-}
-
-.packageNameH1 {
-  display: inline;
-  font-size: inherit;
-  font-weight: inherit;
-  margin: 0;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-.briefInfo {
-  background-color: #fff;
-  padding: 32rem 24rem 24rem 24rem;
-}
-
-.packageVersion {
-  font-size: 24rem;
-  margin-left: 8rem;
-  font-weight: bold;
-  opacity: 0.66;
-  position: relative;
-  top: 2rem;
-}
-
-.shortDescription {
-  font-size: 18rem;
-  opacity: 0.66;
-  margin-bottom: 18rem;
-}
-
-.shortDescription:last-child {
-  margin-bottom: 0;
 }
 
 .longDescription {
   max-width: var(--max-content-width);
   margin: 0 auto;
+  padding: 32rem 24rem 24rem;
+  background-color: #fff;
+  flex: 1 1;
 }
 
 .longDescription p {
