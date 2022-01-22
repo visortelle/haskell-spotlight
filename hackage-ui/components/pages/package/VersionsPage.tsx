@@ -62,7 +62,7 @@ export type VersionProps = {
 }
 
 const Version = (props: VersionProps) => {
-  let versionKindColor = 'var(--accent-color-green)';
+  let versionKindColor = 'var(--purple-color-2)';
   let versionKindLabel = 'Recommended';
   if (props.kind === 'deprecated') {
     versionKindColor = 'var(--accent-color-red)';
