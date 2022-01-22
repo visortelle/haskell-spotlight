@@ -42,7 +42,7 @@ export const Sidebar = (props: SidebarProps) => {
         {props.package.updatedAt && (
           <div
             className={`${s.sidebarEntry} ${s.sidebarEntryShrink}`}
-            data-tip={`Last publish: ${new Date(Date.parse(props.package.updatedAt)).toLocaleString('en-us', { day: 'numeric', month: 'long', year: 'numeric' })}`}
+            data-tip={`Published: ${new Date(Date.parse(props.package.updatedAt)).toLocaleString('en-us', { day: 'numeric', month: 'long', year: 'numeric' })}`}
             data-for={tooltipId}
           >
             <div className={s.sidebarEntryIcon}><SvgIcon svg={updatedAtIcon} /></div>
