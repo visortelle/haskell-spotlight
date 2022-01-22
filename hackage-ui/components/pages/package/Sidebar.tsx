@@ -23,7 +23,7 @@ type SidebarProps = {
 export const Sidebar = (props: SidebarProps) => {
   const appContext = useContext(lib.appContext.AppContext);
   const repository = props.package.repositoryUrl ? parseRepositoryUrl(props.package.repositoryUrl) : null;
-  const copyToInstall = `${props.package.name} >= ${props.package.versions.current}`;
+  const copyToInstall = `${props.package.name} >= ${props.package.currentVersion}`;
 
   const [isMounted, setIsMounted] = useState(false);
 
@@ -76,7 +76,7 @@ export const Sidebar = (props: SidebarProps) => {
       </div>
 
       {
-        props.package.homepage &&
+        props.package.homepageUrl &&
         <div className={s.sidebarSection}>
           <h3 className={s.sidebarSectionHeader}>
             Homepage
@@ -85,10 +85,10 @@ export const Sidebar = (props: SidebarProps) => {
             <div className={s.sidebarEntryIcon}><SvgIcon svg={homepageIcon} /></div>
             <lib.links.ExtA
               className={s.sidebarEntryLink}
-              href={props.package.homepage.url}
+              href={props.package.homepageUrl.url}
               analytics={{ featureName: 'GoToPackageHomepage', eventParams: { screen_name: props.analytics.screenName } }}
             >
-              {props.package.homepage.text.replace(/^https?\:\/\//, '').replace(/\/$/, '')}
+              {props.package.homepageUrl.text.replace(/^https?\:\/\//, '').replace(/\/$/, '')}
             </lib.links.ExtA>
           </div>
         </div>

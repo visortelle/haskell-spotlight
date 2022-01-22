@@ -1,21 +1,7 @@
-export type Version = {
-  id: string;
-  // Date in ISO 8601
-  releasedAt: string;
-  releasedBy: string;
-  license: License;
-};
-
-export type PreferredVersions = {
+export type Versions = {
   normal: string[];
   unpreferred: string[];
   deprecated: string[];
-};
-
-export type Versions = {
-  current: string;
-  available: Version[];
-  preferred: PreferredVersions;
 };
 
 export type License = {
@@ -32,10 +18,12 @@ export type PackageProps = {
   id: string;
   name: string;
   license: License | null;
-  homepage: Homepage | null;
+  homepageUrl: Homepage | null;
   repositoryUrl: string | null;
   bugReportsUrl: string | null;
-  versions: Versions;
+  versions: Versions | null;
+  currentVersion: string | null;
+  versionsCount: number,
   shortDescription: string | null;
   longDescriptionHtml: string | null;
   // Date in ISO 8601

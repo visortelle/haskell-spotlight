@@ -1,8 +1,10 @@
 .package {
   display: flex;
   flex: 1 1 auto;
-  box-shadow: 0rem 2rem 4rem rgb(0 0 0 / 27%);
   border-radius: 12rem;
+  overflow: hidden;
+  box-shadow: 0rem 2rem 4rem rgb(0 0 0 / 27%);
+  margin-top: 24rem;
 }
 
 .content {
@@ -15,7 +17,7 @@
 .longDescription {
   max-width: var(--max-content-width);
   margin: 0 auto;
-  padding: 32rem 24rem 24rem;
+  padding: 32rem 24rem;
   background-color: #fff;
   flex: 1 1;
 }

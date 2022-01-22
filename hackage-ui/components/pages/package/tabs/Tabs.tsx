@@ -1,68 +1,38 @@
-import { PackageProps } from "../common";
-import PackageOverview from "./PackageOverview";
-import Versions from "./Versions";
-import Dependencies from "./Dependencies";
-import Docs from "./Docs";
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import s from './Tabs.module.css';
+import * as lib from '@hackage-ui/react-lib';
 
-type Tab = {
+export type Tab = {
   id: string,
-  name: string,
-  render: () => ReactNode
+  title: string,
+  href: string,
 };
 
-const getTabs = (props: PackageProps): Tab[] => {
-  return [
-    {
-      id: 'package-overview',
-      name: 'Overview',
-      render: () => <PackageOverview {...props} />
-    },
-    {
-      id: 'docs',
-      name: '📘 Docs',
-      render: () => <Docs {...props} />
-    },
-    {
-      id: 'versions',
-      name: `${props.versions.available.length} Versions`,
-      render: () => <Versions {...props} />
-    },
-    {
-      id: 'dependencies',
-      name: 'Dependencies',
-      render: () => <Dependencies {...props} />
-    }
-  ]
+export type TabsProps = {
+  tabs: Tab[],
+  activeTab: string,
 }
 
-const Tabs = (props: PackageProps) => {
-  const [activeTab, setActiveTab] = useState('package-overview');
-  const tabs = getTabs(props);
-
+const Tabs = (props: TabsProps) => {
   return (
     <div className={s.tabs}>
       <div className={s.tabPicker}>
-        {tabs.map(tab => {
-          const isActive = tab.id === activeTab;
+        {props.tabs.map(tab => {
+          const isActive = tab.id === props.activeTab;
           return (
             <div key={tab.id} className={s.tabPickerItemContainer}>
-              <div
+              <lib.links.A
                 className={`${s.tabPickerItem} ${isActive ? s.tabPickerItemActive : ''}`}
-                onClick={() => setActiveTab(tab.id)}
+                href={tab.href}
+                analytics={{ featureName: `ClickTab-${tab.id}`, eventParams: {} }}
               >
-                {tab.name}
-              </div>
-              {isActive && (<div className={s.tabPickerActiveItemBar}></div>)}
-            </div>
+                {tab.title}
+              </lib.links.A>
+            </div >
           );
         })}
-      </div>
-      <div className={s.tabContent}>
-        {tabs.find(tab => tab.id === activeTab)?.render()}
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }
 
