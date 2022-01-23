@@ -24,7 +24,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   color: #fff;
-  opacity: 0.66;
+  opacity: 0.8;
 }
 
 .tabPickerItem:hover {

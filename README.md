@@ -1,17 +1,31 @@
 # Hackage UI
 
-Fresh look for the <https://hackage.haskell.org/>. 
+Fresh look for the <https://hackage.haskell.org/>. Work in progress.
 
-Rust's http://crates.io is used as a visual design reference.
+<img width="1105" alt="Screen Shot 2022-01-19 at 9 14 12 AM" src="https://user-images.githubusercontent.com/9302460/150090475-4a28a041-e24c-4c67-abb8-3eaf6c315fdd.png">
 
-Demo here: <https://hackage-ui.vercel.app/>
+## Search
 
-Progress here: <https://github.com/visortelle/hackage-ui/issues/2>
+- Search on Hoogle.
+- Search on Hackage.
+- Full-text search integration on Hackage [by Serokell](https://hackage-search.serokell.io/) is coming soong.
 
-If you like it, please ⭐️ star it. 
+The search widget is available in forms of:
 
-<img width="942" alt="Screen Shot 2022-01-01 at 11 19 10 PM" src="https://user-images.githubusercontent.com/9302460/147861304-189d8186-aba4-4d14-b8c0-d07f1dbbd36f.png">
+- Try Haskell Spotlight [VSCode extension](https://marketplace.visualstudio.com/items?itemName=visortelle.haskell-spotlight)
 
-Just started the project. Not much to look at here.
+<img width="1440" alt="Screen Shot 2022-01-19 at 9 19 11 AM" src="https://user-images.githubusercontent.com/9302460/150091335-7ccf0f76-1564-4960-a10b-299b9ed81fbd.png">
 
-Communication and cooperation are welcome. ✌️
+- Try Haskell Spotlight browser extension:
+
+<img width="1194" alt="Screen Shot 2022-01-19 at 9 29 25 AM" src="https://user-images.githubusercontent.com/9302460/150092880-07339fff-1e48-4eac-bd92-ba56e340f1c7.png">
+
+  - for [🦊 Firefox](https://addons.mozilla.org/en-US/firefox/addon/haskell-spotlight/)
+  - for Chrome (coming soon)
+  - for Safari (coming soon)
+
+## Changelog
+
+Changelog is available here: https://github.com/visortelle/hackage-ui/issues/2
+
+Don't forget to ⭐️ star the GitHub repository if you like it! 🙂
