@@ -12,6 +12,7 @@ type LayoutProps = {
     screenName: string
   },
   package: PackageProps,
+  hidePackageVersion?: boolean,
   activeTab: string,
   children: ReactNode,
 }
@@ -31,13 +32,18 @@ const getTabs = (props: LayoutProps): Tab[] => {
     {
       id: 'versions',
       title: `${props.package.versionsCount} Versions`,
-      href: `/package/${props.package.id}/versions`
+      href: `/package/${props.package.name}/versions`
     },
     // {
     //   id: 'dependencies',
     //   title: 'Dependencies',
     //   href: '#'
-    // }
+    // },
+    {
+      id: 'dependents',
+      title: `${props.package.reverseDependencies?.length || 0} Dependents`,
+      href: `/package/${props.package.name}/dependents`
+    }
   ]
 }
 
@@ -49,7 +55,12 @@ const Layout = (props: LayoutProps) => {
         <div className={s.contentContainer}>
           <div className={s.content}>
             <div className={s.briefInfo}>
-              <BriefInfo packageName={props.package.name} packageVersion={props.package.currentVersion} shortDescription={props.package.shortDescription} />
+              <BriefInfo
+                packageName={props.package.name}
+                packageVersion={props.package.currentVersion}
+                shortDescription={props.package.shortDescription}
+                hidePackageVersion={props.hidePackageVersion}
+              />
               <Tabs
                 tabs={getTabs(props)}
                 activeTab={props.activeTab}

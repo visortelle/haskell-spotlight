@@ -1,6 +1,6 @@
 import axios from 'axios';
 import hljs from 'highlight.js';
-import { License, Homepage, Versions } from '../components/pages/package/common';
+import { License, Homepage, Versions, ReverseDependency } from '../components/pages/package/common';
 import cheerio, { CheerioAPI } from 'cheerio';
 
 export type Package = {
@@ -16,6 +16,7 @@ export type Package = {
   repositoryUrl: string | null,
   bugReportsUrl: string | null,
   updatedAt: string | null,
+  reverseDependencies: ReverseDependency[] | null
 }
 
 export async function getPackage(packageId: string): Promise<Package> {
@@ -54,7 +55,8 @@ export async function getPackage(packageId: string): Promise<Package> {
     shortDescription,
     longDescriptionHtml,
     repositoryUrl: getRepositoryUrl($),
-    updatedAt: getUpdatedAt($)
+    updatedAt: getUpdatedAt($),
+    reverseDependencies: await getReverseDependencies(name)
   }
 }
 
@@ -202,5 +204,38 @@ export async function getVersions(packageName: string): Promise<Versions> {
     console.log(err);
   } finally {
     return versions;
+  }
+}
+
+export async function getReverseDependencies(packageName: string): Promise<ReverseDependency[]> {
+  let reverseDependencies: ReverseDependency[] = [];
+  let html: string = '';
+
+  try {
+    html = await (await axios(`https://packdeps.haskellers.com/reverse/${encodeURIComponent(packageName)}`)).data;
+
+    const $ = cheerio.load(html);
+    reverseDependencies = $('table tbody tr').toArray().map(row => {
+      const isOutdated = $(row).hasClass('out-of-date');
+      const tds = $('td', row);
+      const td0 = $(tds).get(0);
+      const td1 = $(tds).get(1);
+      const packageName = $(td0).text();
+      const versionsRange = $(td1).text();
+      const hasReverseDependencies = $('a', td0).toArray().length > 0;
+
+      return {
+        isOutdated,
+        packageName,
+        versionsRange,
+        hasReverseDependencies
+      }
+    });
+  } catch (err) {
+    if (!axios.isAxiosError(err)) {
+      console.log(err);
+    }
+  } finally {
+    return reverseDependencies;
   }
 }

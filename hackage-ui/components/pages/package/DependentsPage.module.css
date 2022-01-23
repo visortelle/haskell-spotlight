@@ -1,4 +1,4 @@
-.versionsPage {
+.dependentsPage {
   padding-bottom: 24rem;
 }
 
@@ -9,7 +9,7 @@
   justify-content: space-between;
 }
 
-.version {
+.dependent {
   padding: 18rem 24rem;
   background-color: #fff;
   margin-bottom: 12rem;
@@ -21,17 +21,7 @@
   color: var(--text-color);
 }
 
-.version:hover {
-  cursor: pointer;
-  opacity: 0.8;
-}
-
-.versionId {
-  font-weight: bold;
-  font-size: 16rem;
-}
-
-.versionKind {
+.label {
   width: 120rem;
   height: 24rem;
   border-radius: 8rem;
@@ -43,3 +33,4 @@
   background-color: var(--surface-color);
   font-size: 12rem;
 }
+

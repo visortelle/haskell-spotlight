@@ -1,9 +1,9 @@
 import { NextPage, GetStaticPropsResult, GetStaticPropsContext } from 'next';
 import Head from 'next/head';
-import VersionsPage, { VersionsPageProps } from '../../../components/pages/package/VersionsPage';
+import DependentsPage, { DependentsPageProps } from '../../../components/pages/package/DependentsPage';
 import * as pkgFetch from '../../../fetch/package';
 
-const Page: NextPage<VersionsPageProps> = (props) => {
+const Page: NextPage<DependentsPageProps> = (props) => {
   return (
     <>
       <Head>
@@ -11,12 +11,12 @@ const Page: NextPage<VersionsPageProps> = (props) => {
         <meta name="description" content={props.package.shortDescription || props.package.name}></meta>
       </Head>
 
-      <VersionsPage {...props} />
+      <DependentsPage {...props} />
     </>
   );
 }
 
-export async function getStaticProps(props: GetStaticPropsContext): Promise<GetStaticPropsResult<VersionsPageProps>> {
+export async function getStaticProps(props: GetStaticPropsContext): Promise<GetStaticPropsResult<DependentsPageProps>> {
   const packageId = props.params!.packageId as string;
   const pkg = await pkgFetch.getPackage(packageId);
 

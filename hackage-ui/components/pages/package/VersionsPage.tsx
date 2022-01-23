@@ -17,7 +17,12 @@ const VersionsPage = (props: VersionsPageProps) => {
   ]))) : [];
 
   return (
-    <Layout analytics={{ screenName }} package={props.package} activeTab="versions">
+    <Layout
+      analytics={{ screenName }}
+      package={props.package}
+      activeTab="versions"
+      hidePackageVersion={true}
+    >
       <div className={s.versionsPage}>
         <div className={s.info}>
           <span>All {versions.length} versions of <strong>{props.package.name}</strong></span>

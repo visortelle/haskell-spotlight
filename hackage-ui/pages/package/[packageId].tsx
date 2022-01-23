@@ -23,7 +23,7 @@ export async function getStaticProps(props: GetStaticPropsContext): Promise<GetS
 
   return {
     props: pkg,
-    revalidate: 60
+    revalidate: 180
   }
 }
 
