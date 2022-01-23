@@ -4,17 +4,50 @@ import { appContext } from '@hackage-ui/react-lib';
 import '@hackage-ui/react-lib/dist/react-lib.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'highlight.js/styles/kimbie-light.css';
+import { useRouter } from 'next/router';
+import { useEffect, useCallback, useContext } from 'react';
 
-function MyApp({ Component, pageProps }: AppProps) {
+
+const MyApp = (props: AppProps) => {
   return <>
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></meta>
     </Head>
 
     <appContext.DefaultAppContextProvider useNextJSRouting={true}>
-      <Component {...pageProps} />
+      <ComponentWithProgressIndicator {...props} />
     </appContext.DefaultAppContextProvider>
   </>
+}
+
+const taskName = 'page-loading';
+
+const ComponentWithProgressIndicator = ({ Component, pageProps }: AppProps) => {
+  const router = useRouter();
+  const context = useContext(appContext.AppContext);
+
+  const handleRouteChangeStart = useCallback(() => {
+    context.startTask(taskName);
+  }, []);
+
+  const handleRouteChangeEnd = useCallback(() => {
+    context.finishTask(taskName);
+  }, []);
+
+  useEffect(() => {
+    router.events.on("routeChangeStart", handleRouteChangeStart);
+    router.events.on("routeChangeComplete", handleRouteChangeEnd);
+    router.events.on("routeChangeError", handleRouteChangeEnd);
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChangeStart);
+      router.events.off("routeChangeComplete", handleRouteChangeEnd);
+      router.events.off("routeChangeError", handleRouteChangeEnd);
+    };
+  }, [router, handleRouteChangeStart, handleRouteChangeEnd]);
+
+  return (
+    <Component {...pageProps} />
+  );
 }
 
 export default MyApp;
