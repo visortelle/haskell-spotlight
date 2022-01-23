@@ -6,11 +6,11 @@ import { useState, memo } from 'react';
 
 const screenName = 'PackageDependentsPage';
 
-export type DependentsPageProps = {
+export type DependenciesPageProps = {
   package: PackageProps,
 }
 
-const DependentsPage = (props: DependentsPageProps) => {
+const DependentsPage = (props: DependenciesPageProps) => {
   const [showOutdatedOnly, setShowOutdatedOnly] = useState(false);
 
   const _deps = props.package.reverseDependencies || [];
@@ -20,12 +20,12 @@ const DependentsPage = (props: DependentsPageProps) => {
     <Layout
       analytics={{ screenName }}
       package={props.package}
-      activeTab="dependents"
+      activeTab="dependencies"
       hidePackageVersion={true}
     >
       <div className={s.dependentsPage}>
         <div className={s.info}>
-          <span>Displaying <strong>{deps.length}</strong> of <strong>{props.package.reverseDependencies?.length || '0'}</strong> reverse dependencies of <strong>{props.package.name}</strong></span>
+          <span>Displaying {deps.length} reverse dependencies of <strong>{props.package.name}</strong></span>
           <lib.headerButton
             onClick={() => setShowOutdatedOnly(!showOutdatedOnly)}
             text={showOutdatedOnly ? 'Show All' : 'Show Outdated Only'}
@@ -35,7 +35,7 @@ const DependentsPage = (props: DependentsPageProps) => {
         <div>
           {deps.map(dep => {
             return (
-              <Dependent key={dep.packageName} {...dep} />
+              <Dependency key={dep.packageName} {...dep} />
             );
           })}
         </div>
@@ -44,12 +44,12 @@ const DependentsPage = (props: DependentsPageProps) => {
   );
 }
 
-const Dependent = (props: ReverseDependency) => {
+const Dependency = (props: ReverseDependency) => {
   return (
     <lib.links.A
       className={s.dependent}
-      href={`/package/${props.packageName}/dependents`}
-      analytics={{ featureName: 'ClickPackageReverseDependency', eventParams: { event_label: props.packageName, screen_name: screenName } }}
+      href={`/package/${props.packageName}/dependencies`}
+      analytics={{ featureName: 'ClickPackageDependency', eventParams: { event_label: props.packageName, screen_name: screenName } }}
       prefetch={false}
     >
       <div

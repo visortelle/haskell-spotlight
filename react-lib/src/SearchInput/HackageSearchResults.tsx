@@ -87,6 +87,7 @@ const HackageSearchResults = ({ query, apiUrl, asEmbeddedWidget }: HackageSearch
               target={asEmbeddedWidget ? '__blank' : '_self'}
               href={asEmbeddedWidget ? `https://hackage.haskell.org/package/${pkg.name}` : `/package/${pkg.name}`}
               analytics={{ featureName: 'HackageSearchResult', eventParams: {} }}
+              prefetch={false}
             >
               {pkg.name}
             </Link>

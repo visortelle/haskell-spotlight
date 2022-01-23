@@ -10,7 +10,7 @@
   position: relative;
   justify-content: space-between;
   font-size: 12rem;
-  box-shadow: 1rem 2rem 1rem rgb(0 0 0 / 27%);
+  box-shadow: 1rem 1rem 1rem rgb(0 0 0 / 27%);
   overflow: hidden;
   text-overflow: ellipsis;
   user-select: none;

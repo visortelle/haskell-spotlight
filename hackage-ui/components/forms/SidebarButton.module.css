@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: space-between;
   background-color: var(--surface-color);
-  box-shadow: 0 4rem 6rem rgb(0 0 0 / 27%);
+  box-shadow: 1rem 1rem 1rem rgb(0 0 0 / 27%);
   user-select: none;
   transition: var(--transition-short);
   padding: 6rem 24rem;

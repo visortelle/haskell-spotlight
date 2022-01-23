@@ -8,7 +8,7 @@
   background-color: var(--purple-color-1);
   padding: 2rem 8rem;
   border-radius: 4rem;
-  box-shadow: 1rem 1rem 2rem rgb(0 0 0 / 50%);
+  box-shadow: 1rem 1rem 1rem rgb(0 0 0 / 27%);
   transition: var(--transition-short);
   user-select: none;
   position: relative;

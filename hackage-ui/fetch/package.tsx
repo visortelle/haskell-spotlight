@@ -1,7 +1,8 @@
 import axios from 'axios';
 import hljs from 'highlight.js';
-import { License, Homepage, Versions, ReverseDependency } from '../components/pages/package/common';
+import { License, Homepage, Versions, Dependencies, ReverseDependency } from '../components/pages/package/common';
 import cheerio, { CheerioAPI } from 'cheerio';
+import { table } from 'console';
 
 export type Package = {
   id: string,
@@ -16,7 +17,8 @@ export type Package = {
   repositoryUrl: string | null,
   bugReportsUrl: string | null,
   updatedAt: string | null,
-  reverseDependencies: ReverseDependency[] | null
+  reverseDependencies: ReverseDependency[] | null,
+  dependencies: Dependencies | null
 }
 
 export async function getPackage(packageId: string): Promise<Package> {
@@ -56,7 +58,9 @@ export async function getPackage(packageId: string): Promise<Package> {
     longDescriptionHtml,
     repositoryUrl: getRepositoryUrl($),
     updatedAt: getUpdatedAt($),
-    reverseDependencies: await getReverseDependencies(name)
+    reverseDependencies: await getReverseDependencies(name),
+    dependencies: null
+    // dependencies: getDependencies($)
   }
 }
 
@@ -138,7 +142,7 @@ export function getLicense($: CheerioAPI): License | null {
   }
 
   const licenseEl = $(`> *`, tableTd);
-  return { name: licenseEl.text(), url: licenseEl.attr('href') || null };
+  return { name: $(tableTd).text(), url: licenseEl.attr('href') || null };
 }
 
 export function getHomepageUrl($: CheerioAPI): Homepage | null {

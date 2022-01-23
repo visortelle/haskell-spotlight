@@ -61,7 +61,7 @@
   margin: 0;
   margin-bottom: 8rem;
   color: #fff;
-  text-shadow: 2rem 2rem 2rem rgb(0 0 0 / 27%);
+  text-shadow: 1rem 2rem 1rem rgb(0 0 0 / 27%);
 }
 
 @media (max-width: 1000px) {

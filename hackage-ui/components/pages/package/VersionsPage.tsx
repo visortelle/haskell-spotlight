@@ -1,5 +1,5 @@
 import s from './VersionsPage.module.css';
-import { PackageProps, Versions } from './common';
+import { PackageProps } from './common';
 import Layout from './Layout';
 import * as lib from '@hackage-ui/react-lib';
 
@@ -25,7 +25,7 @@ const VersionsPage = (props: VersionsPageProps) => {
     >
       <div className={s.versionsPage}>
         <div className={s.info}>
-          <span>All {versions.length} versions of <strong>{props.package.name}</strong></span>
+          <span>All <strong>{versions.length}</strong> versions of <strong>{props.package.name}</strong></span>
 
           <lib.links.ExtA
             href="https://pvp.haskell.org/"

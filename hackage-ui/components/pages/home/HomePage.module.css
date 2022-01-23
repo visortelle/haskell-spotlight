@@ -34,7 +34,7 @@
   margin: 0 auto;
   padding-top: 24rem;
   color: #fff;
-  text-shadow: 1rem 3rem 2rem rgb(0 0 0 / 0.27);
+  text-shadow: 1rem 2rem 2rem rgb(0 0 0 / 27%);
   font-size: 42rem;
   text-align: center;
 }
@@ -81,7 +81,7 @@
   padding: 8rem 18rem;
   margin-right: 12rem;
   margin-bottom: 4rem;
-  box-shadow: 0rem 2rem 4rem rgb(0 0 0 / 27%);
+  box-shadow: 0rem 1rem 2rem rgb(0 0 0 / 27%);
 }
 
 .packageListsHeaderIcon {

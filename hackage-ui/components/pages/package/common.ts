@@ -14,6 +14,11 @@ export type Homepage = {
   url: string;
 };
 
+export type Dependencies = {
+  packageName: string;
+  versionsRange: string;
+};
+
 export type ReverseDependency = {
   packageName: string;
   versionsRange: string;
@@ -36,4 +41,5 @@ export type PackageProps = {
   // Date in ISO 8601
   updatedAt: string | null;
   reverseDependencies: ReverseDependency[] | null;
+  dependencies: Dependencies | null;
 };

@@ -36,12 +36,12 @@ const getTabs = (props: LayoutProps): Tab[] => {
     },
     // {
     //   id: 'dependencies',
-    //   title: 'Dependencies',
+    //   title: `${props.package.dependencies?.length || '0'} Dependencies`,
     //   href: '#'
     // },
     {
       id: 'dependents',
-      title: `${props.package.reverseDependencies?.length || 0} Dependents`,
+      title: `${props.package.reverseDependencies?.length || '0'} Dependents`,
       href: `/package/${props.package.name}/dependents`
     }
   ]

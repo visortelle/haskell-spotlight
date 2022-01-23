@@ -162,6 +162,7 @@ const HoogleSearchResults = ({ query, apiUrl, asEmbeddedWidget }: HoogleSearchRe
                 target={asEmbeddedWidget ? '__blank' : '__self'}
                 className={`${s.hoogleItemLink} ${s.link} ${itemViewMode === 'brief' ? s.hoogleItemLinkBrief : ''}`}
                 analytics={{ featureName: 'HoogleSearchResultItem', eventParams: {} }}
+                prefetch={false}
               >
                 <strong className={s.hoogleItemTypeName}>{typeName}</strong>{typeDef ? <strong>&nbsp;::&nbsp;</strong> : ''}<span>{typeDef}</span>
               </Link>
@@ -182,6 +183,7 @@ const HoogleSearchResults = ({ query, apiUrl, asEmbeddedWidget }: HoogleSearchRe
                           target={asEmbeddedWidget ? '__blank' : '__self'}
                           className={s.link}
                           analytics={{ featureName: 'HoogleSearchResultItem', eventParams: {} }}
+                          prefetch={false}
                         >
                           <small style={{ marginRight: '0.5em' }}>📦</small>{pkg[0].package.name}
                         </Link>
@@ -193,6 +195,7 @@ const HoogleSearchResults = ({ query, apiUrl, asEmbeddedWidget }: HoogleSearchRe
                               target={asEmbeddedWidget ? '__blank' : '__self'}
                               className={s.link}
                               analytics={{ featureName: 'HoogleSearchResultModule', eventParams: {} }}
+                              prefetch={false}
                             >
                               {item.module.name}
                             </Link>
