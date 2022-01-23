@@ -82,6 +82,7 @@ const Version = (props: VersionProps) => {
       className={s.version}
       href={props.getHref()}
       analytics={{ featureName: 'ClickPackageVersion', eventParams: { event_label: props.id, screen_name: screenName } }}
+      prefetch={false}
     >
       <div
         className={s.versionKind}

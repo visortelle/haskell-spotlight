@@ -50,6 +50,7 @@ const Dependent = (props: ReverseDependency) => {
       className={s.dependent}
       href={`/package/${props.packageName}/dependents`}
       analytics={{ featureName: 'ClickPackageReverseDependency', eventParams: { event_label: props.packageName, screen_name: screenName } }}
+      prefetch={false}
     >
       <div
         className={s.label}
