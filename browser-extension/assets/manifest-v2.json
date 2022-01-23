@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+  "name": "Haskell Spotlight",
+  "short_name": "Haskell Spotlight",
+  "description": "Search on Hackage, Hoogle and more soon.",
+  "homepage_url": "https://github.com/visortelle/hackage-ui",
+  "version": "0.0.7",
+  "icons": { "192": "images/icon-192.png" },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentscript.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "browser_action": {
+    "default_icon": {
+      "128": "images/icon-192.png"
+    },
+    "default_title": "Haskell Spotlight",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "https://hackage-ui.vercel.app/api/*"
+  ]
+}

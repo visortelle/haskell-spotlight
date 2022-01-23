@@ -1,7 +1,6 @@
 import path from "path";
 import { Configuration, ProvidePlugin } from "webpack";
 import TerserPlugin from "terser-webpack-plugin";
-import * as postcss from 'postcss';
 
 export default ({
   mode,
@@ -10,7 +9,6 @@ export default ({
 }): Configuration => ({
   mode,
   entry: {
-    background: path.resolve(__dirname, "./scripts/contentscript.ts"),
     contentscript: path.resolve(__dirname, "./scripts/contentscript.ts"),
     popup: path.resolve(__dirname, "./scripts/popup.ts"),
   },
