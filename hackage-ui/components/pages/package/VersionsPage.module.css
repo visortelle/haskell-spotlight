@@ -29,6 +29,7 @@
 .versionId {
   font-weight: bold;
   font-size: 16rem;
+  font-family: 'Fira Code';
 }
 
 .versionKind {

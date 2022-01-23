@@ -8,7 +8,7 @@ Fresh look for the <https://hackage.haskell.org/>. Work in progress.
 
 - Search on Hoogle.
 - Search on Hackage.
-- Full-text search integration on Hackage [by Serokell](https://hackage-search.serokell.io/) is coming soong.
+- Full-text search integration on Hackage [by Serokell](https://hackage-search.serokell.io/) is coming soon.
 
 The search widget is available in forms of:
 

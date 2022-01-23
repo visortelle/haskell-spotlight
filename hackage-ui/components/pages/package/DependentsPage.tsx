@@ -74,7 +74,8 @@ const Dependent = (props: ReverseDependency) => {
         style={{
           color: props.isOutdated ? 'var(--accent-color-red)' : 'var(--purple-color-2)',
           marginLeft: 'auto',
-          fontWeight: 'bold'
+          fontWeight: 'bold',
+          fontFamily: 'Fira Code'
         }}
       >
         {props.versionsRange}
