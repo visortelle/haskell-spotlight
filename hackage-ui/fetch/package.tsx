@@ -38,7 +38,18 @@ export async function getPackage(packageId: string): Promise<Package> {
   const shortDescription = $('h1 small', docContent).html()?.trim() || null;
   const longDescriptionHtml = $('#description').html()?.trim() || null;
 
-  const versions = await getVersions(name);
+  // XXX - take care on the order of arguments here... Or implement a better solution.
+  const [
+    versions,
+    reverseDependencies
+  ] = await (await Promise.allSettled([
+    await getVersions(name),
+    await getReverseDependencies(name)
+  ])).map((res) => (res as any).value) as [
+      Versions,
+      ReverseDependency[]
+    ];
+
   const versionsCount = Array.from(new Set([
     ...versions.normal,
     ...versions.unpreferred,
@@ -58,7 +69,7 @@ export async function getPackage(packageId: string): Promise<Package> {
     longDescriptionHtml,
     repositoryUrl: getRepositoryUrl($),
     updatedAt: getUpdatedAt($),
-    reverseDependencies: await getReverseDependencies(name),
+    reverseDependencies,
     dependencies: null
     // dependencies: getDependencies($)
   }
