@@ -16,7 +16,6 @@ const DependentsPage = (props: DependenciesPageProps) => {
       analytics={{ screenName }}
       package={props.package}
       activeTab="dependencies"
-      hidePackageVersion={true}
     >
       <div className={s.dependentsPage}>
         <div className={s.info}>
