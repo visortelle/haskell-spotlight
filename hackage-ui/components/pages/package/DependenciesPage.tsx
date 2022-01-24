@@ -21,8 +21,8 @@ const DependentsPage = (props: DependenciesPageProps) => {
         <div className={s.info}>
           <span>Displaying
             {(props.package.dependencies?.dependenciesCount || 0) > 0 && <span>&nbsp;<strong>{props.package.dependencies?.dependenciesCount}</strong> dependencies</span>}
-            {(props.package.dependencies?.conditionalDependenciesCount || 0) > 0 && <span>&nbsp;and <strong>{props.package.dependencies?.conditionalDependenciesCount}</strong> conditional dependencies </span>}
-            <span>of <strong>{props.package.id}</strong></span>
+            {(props.package.dependencies?.conditionalDependenciesCount || 0) > 0 && <span>&nbsp;and <strong>{props.package.dependencies?.conditionalDependenciesCount}</strong> conditional dependencies</span>}
+            <span>&nbsp;of <strong>{props.package.id}</strong></span>
           </span>
         </div>
 
