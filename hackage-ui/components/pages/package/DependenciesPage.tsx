@@ -36,7 +36,7 @@ const DependentsPage = (props: DependenciesPageProps) => {
               <div key={i} className={s.conditionalDeps}>
                 <div className={s.conditionalDepCode}>if {cond.predicate}</div>
                 {(cond.ifDeps.length === 0 && cond.elseDeps.length !== 0) && (
-                  <div>No dependencies found in this branch.</div>
+                  <div style={{ padding: '12rem', margin: '-12rem 0', background: '#fff'}}>No dependencies found in this branch.</div>
                 )}
                 {cond.ifDeps.length !== 0 && (
                   <div>
