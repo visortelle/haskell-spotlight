@@ -14,9 +14,26 @@ export type Homepage = {
   url: string;
 };
 
-export type Dependencies = {
+export type DependencyCondition = {
+  predicate: string;
+  ifDeps: Dependency[];
+  elseDeps: Dependency[];
+};
+
+export type Dependency = {
   packageName: string;
-  versionsRange: string;
+  versionsRange: null | string;
+};
+
+export type Dependencies = {
+  dependenciesCount: number;
+  conditionalDependenciesCount: number;
+  modules: {
+    name: string;
+    dependencies: Dependency[];
+    // Examples - pandoc-2.17.0.1, hlint-3.6.6
+    conditions: DependencyCondition[];
+  }[];
 };
 
 export type ReverseDependency = {

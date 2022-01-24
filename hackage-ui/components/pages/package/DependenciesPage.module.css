@@ -9,7 +9,7 @@
   justify-content: space-between;
 }
 
-.dependent {
+.dependency {
   padding: 18rem 24rem;
   background-color: #fff;
   margin-bottom: 12rem;
@@ -21,16 +21,53 @@
   color: var(--text-color);
 }
 
-.label {
-  width: 120rem;
-  height: 24rem;
-  border-radius: 12rem;
-  margin-right: 24rem;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--surface-color);
-  font-size: 12rem;
+.dependency:last-child {
+  margin-bottom: 0;
 }
 
+.module {
+  margin-bottom: 48rem;
+}
+
+.moduleName {
+  font-size: 24rem;
+  font-weight: bold;
+  margin-bottom: 12rem;
+}
+
+.conditionalDepsHeader {
+  font-size: 16rem;
+  margin: 18rem 0 12rem 0;
+}
+
+.conditionalDeps {
+  background-color: var(--surface-color);
+  border-radius: 12rem;
+  padding: 12rem 0;
+  padding-top: 0;
+  margin-bottom: 24rem;
+  box-shadow: 0rem 1rem 3rem rgb(0 0 0 / 27%);
+}
+
+.conditionalDeps .dependency {
+  margin-left: 12rem;
+  margin-right: 12rem;
+}
+
+.conditionalDepCode {
+  background-color: var(--purple-color-2);
+  font-family: 'Fira Code';
+  color: #fff;
+  margin: 12rem 0;
+  padding: 8rem 12rem;
+  font-size: 14rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 2rem solid var(--purple-color-1);
+}
+
+.conditionalDepCode:first-child {
+  padding-top: 12rem;
+  border-top-left-radius: 12rem;
+  border-top-right-radius: 12rem;
+}

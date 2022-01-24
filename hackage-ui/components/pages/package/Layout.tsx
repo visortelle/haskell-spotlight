@@ -34,11 +34,11 @@ const getTabs = (props: LayoutProps): Tab[] => {
       title: `${props.package.versionsCount} Versions`,
       href: `/package/${props.package.name}/versions`
     },
-    // {
-    //   id: 'dependencies',
-    //   title: `${props.package.dependencies?.length || '0'} Dependencies`,
-    //   href: '#'
-    // },
+    {
+      id: 'dependencies',
+      title: `${(props.package.dependencies?.dependenciesCount || 0) + (props.package.dependencies?.conditionalDependenciesCount || 0)} Dependencies`,
+      href: `/package/${props.package.id}/dependencies`
+    },
     {
       id: 'dependents',
       title: `${props.package.reverseDependencies?.length || '0'} Dependents`,

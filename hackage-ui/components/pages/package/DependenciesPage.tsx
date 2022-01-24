@@ -1,8 +1,8 @@
-import s from './DependentsPage.module.css';
-import { PackageProps, ReverseDependency } from './common';
+import s from './DependenciesPage.module.css';
+import { PackageProps, Dependency } from './common';
 import Layout from './Layout';
 import * as lib from '@hackage-ui/react-lib';
-import { useState, memo } from 'react';
+import { memo } from 'react';
 
 const screenName = 'PackageDependentsPage';
 
@@ -11,11 +11,6 @@ export type DependenciesPageProps = {
 }
 
 const DependentsPage = (props: DependenciesPageProps) => {
-  const [showOutdatedOnly, setShowOutdatedOnly] = useState(false);
-
-  const _deps = props.package.reverseDependencies || [];
-  const deps = showOutdatedOnly ? _deps.filter(dep => dep.isOutdated) : _deps;
-
   return (
     <Layout
       analytics={{ screenName }}
@@ -25,45 +20,71 @@ const DependentsPage = (props: DependenciesPageProps) => {
     >
       <div className={s.dependentsPage}>
         <div className={s.info}>
-          <span>Displaying {deps.length} reverse dependencies of <strong>{props.package.name}</strong></span>
-          <lib.headerButton
-            onClick={() => setShowOutdatedOnly(!showOutdatedOnly)}
-            text={showOutdatedOnly ? 'Show All' : 'Show Outdated Only'}
-          />
+          <span>Displaying
+            {(props.package.dependencies?.dependenciesCount || 0) > 0 && <span>&nbsp;<strong>{props.package.dependencies?.dependenciesCount}</strong> dependencies</span>}
+            {(props.package.dependencies?.conditionalDependenciesCount || 0) > 0 && <span>&nbsp;and <strong>{props.package.dependencies?.conditionalDependenciesCount}</strong> conditional dependencies </span>}
+            <span>of <strong>{props.package.id}</strong></span>
+          </span>
         </div>
 
-        <div>
-          {deps.map(dep => {
+        {props.package.dependencies?.modules.map(mod => {
+          const conditionalDeps = mod.conditions.map((cond, i) => {
+            if (cond.ifDeps.length === 0 && cond.elseDeps.length === 0) {
+              return null;
+            }
+
             return (
-              <Dependency key={dep.packageName} {...dep} />
+              <div key={i} className={s.conditionalDeps}>
+                <div className={s.conditionalDepCode}>if {cond.predicate}</div>
+                {(cond.ifDeps.length === 0 && cond.elseDeps.length !== 0) && (
+                  <div>No dependencies found in this branch.</div>
+                )}
+                {cond.ifDeps.length !== 0 && (
+                  <div>
+                    {cond.ifDeps.map(dep => <Dependency key={dep.packageName} {...dep} />)}
+                  </div>
+                )}
+                {cond.elseDeps.length !== 0 && (
+                  <>
+                    <div className={s.conditionalDepCode}>else</div>
+                    <div>
+                      {cond.elseDeps.map(dep => <Dependency key={dep.packageName} {...dep} />)}
+                    </div>
+                  </>
+                )}
+              </div>
             );
-          })}
-        </div>
+          });
+
+          return (
+            <div key={mod.name} className={s.module}>
+              <div className={s.moduleName}>{mod.name}</div>
+              <div>
+                {mod.dependencies.map(dep => <Dependency key={dep.packageName} {...dep} />)}
+              </div>
+
+              {(mod.conditions.length > 0) &&
+                <div className={s.conditionalDepsHeader}>Conditional dependencies of the <strong>{mod.name}</strong></div>
+              }
+              {conditionalDeps}
+            </div>
+          );
+        })}
       </div>
     </Layout>
   );
 }
 
-const Dependency = (props: ReverseDependency) => {
+const Dependency = (props: Dependency) => {
   return (
     <lib.links.A
-      className={s.dependent}
+      className={s.dependency}
       href={`/package/${props.packageName}/dependencies`}
       analytics={{ featureName: 'ClickPackageDependency', eventParams: { event_label: props.packageName, screen_name: screenName } }}
       prefetch={false}
     >
-      <div
-        className={s.label}
-        style={{
-          background: props.isOutdated ? 'var(--accent-color-red)' : 'var(--purple-color-2)'
-        }}
-      >
-        {props.isOutdated ? 'Outdated' : 'OK'}
-      </div>
-
       <span
         style={{
-          color: props.isOutdated ? 'var(--accent-color-red)' : 'var(--purple-color-2)',
           fontWeight: 'bold'
         }}
       >
@@ -72,9 +93,8 @@ const Dependency = (props: ReverseDependency) => {
 
       <span
         style={{
-          color: props.isOutdated ? 'var(--accent-color-red)' : 'var(--purple-color-2)',
           marginLeft: 'auto',
-          fontWeight: 'bold'
+          fontFamily: 'Fira Code'
         }}
       >
         {props.versionsRange}

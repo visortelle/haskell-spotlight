@@ -1,8 +1,8 @@
 import axios from 'axios';
 import hljs from 'highlight.js';
-import { License, Homepage, Versions, Dependencies, ReverseDependency } from '../components/pages/package/common';
-import cheerio, { CheerioAPI } from 'cheerio';
-import { table } from 'console';
+import { License, Homepage, Versions, Dependency, Dependencies, ReverseDependency, DependencyCondition } from '../components/pages/package/common';
+import cheerio, { CheerioAPI, BasicAcceptedElems } from 'cheerio';
+import unescape from 'lodash/unescape';
 
 export type Package = {
   id: string,
@@ -41,12 +41,15 @@ export async function getPackage(packageId: string): Promise<Package> {
   // XXX - take care on the order of arguments here... Or implement a better solution.
   const [
     versions,
+    dependencies,
     reverseDependencies
   ] = await (await Promise.allSettled([
     await getVersions(name),
-    await getReverseDependencies(name)
+    await getDependencies(packageId),
+    await getReverseDependencies(name),
   ])).map((res) => (res as any).value) as [
       Versions,
+      Dependencies,
       ReverseDependency[]
     ];
 
@@ -70,8 +73,7 @@ export async function getPackage(packageId: string): Promise<Package> {
     repositoryUrl: getRepositoryUrl($),
     updatedAt: getUpdatedAt($),
     reverseDependencies,
-    dependencies: null
-    // dependencies: getDependencies($)
+    dependencies
   }
 }
 
@@ -207,6 +209,7 @@ export function getUpdatedAt($: CheerioAPI): string | null {
 }
 
 export async function getVersions(packageName: string): Promise<Versions> {
+  // ee5ad44c22b245e960ee2f8670ada3a55bbb7e16
   let versions: Versions = { normal: [], unpreferred: [], deprecated: [] };
   try {
     const data = await (await axios.get(`https://hackage.haskell.org/package/${packageName}/preferred`, { headers: { accept: 'application/json' } })).data;
@@ -222,6 +225,68 @@ export async function getVersions(packageName: string): Promise<Versions> {
   }
 }
 
+export async function getDependencies(packageId: string): Promise<Dependencies> {
+  let dependencies: Dependencies = { modules: [], dependenciesCount: 0, conditionalDependenciesCount: 0 };
+  let html: string = '';
+
+  try {
+    html = await (await axios(`https://hackage.haskell.org/package/${encodeURIComponent(packageId)}/dependencies`)).data;
+
+    const $ = cheerio.load(html);
+
+    const getDep = (li: BasicAcceptedElems<any>): Dependency => {
+      const versionRangeSpecified = $(li).text().trim().match(/^.*\(.*\)$/);
+
+      return {
+        packageName: $('a', li).text().trim(),
+        versionsRange: versionRangeSpecified ? $(li).text().trim().replace(/^.*\(/, '').replace(/\).*$/, '') : null
+      }
+    }
+
+    const modules = $('#content table.properties > tbody > tr').toArray().map(tr => {
+      return {
+        name: $('th', tr).text().trim(),
+        dependencies: $('> td > #detailed-dependencies > ul > li:not(:has(strong))', tr).map((_, li) => getDep(li)).toArray(),
+        conditions: $('> td > #detailed-dependencies > ul > li:has(strong)', tr).map((_, li) => {
+          const elements = $(li).contents();
+
+          const ifIndex = $(elements).index($('strong:contains(if)', li));
+          const elseIndex = $(elements).index($('strong:contains(else)', li));
+
+          const predicate = $($(elements).get(ifIndex + 1)).text().trim();
+
+          const ifBranchEl = $(elements).get(ifIndex + 2);
+          const elseBranchEl = $(elements).get(elseIndex + 1);
+
+          const ifDeps = $('> ul > li:not(:has(strong))', ifBranchEl).map((_, li) => getDep(li)).toArray();
+          const elseDeps = $('> ul > li:not(:has(strong))', elseBranchEl).map((_, li) => getDep(li)).toArray();
+
+          const condition: DependencyCondition = {
+            predicate,
+            ifDeps,
+            elseDeps
+          }
+
+          return condition;
+        }).toArray()
+      }
+    });
+
+    // Probably deduplicate dependencies here?
+    const conditionalDependenciesCount = modules.reduce((c, m) => c + m.conditions.reduce((mc, cm) => mc + cm.ifDeps.length + cm.elseDeps.length, 0), 0);
+    const dependenciesCount = modules.reduce((c, m) => c + m.dependencies.length, 0);
+
+    dependencies = { modules, dependenciesCount, conditionalDependenciesCount };
+  } catch (err) {
+    if (!axios.isAxiosError(err)) {
+      console.log(err);
+    }
+  } finally {
+    return dependencies;
+  }
+}
+
+
 export async function getReverseDependencies(packageName: string): Promise<ReverseDependency[]> {
   let reverseDependencies: ReverseDependency[] = [];
   let html: string = '';
@@ -230,13 +295,13 @@ export async function getReverseDependencies(packageName: string): Promise<Rever
     html = await (await axios(`https://packdeps.haskellers.com/reverse/${encodeURIComponent(packageName)}`)).data;
 
     const $ = cheerio.load(html);
-    reverseDependencies = $('table tbody tr').toArray().map(row => {
-      const isOutdated = $(row).hasClass('out-of-date');
-      const tds = $('td', row);
+    reverseDependencies = $('table tbody tr').toArray().map(tr => {
+      const isOutdated = $(tr).hasClass('out-of-date');
+      const tds = $('td', tr);
       const td0 = $(tds).get(0);
       const td1 = $(tds).get(1);
-      const packageName = $(td0).text();
-      const versionsRange = $(td1).text();
+      const packageName = $(td0).text().trim();
+      const versionsRange = $(td1).text().trim();
       const hasReverseDependencies = $('a', td0).toArray().length > 0;
 
       return {
