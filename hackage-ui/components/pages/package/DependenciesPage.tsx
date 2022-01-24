@@ -62,7 +62,7 @@ const DependentsPage = (props: DependenciesPageProps) => {
                 {mod.dependencies.map(dep => <Dependency key={dep.packageName} {...dep} />)}
               </div>
 
-              {(mod.conditions.length > 0) &&
+              {(mod.conditions.length > 0 && mod.conditions.some(m => (m.ifDeps.length > 0) || (m.elseDeps.length > 0))) &&
                 <div className={s.conditionalDepsHeader}>Conditional dependencies of the <strong>{mod.name}</strong></div>
               }
               {conditionalDeps}
