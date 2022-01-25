@@ -17,6 +17,7 @@
   max-height: calc(100vh - 64rem);
   overflow: hidden;
   box-shadow: 1rem 3rem 8rem rgb(0 0 0 / 27%);
+  z-index: 2147483647;
 }
 
 .searchResults {
