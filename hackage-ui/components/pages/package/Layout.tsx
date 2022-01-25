@@ -24,11 +24,6 @@ const getTabs = (props: LayoutProps): Tab[] => {
       title: 'Overview',
       href: `/package/${props.package.id}`
     },
-    // {
-    //   id: 'docs',
-    //   title: '📘 Docs',
-    //   href: `#`
-    // },
     {
       id: 'versions',
       title: `${props.package.versionsCount} Versions`,
@@ -56,6 +51,7 @@ const Layout = (props: LayoutProps) => {
           <div className={s.content}>
             <div className={s.briefInfo}>
               <BriefInfo
+                packageId={props.package.id}
                 packageName={props.package.name}
                 packageVersion={props.package.currentVersion}
                 shortDescription={props.package.shortDescription}

@@ -3,6 +3,7 @@ import { PackageProps, ReverseDependency } from './common';
 import Layout from './Layout';
 import * as lib from '@hackage-ui/react-lib';
 import { useState, memo } from 'react';
+import SmallButton from './SmallButton';
 
 const screenName = 'PackageDependentsPage';
 
@@ -26,7 +27,7 @@ const DependentsPage = (props: DependentsPageProps) => {
       <div className={s.dependentsPage}>
         <div className={s.info}>
           <span>Displaying <strong>{deps.length}</strong> of <strong>{props.package.reverseDependencies?.length || '0'}</strong> reverse dependencies of <strong>{props.package.name}</strong></span>
-          <lib.headerButton
+          <SmallButton
             onClick={() => setShowOutdatedOnly(!showOutdatedOnly)}
             text={showOutdatedOnly ? 'Show All' : 'Show Outdated Only'}
           />
