@@ -10,9 +10,10 @@
 }
 
 .dependency {
-  padding: 18rem 24rem;
+  padding: 12rem 24rem;
+  font-size: 14rem;
   background-color: #fff;
-  margin-bottom: 12rem;
+  margin-bottom: 8rem;
   box-shadow: 0rem 1rem 2rem rgb(0 0 0 / 27%);
   border-radius: 8rem;
   display: flex;
