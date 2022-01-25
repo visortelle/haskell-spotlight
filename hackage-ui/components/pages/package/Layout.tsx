@@ -11,13 +11,17 @@ type LayoutProps = {
   analytics: {
     screenName: string
   },
-  package: PackageProps,
+  package: null | PackageProps,
   hidePackageVersion?: boolean,
   activeTab: string,
   children: ReactNode,
 }
 
 const getTabs = (props: LayoutProps): Tab[] => {
+  if (props.package === null) {
+    return [];
+  }
+
   return [
     {
       id: 'overview',
@@ -43,6 +47,10 @@ const getTabs = (props: LayoutProps): Tab[] => {
 }
 
 const Layout = (props: LayoutProps) => {
+  if (props.package === null) {
+    return null;
+  }
+
   return (
     <div className={s.page}>
       <GlobalMenu {...defaultMenuProps} />

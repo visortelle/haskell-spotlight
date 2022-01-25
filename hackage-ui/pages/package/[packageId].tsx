@@ -21,6 +21,13 @@ export async function getStaticProps(props: GetStaticPropsContext): Promise<GetS
   const packageId = props.params!.packageId as string;
   const pkg = await pkgFetch.getPackage(packageId);
 
+  if (pkg === null) {
+    return {
+      notFound: true,
+      revalidate: 10
+    }
+  }
+
   return {
     props: pkg,
     revalidate: 180

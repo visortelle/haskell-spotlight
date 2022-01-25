@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import hljs from 'highlight.js';
 import { License, Homepage, Versions, Dependency, Dependencies, ReverseDependency, DependencyCondition } from '../components/pages/package/common';
 import cheerio, { CheerioAPI, BasicAcceptedElems } from 'cheerio';
@@ -21,12 +21,16 @@ export type Package = {
   dependencies: Dependencies | null
 }
 
-export async function getPackage(packageId: string): Promise<Package> {
+export async function getPackage(packageId: string): Promise<null | Package> {
   let html = '';
   try {
     html = await getPackageRawHtml(packageId);
   } catch (err) {
     console.log(err);
+  }
+
+  if (html === '') {
+    return null;
   }
 
   const $ = cheerio.load(html);
@@ -101,7 +105,9 @@ export async function getPackageRawHtml(packageId: string): Promise<string> {
   try {
     html = await (await axios(`https://hackage.haskell.org/package/${encodeURIComponent(packageId)}`)).data;
   } catch (err) {
-    console.log(err);
+    if (!(axios.isAxiosError(err) && err.response?.status === 404)) {
+      console.log(err);
+    }
   }
 
   return html;
