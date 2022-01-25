@@ -23,7 +23,7 @@ const BriefInfo = (props: BriefInfoProps) => {
 
       {props.packageId &&
         <lib.links.ExtA className={s.openOnHackage} target='__blank' href={`https://hackage.haskell.org/package/${props.packageId}`} analytics={{ featureName: 'showOnPackage', eventParams: {} }}>
-          <SVGIcon svg={openInNewTabIcon} />Open on Hackage
+          <SVGIcon svg={openInNewTabIcon} />View on Hackage
         </lib.links.ExtA>
       }
     </div>
