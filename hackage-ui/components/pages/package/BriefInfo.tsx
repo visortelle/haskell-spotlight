@@ -1,10 +1,7 @@
 import s from './BriefInfo.module.css';
-import * as lib from '@hackage-ui/react-lib';
-import SVGIcon from '../../icons/SVGIcon';
-import openInNewTabIcon from '!!raw-loader!../../icons/open-in-new-tab.svg';
+import SmallButtonExtA from './SmallButtonExtA';
 
 export type BriefInfoProps = {
-  packageId: string | null,
   packageName: string | null,
   packageVersion: string | null,
   shortDescription: string | null,
@@ -21,10 +18,13 @@ const BriefInfo = (props: BriefInfoProps) => {
       </div>
       {props.shortDescription && <div className={s.shortDescription}>{props.shortDescription}</div>}
 
-      {props.packageId &&
-        <lib.links.ExtA className={s.openOnHackage} target='__blank' href={`https://hackage.haskell.org/package/${props.packageId}`} analytics={{ featureName: 'showOnPackage', eventParams: {} }}>
-          <SVGIcon svg={openInNewTabIcon} />View on Hackage
-        </lib.links.ExtA>
+      {props.packageName &&
+        <div className={s.openOnHackage}>
+          <SmallButtonExtA
+            href={`https://hackage.haskell.org/package/${props.packageName}${props.packageVersion ? `-${props.packageVersion}` : ''}`}
+            title={`View on Hackage`}
+          />
+        </div>
       }
     </div>
   );

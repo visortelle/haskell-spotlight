@@ -47,21 +47,4 @@
   position: absolute;
   top: 8rem;
   right: 8rem;
-  padding: 2rem 8rem;
-  font-size: 12rem;
-  background-color: var(--purple-color-2);
-  color: #fff;
-  border-radius: 4rem;
-  box-shadow: 1rem 1rem 1rem rgb(0 0 0 / 27%);
-  transition: var(--transition-short);
-  display: inline-flex;
-  align-items: center;
-}
-
-
-.openOnHackage svg {
-  width: 16rem;
-  height: 16rem;
-  fill: #fff;
-  margin-right: 4rem;
 }

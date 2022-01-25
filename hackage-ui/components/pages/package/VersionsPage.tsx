@@ -2,6 +2,7 @@ import s from './VersionsPage.module.css';
 import { PackageProps } from './common';
 import Layout from './Layout';
 import * as lib from '@hackage-ui/react-lib';
+import SmallButtonExtA from './SmallButtonExtA';
 
 const screenName = 'PackageVersionsPage';
 
@@ -27,12 +28,11 @@ const VersionsPage = (props: VersionsPageProps) => {
         <div className={s.info}>
           <span>All <strong>{versions.length}</strong> versions of <strong>{props.package.name}</strong></span>
 
-          <lib.links.ExtA
+          <SmallButtonExtA
             href="https://pvp.haskell.org/"
-            analytics={{ featureName: 'GoToPackageVersioningPolicy', eventParams: { screen_name: screenName } }}
-          >
-            📘 Versioning Policy
-          </lib.links.ExtA>
+            title='Versioning Policy'
+          />
+
         </div>
 
         <div>

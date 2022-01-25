@@ -37,3 +37,9 @@
   margin-right: 0;
 }
 
+.button svg {
+  width: 16rem;
+  height: 16rem;
+  fill: #fff;
+  margin-right: 4rem;
+}
