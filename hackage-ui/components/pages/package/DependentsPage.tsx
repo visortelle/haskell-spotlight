@@ -11,6 +11,8 @@ export type DependentsPageProps = {
   package: PackageProps,
 }
 
+const perfSafeMaxCount = 1000;
+
 const DependentsPage = (props: DependentsPageProps) => {
   const [showOutdatedOnly, setShowOutdatedOnly] = useState(false);
 
@@ -32,6 +34,10 @@ const DependentsPage = (props: DependentsPageProps) => {
             text={showOutdatedOnly ? 'Show All' : 'Show Outdated Only'}
           />
         </div>
+
+        {(deps?.length || 0) > perfSafeMaxCount && (
+          <div className={s.perfDisclaimer}>🚧 Amount of items to display is more than {perfSafeMaxCount}. Page may become unresponsive. 🚧</div>
+        )}
 
         <div>
           {deps.map(dep => {

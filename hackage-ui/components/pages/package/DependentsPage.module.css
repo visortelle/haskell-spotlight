@@ -34,3 +34,12 @@
   background-color: var(--surface-color);
   font-size: 12rem;
 }
+
+.perfDisclaimer {
+  padding: 24rem 24rem;
+  background: var(--accent-color-red);
+  color: #fff;
+  margin-bottom: 12rem;
+  border-radius: 8rem;
+  text-align: center;
+}
