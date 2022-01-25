@@ -55,7 +55,6 @@ const GlobalMenu = (props: Props) => {
         className={`${s.menu} ${atTop ? s.menuAtTop : ''}`}
         style={{ height: `${heightPx}rem` }}
       >
-        <div className={`${s.progressIndicator} ${Object.keys(appContext.tasks).length > 0 ? s.progressIndicatorRunning : ''}`}></div>
         <div className={s.content}>
           <lib.links.A href="/" className={s.logo} analytics={{ featureName: 'GlobalMenuLogo', eventParams: { screen_name: 'All' } }}>
             <Logo fontSize={18} />
@@ -86,6 +85,7 @@ const GlobalMenu = (props: Props) => {
             })}
           </ul>
         </div>
+        <div className={`${s.progressIndicator} ${Object.keys(appContext.tasks).length > 0 ? s.progressIndicatorRunning : ''}`}></div>
       </div>
     </>
   );
