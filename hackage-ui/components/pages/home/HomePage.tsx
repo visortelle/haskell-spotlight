@@ -8,6 +8,7 @@ import discourseIcon from '!!raw-loader!../../icons/discourse.svg';
 import redditIcon from '!!raw-loader!../../icons/reddit.svg';
 import haskellMonochromeIcon from '!!raw-loader!../../icons/haskell-monochrome.svg';
 import Footer from "../../layout/Footer";
+import Greeting from "../../layout/Greeting";
 import VerticalList, { Item } from "../../widgets/VerticalList";
 import * as lib from "@hackage-ui/react-lib";
 import { useContext, useEffect } from "react";
@@ -40,30 +41,27 @@ const Home = (props: HomeProps) => {
     <div className={s.page}>
       <GlobalMenu {...defaultMenuProps} />
 
-      <div className={s.greeting}>
-        <div className={s.greetingContent}>
-          <h1 className={s.greetingHeader}>The Haskell Community’s<br /> Home Page</h1>
+      <Greeting
+        header={<>The Haskell Community’s<br /> Home Page</>}
+      >
+        <div className={s.gettingStarted}>
+          <SidebarButton
+            onClick={() => { }} href="https://github.com/visortelle/hackage-ui/issues/"
+            overrides={{ style: { flex: 'initial', backgroundColor: 'var(--text-color)', marginBottom: '12rem', justifyContent: 'flex-start', padding: '12rem 24rem', fontSize: '18rem', marginRight: '24rem' } }}
+          >
+            <SvgIcon svg={gitHubIcon} />
+            <div>Contribute on GitHub</div>
+          </SidebarButton>
 
-          <div className={s.gettingStarted}>
-            <SidebarButton
-              onClick={() => { }} href="https://github.com/visortelle/hackage-ui/issues/"
-              overrides={{ style: { flex: 'initial', backgroundColor: 'var(--text-color)', marginBottom: '12rem', justifyContent: 'flex-start', padding: '12rem 24rem', fontSize: '18rem', marginRight: '24rem' } }}
-            >
-              <SvgIcon svg={gitHubIcon} />
-              <div>Contribute on GitHub</div>
-            </SidebarButton>
-
-            <SidebarButton
-              onClick={() => { }} href="https://twitter.com/HackageUI"
-              overrides={{ style: { flex: 'initial', backgroundColor: '#00ACEE', marginBottom: '12rem', justifyContent: 'flex-start', padding: '12rem 24rem', fontSize: '18rem' } }}
-            >
-              <SvgIcon svg={twitterIcon} />
-              <div>Follow us on Twitter</div>
-            </SidebarButton>
-          </div>
+          <SidebarButton
+            onClick={() => { }} href="https://twitter.com/HackageUI"
+            overrides={{ style: { flex: 'initial', backgroundColor: '#00ACEE', marginBottom: '12rem', justifyContent: 'flex-start', padding: '12rem 24rem', fontSize: '18rem' } }}
+          >
+            <SvgIcon svg={twitterIcon} />
+            <div>Follow us on Twitter</div>
+          </SidebarButton>
         </div>
-
-      </div>
+      </Greeting>
 
       <div className={s.content}>
 

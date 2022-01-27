@@ -5,6 +5,7 @@
   margin: 0;
   color: #fff;
   font-weight: bold;
+  text-shadow: 1rem 1rem 1rem rgba(0,0,0,0.5);
 }
 
 .svg {

@@ -1,0 +1,62 @@
+.card {
+  background: #fff;
+  border-radius: 12rem;
+  padding: 32rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-right: 12rem;
+  flex: 1;
+}
+
+.card:last-child {
+  margin-right: 0;
+}
+
+.cardDisabled {
+  pointer-events: none;
+  filter: grayscale(1);
+  color:rgb(0 0 0 / 27%);
+}
+
+.cardDisabled .icon {
+  opacity: 0.5;
+}
+
+.svgIcon svg {
+  width: 80rem;
+  height: 80rem;
+}
+
+.title {
+  margin: 18rem 0;
+}
+
+.description {
+  margin: 0 0 18rem 0;
+}
+
+.description:last-child {
+  margin-bottom: 0;
+}
+
+.row {
+  display: flex;
+  margin-bottom: 72rem;
+}
+
+.secondaryContent {
+  display: flex;
+  flex: 1;
+  padding-left: 32rem;
+}
+
+@media (max-width: 1000px) {
+  .row {
+    flex-direction: column;
+  }
+  .card {
+    margin-right: 0;
+    margin-bottom: 18rem;
+  }
+}

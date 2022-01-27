@@ -1,0 +1,56 @@
+.card {
+  background: #fff;
+  border-radius: 12rem;
+  padding: 32rem 24rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-right: 12rem;
+  flex: 1;
+}
+
+.card:last-child {
+  margin-right: 0;
+}
+
+.cardDisabled {
+  pointer-events: none;
+  filter: grayscale(1);
+  color: rgb(0 0 0 / 27%);
+}
+
+.cardDisabled .icon {
+  opacity: 0.5;
+}
+
+.svgIcon svg {
+  width: 48rem;
+  height: 48rem;
+}
+
+.title {
+  margin: 18rem 0;
+}
+
+.description {
+  margin: 0 0 18rem 0;
+}
+
+.row {
+  display: flex;
+  margin-bottom: 72rem;
+}
+
+@media (max-width: 1000px) {
+  .row {
+    flex-wrap: wrap;
+  }
+  .card {
+    flex: 1 1 calc(50% - 6rem);
+    margin-bottom: 12rem;
+  }
+  .card:nth-child(even) {
+    margin-right: 0;
+  }
+}

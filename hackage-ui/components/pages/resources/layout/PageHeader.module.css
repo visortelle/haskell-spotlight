@@ -1,0 +1,15 @@
+.container {
+  margin-bottom: 32rem;
+}
+
+.text {
+  margin: 0 auto;
+  font-size: 42rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.secondaryText {
+  font-size: 18rem;
+  text-align: center;
+}

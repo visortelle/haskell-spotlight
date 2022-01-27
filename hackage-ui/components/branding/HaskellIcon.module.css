@@ -1,0 +1,37 @@
+.container {
+  background-color: var(--purple-color-2);
+  border-radius: 8rem;
+  width: 84rem;
+  height: 84rem;
+  box-shadow: 0rem 1rem 2rem rgb(0 0 0 / 27%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.icon svg {
+  width: 52rem;
+  height: 52rem;
+  fill: var(--purple-color-1);
+  position: relative;
+  left: 3rem;
+}
+
+.iconAddon {
+  position: absolute;
+  bottom: -8rem;
+  right: -8rem;
+  background: #fff;
+  border-radius: 6rem;
+  padding: 3rem;
+  box-shadow: 0rem 1rem 2rem rgb(0 0 0 / 27%);
+}
+
+.iconAddon svg {
+  width: 24rem;
+  height: 24rem;
+  fill: var(--purple-color-2);
+  stroke: var(--purple-color-2);
+  stroke-width: 1rem;
+}

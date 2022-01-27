@@ -3,42 +3,6 @@
   display: flex;
   flex-direction: column;
 }
-
-.greeting {
-  display: flex;
-  justify-content: center;
-  background-color: var(--purple-color-2);
-  position: relative;
-  overflow: hidden;
-  padding-bottom: 8rem;
-}
-
-.greeting:after {
-  content: "";
-  width: 100%;
-  position: absolute;
-  bottom: -4rem;
-  box-shadow: 0 0rem 8rem rgb(0 0 0 / 50%);
-  height: 4rem;
-}
-
-.greetingContent {
-  max-width: var(--max-content-width);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.greetingHeader {
-  margin: 0 auto;
-  padding-top: 24rem;
-  color: #fff;
-  text-shadow: 1rem 2rem 2rem rgb(0 0 0 / 27%);
-  font-size: 42rem;
-  text-align: center;
-}
-
 .gettingStarted {
   display: flex;
   justify-content: center;

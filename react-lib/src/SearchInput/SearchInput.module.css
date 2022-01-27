@@ -9,7 +9,7 @@
   width: calc(100vw - 48rem);
   max-width: var(--max-content-width);
   position: fixed;
-  left: calc(50% - 18rem);
+  left: 50%;
   top: 54rem;
   transform: translate(-50%, 0%);
   background-color: #fff;

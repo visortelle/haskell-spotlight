@@ -1,0 +1,47 @@
+.link {
+  display: inline-flex;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  position: relative;
+  margin-top: auto;
+  height: 2em;
+}
+
+.linkDisabled {
+  pointer-events: none;
+  filter: grayscale(1);
+  color:rgb(0 0 0 / 27%);
+}
+
+.linkDisabled svg {
+  opacity: 0.5;
+}
+
+.text {
+  display: flex;
+  align-items: center;
+}
+
+.text svg {
+  width: 24rem;
+  height: 24rem;
+  margin-right: 6rem;
+}
+
+.linkArrow {
+  color: var(--purple-color-2);
+  position: absolute;
+  right: 0;
+  top: calc(50%);
+  transform: translate(0, -50%);
+}
+
+.openInNewTabIcon {
+  margin-left: 6rem;
+  position: relative;
+  top: 3rem;
+}
+.openInNewTabIcon svg {
+  width: 16rem;
+  fill: var(--purple-color-2);
+}
