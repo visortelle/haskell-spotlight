@@ -1,0 +1,6 @@
+.page {
+  padding: 0 12rem;
+  padding-top: 48rem;
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+}

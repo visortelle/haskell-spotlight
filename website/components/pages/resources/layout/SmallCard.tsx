@@ -6,8 +6,8 @@ import { ReactNode } from 'react';
 import Link, { LinkProps } from './Link';
 
 export type SmallCardProps = {
-  iconFormat: 'svg' | 'png' | 'react',
-  icon: string | ReactNode,
+  iconFormat?: 'svg' | 'png' | 'react',
+  icon?: string | ReactNode,
   title: string,
   description: string,
   link?: LinkProps,

@@ -1,5 +1,6 @@
 import * as lib from "@haskell-spotlight/react-lib";
 import { useContext, useEffect } from "react";
+import s from './DeveloperToolsPage.module.css';
 import BigCard, { BigCardsRow } from "./layout/BigCard";
 import SmallCard, { SmallCardsRow } from "./layout/SmallCard";
 import SVGIcon from "../../icons/SVGIcon";
@@ -34,7 +35,8 @@ const DevelopmentEnvironmentPage = (props: DevelopmentEnvironmentPageProps) => {
 
   return (
     <Layout analytics={{ screenName }}>
-      <PageHeader
+      <div className={s.page}>
+<PageHeader
         text="Developer tools"
         secondaryText="Install compiler, prepare your favorite code editor and more."
       />
@@ -144,13 +146,6 @@ const DevelopmentEnvironmentPage = (props: DevelopmentEnvironmentPageProps) => {
                 />
               ), (
                 <Link
-                  key="firefox"
-                  text={<><SVGIcon svg={firefoxIcon} /><div style={{ width: '140rem' }}>Get for Firefox</div></>}
-                  href="https://addons.mozilla.org/en-US/firefox/addon/haskell-spotlight/"
-                  type="external"
-                  openInNewTab={true}
-                />), (
-                <Link
                   key="chrome"
                   text={<><SVGIcon svg={chromeIcon} /><div style={{ width: '140rem' }}>Get for Chrome</div></>}
                   href="https://chrome.google.com/webstore/detail/haskell-spotlight/npadgihccblidebeflijkcgfpklgalkj"
@@ -158,6 +153,13 @@ const DevelopmentEnvironmentPage = (props: DevelopmentEnvironmentPageProps) => {
                   openInNewTab={true}
                 />
               ), (
+                <Link
+                  key="firefox"
+                  text={<><SVGIcon svg={firefoxIcon} /><div style={{ width: '140rem' }}>Get for Firefox</div></>}
+                  href="https://addons.mozilla.org/en-US/firefox/addon/haskell-spotlight/"
+                  type="external"
+                  openInNewTab={true}
+                />), (
                 <Link
                   key="safari"
                   text={<><SVGIcon svg={safariIcon} /><div style={{ width: '140rem' }}>Get for Safari</div></>}
@@ -171,7 +173,9 @@ const DevelopmentEnvironmentPage = (props: DevelopmentEnvironmentPageProps) => {
           )}
         />
       </BigCardsRow>
-    </Layout>
+
+      </div>
+          </Layout>
   );
 }
 

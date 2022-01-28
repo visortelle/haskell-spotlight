@@ -12,9 +12,11 @@ const screenName = 'ResourcesPage';
 const ResourcesPage = (props: ResourcesPageProps) => {
   return (
     <Layout analytics={{ screenName }}>
-      <lib.links.A href="/resources/developer-tools" analytics={{ featureName: 'ClickResourcesPageLink', eventParams: {} }}>
-        Developer tools
-      </lib.links.A>
+      <div className={s.page}>
+        <lib.links.A href="/resources/developer-tools" analytics={{ featureName: 'ClickResourcesPageLink', eventParams: {} }}>
+          Developer tools
+        </lib.links.A>
+      </div>
 
       {/*
         - [ ] Add section about low level tools lit

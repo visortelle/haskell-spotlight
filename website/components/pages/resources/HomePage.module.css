@@ -1,0 +1,27 @@
+.page {
+  padding: 0 12rem;
+  min-height: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+.gettingStarted {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32rem 24rem;
+}
+
+.content {
+  flex: 1;
+  max-width: var(--max-content-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 48rem 0;
+}
+
+.paragraph {
+  margin: 0;
+  padding: 0;
+  font-size: 16rem;
+}

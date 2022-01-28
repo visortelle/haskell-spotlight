@@ -1,9 +1,11 @@
-/* .page {
-  min-height: inherit;
-  display: flex;
-  flex-direction: column;
+.page {
+  padding: 0 12rem;
+  padding-top: 48rem;
+  max-width: var(--max-content-width);
+  margin: 0 auto;
 }
 
+/*
 .content {
   padding: 0 12rem;
   padding-top: 48rem;

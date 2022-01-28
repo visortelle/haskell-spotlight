@@ -4,7 +4,8 @@
   background-color: var(--purple-color-2);
   position: relative;
   overflow: hidden;
-  padding-bottom: 8rem;
+  padding: 36rem 0;
+  padding-top: 24rem;
 }
 
 .greeting:after {
@@ -24,11 +25,31 @@
   flex-direction: column;
 }
 
-.greetingHeader {
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.header svg {
+  width: 48rem;
+  height: 48rem;
+  fill: var(--purple-color-1);
+  margin-right: 6rem;
+}
+
+.text {
   margin: 0 auto;
-  padding-top: 24rem;
   color: #fff;
   text-shadow: 1rem 2rem 2rem rgb(0 0 0 / 27%);
-  font-size: 42rem;
+  font-size: 38rem;
+  line-height: 1;
   text-align: center;
+}
+
+.secondaryText {
+  margin: 0;
+  margin-top: 12rem;
+  color: #fff;
+  font-size: 18rem;
+  text-shadow: 1rem 2rem 2rem rgb(0 0 0 / 27%);
 }

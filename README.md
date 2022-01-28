@@ -20,8 +20,8 @@ The search widget is available in forms of:
 
 <img width="1194" alt="Screen Shot 2022-01-19 at 9 29 25 AM" src="https://user-images.githubusercontent.com/9302460/150092880-07339fff-1e48-4eac-bd92-ba56e340f1c7.png">
 
-  - for [🦊 Firefox](https://addons.mozilla.org/en-US/firefox/addon/haskell-spotlight/)
   - for [Chrome](https://chrome.google.com/webstore/detail/haskell-spotlight/npadgihccblidebeflijkcgfpklgalkj)
+  - for [Firefox](https://addons.mozilla.org/en-US/firefox/addon/haskell-spotlight/)
   - for Safari (coming soon)
 
 ## Changelog
