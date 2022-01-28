@@ -1,4 +1,4 @@
-module HackageUI where
+module HaskellSpotlight where
 
 main :: IO ()
 main = do

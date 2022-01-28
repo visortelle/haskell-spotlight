@@ -36,7 +36,7 @@ const Footer = () => {
 
         <div className={s.footerColumn}>
           <h3 className={s.footerColumnHeader}>Social</h3>
-          <FooterLink href="https://twitter.com/HackageUI"><SvgIcon svg={twitterIcon} />@HackageUI</FooterLink>
+          <FooterLink href="https://twitter.com/HackageSpot"><SvgIcon svg={twitterIcon} />@HaskellSpot</FooterLink>
           <FooterLink href="https://github.com/haskell-spotlight/haskell-spotlight"><SvgIcon svg={githubIcon} />haskell-spotlight/haskell-spotlight</FooterLink>
           <FooterLink href="https://twitter.com/haskellfound"><SvgIcon svg={twitterIcon} />@haskellfound</FooterLink>
           <FooterLink href="https://discourse.haskell.org/c/haskell-foundation"><SvgIcon svg={discourseIcon} />discourse.haskell.org</FooterLink>

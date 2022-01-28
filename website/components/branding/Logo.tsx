@@ -18,7 +18,7 @@ const Logo = (props: { fontSize: number }) => {
         <path d="M26.586 77.722L51.33 40.63 26.586 3.537h18.558L94.63 77.722H76.074L60.61 54.54 45.143 77.722H26.586zm0 0" fill="#453a62" />
         <path d="M86.384 56.085L78.136 43.72h28.868v12.366h-20.62zM74.012 37.54l-8.248-12.365h41.24V37.54H74.012zm0 0" fill="#453a62" />
       </svg>
-      <span style={{ marginLeft: '4rem' }}>hackage.haskell.org</span>
+      <span style={{ marginLeft: '4rem' }}>Haskell Spotlight</span>
     </div>
   );
 };

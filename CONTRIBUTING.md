@@ -16,6 +16,6 @@ If you want to implement some significant change, it's better to create a GitHub
 - Star ⭐️ the project on GitHub.
 - Propose feature ideas.
 - Report bugs.
-- Follow and retweet us on Twitter: [@HackageUI](https://twitter.com/HackageUI).
+- Follow and retweet us on Twitter: [@HaskellSpot](https://twitter.com/HaskellSpot).
 - You can contribute by sponsoring the project or propose a job in a Haskell project to the [author](mailto:visotelle+haskell-spotlight@gmail.com). 🙂
 - Any other way that will come to your mind.

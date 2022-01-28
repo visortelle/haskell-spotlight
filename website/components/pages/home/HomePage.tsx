@@ -54,7 +54,7 @@ const Home = (props: HomeProps) => {
           </SidebarButton>
 
           <SidebarButton
-            onClick={() => { }} href="https://twitter.com/HackageUI"
+            onClick={() => { }} href="https://twitter.com/HaskellSpot"
             overrides={{ style: { flex: 'initial', backgroundColor: '#00ACEE', marginBottom: '12rem', justifyContent: 'flex-start', padding: '12rem 24rem', fontSize: '18rem' } }}
           >
             <SvgIcon svg={twitterIcon} />
