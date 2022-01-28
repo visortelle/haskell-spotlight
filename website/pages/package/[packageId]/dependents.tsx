@@ -7,7 +7,7 @@ const Page: NextPage<DependentsPageProps> = (props) => {
   return (
     <>
       <Head>
-        <title>{props.package.name} - Hackage: The Haskell community’s package registry</title>
+        <title>{props.package.name} - HaskellSpot: The Haskell community’s home page</title>
         <meta name="description" content={props.package.shortDescription || props.package.name}></meta>
       </Head>
 

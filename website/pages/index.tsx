@@ -10,8 +10,8 @@ const Page: NextPage<HomeProps> = (props) => {
   return (
     <>
       <Head>
-        <title>Hackage: The Haskell community’s package registry</title>
-        <meta name="description" content="Hackage is a package registry for Haskell"></meta>
+        <title>HaskellSpot: The Haskell community’s home page</title>
+        <meta name="description" content="HaskellSpot: The Haskell community’s home page"></meta>
       </Head>
 
       <HomePage {...props} />

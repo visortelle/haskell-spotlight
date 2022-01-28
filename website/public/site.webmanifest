@@ -1,6 +1,6 @@
 {
-    "name": "Hackage: The Haskell community’s package registry",
-    "short_name": "Hackage",
+    "name": "HaskellSpot: The Haskell community’s home page",
+    "short_name": "HaskellSpot",
     "icons": [
        {
           "src": "/favicon/android-chrome-192x192.png",

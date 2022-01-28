@@ -6,7 +6,7 @@ const Page: NextPage<DevelopmentEnvironmentPageProps> = () => {
   return (
     <>
       <Head>
-        <title>Hackage: The Haskell community’s package registry</title>
+        <title>HaskellSpot: The Haskell community’s home page</title>
         <meta name="description" content="Haskell - available resources"></meta>
       </Head>
 

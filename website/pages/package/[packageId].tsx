@@ -8,7 +8,7 @@ const Page: NextPage<PackageProps> = (props) => {
   return (
     <>
       <Head>
-        <title>{props.id} - Hackage: The Haskell community’s package registry</title>
+        <title>{props.id} - HaskellSpot: The Haskell community’s home page</title>
         <meta name="description" content={props.shortDescription || props.name}></meta>
       </Head>
 
