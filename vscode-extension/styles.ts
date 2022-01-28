@@ -1,7 +1,7 @@
 import normalizeStyles from "../styles/normalize.css";
 import globalsStyles from "../styles/globals.css";
 import fontsStyles from "../styles/fonts.css";
-import reactLibStyles from "@hackage-ui/react-lib/dist/react-lib.css";
+import reactLibStyles from "@haskell-spotlight/react-lib/dist/react-lib.css";
 import reactToastifyStyles from "react-toastify/dist/ReactToastify.css";
 import hljsStyles from "highlight.js/styles/kimbie-light.css";
 

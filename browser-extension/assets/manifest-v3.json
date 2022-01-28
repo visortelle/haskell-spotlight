@@ -3,7 +3,7 @@
   "name": "Haskell Spotlight",
   "short_name": "Haskell Spotlight",
   "description": "Search on Hackage, Hoogle and more soon.",
-  "homepage_url": "https://github.com/visortelle/hackage-ui",
+  "homepage_url": "https://github.com/haskell-spotlight/haskell-spotlight",
   "version": "0.0.7",
   "icons": { "192": "images/icon-192.png" },
   "content_scripts": [
@@ -21,11 +21,6 @@
     "default_title": "Haskell Spotlight",
     "default_popup": "popup.html"
   },
-  "permissions": [
-    "storage",
-    "unlimitedStorage"
-  ],
-  "host_permissions": [
-    "https://hackage-ui.vercel.app/api/*"
-  ]
+  "permissions": ["storage", "unlimitedStorage"],
+  "host_permissions": ["https://haskell-spotlight.vercel.app/api/*"]
 }

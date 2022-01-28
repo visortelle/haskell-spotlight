@@ -4,7 +4,7 @@ import s from './AppContext.module.css';
 import { Analytics, AnalyticsState } from '../Analytics/Analytics';
 import type { Browser } from 'webextension-polyfill';
 
-export const toastContainerId = 'hackage-ui-toast-container';
+export const toastContainerId = 'haskell-spotlight-toast-container';
 
 export type SearchHistory = string[];
 

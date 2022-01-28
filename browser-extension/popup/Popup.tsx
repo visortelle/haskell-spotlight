@@ -93,10 +93,10 @@ export default () => {
 
         <a
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '12px 12px 32px 12px', fontSize: '16px', fontWeight: 'bold', color: '#5e5086' }}
-          href="https://github.com/visortelle/hackage-ui"
+          href="https://github.com/haskell-spotlight/haskell-spotlight"
           target="__blank"
         >
-          ⭐️ github.com/visortelle/hackage-ui
+          ⭐️ github.com/haskell-spotlight/haskell-spotlight
         </a>
       </div>
     </div>

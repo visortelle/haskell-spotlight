@@ -2,6 +2,7 @@
 
 .PHONY: dev
 dev: ## Start development.
+	cd ../react-lib && make build && npm link
 	npm link @haskell-spotlight/react-lib
 	npm run dev
 

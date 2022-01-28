@@ -2,13 +2,13 @@
 
 .PHONY: dev
 dev: ## Start development.
-	npm link @hackage-ui/react-lib
+	npm link @haskell-spotlight/react-lib
 	npm run dev
 
 .PHONY: build
 build: ## Build the project.
 	cd ../react-lib && make build && npm link
-	npm link @hackage-ui/react-lib
+	npm link @haskell-spotlight/react-lib
 	npm i
 	npm run build
 	# xcrun safari-web-extension-converter --project-location ./build/safari ./build

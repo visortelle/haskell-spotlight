@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import documentStyles from './document.css';
 import Content from './Content';
-import * as lib from '@hackage-ui/react-lib'
+import * as lib from '@haskell-spotlight/react-lib'
 
 export function render({ to }: { to: HTMLElement }) {
   ReactDOM.render(

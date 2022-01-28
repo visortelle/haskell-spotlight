@@ -26,6 +26,6 @@ The search widget is available in forms of:
 
 ## Changelog
 
-Changelog is available here: https://github.com/visortelle/hackage-ui/issues/2
+Changelog is available here: https://github.com/haskell-spotlight/haskell-spotlight/issues/2
 
 Don't forget to ⭐️ star the GitHub repository if you like it! 🙂

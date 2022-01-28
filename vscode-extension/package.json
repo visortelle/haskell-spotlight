@@ -7,13 +7,13 @@
   "displayName": "Haskell Spotlight",
   "license": "MIT",
   "preview": true,
-  "homepage": "https://github.com/visortelle/hackage-ui/blob/main/README.md",
+  "homepage": "https://github.com/haskell-spotlight/haskell-spotlight/blob/main/README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/visortelle/hackage-ui"
+    "url": "https://github.com/haskell-spotlight/haskell-spotlight"
   },
   "bugs": {
-    "url": "https://github.com/visortelle/hackage-ui/issues"
+    "url": "https://github.com/haskell-spotlight/haskell-spotlight/issues"
   },
   "engines": {
     "vscode": "^1.47.0"
@@ -53,7 +53,7 @@
     "dev": "chokidar \"**/*\" -i \"node_modules/**/*\" -i \"build\" -c \"npm run build:dev\" --initial"
   },
   "devDependencies": {
-    "@hackage-ui/react-lib": "*",
+    "@haskell-spotlight/react-lib": "*",
     "highlight.js": "^11.4.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

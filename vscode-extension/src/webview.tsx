@@ -1,4 +1,4 @@
-import * as lib from "@hackage-ui/react-lib";
+import * as lib from "@haskell-spotlight/react-lib";
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import * as ReactDOM from 'react-dom';
 import { applyStyles } from '../styles';
@@ -12,13 +12,13 @@ const Spotlight = () => {
   return (
     <div className={s.content}>
       <div className={`${s.progressIndicator} ${Object.keys(appContext.tasks).length > 0 ? s.progressIndicatorRunning : ''}`}></div>
-      <a href="https://github.com/visortelle/hackage-ui" target='__blank' className={s.logo} dangerouslySetInnerHTML={{ __html: haskellLogo }}></a>
+      <a href="https://github.com/haskell-spotlight/haskell-spotlight" target='__blank' className={s.logo} dangerouslySetInnerHTML={{ __html: haskellLogo }}></a>
       <div style={{ flex: 1 }}>
         <lib.searchInput.SearchInput
           asEmbeddedWidget={true}
           api={{
-            hackageApiUrl: 'https://hackage-ui.vercel.app/api/hackage',
-            hoogleApiUrl: 'https://hackage-ui.vercel.app/api/hoogle'
+            hackageApiUrl: 'https://haskell-spotlight.vercel.app/api/hackage',
+            hoogleApiUrl: 'https://haskell-spotlight.vercel.app/api/hoogle'
           }}
         />
       </div>
