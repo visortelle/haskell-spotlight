@@ -153,10 +153,9 @@ const DevelopmentEnvironmentPage = (props: DevelopmentEnvironmentPageProps) => {
                 <Link
                   key="chrome"
                   text={<><SVGIcon svg={chromeIcon} /><div style={{ width: '140rem' }}>Get for Chrome</div></>}
-                  href="#"
+                  href="https://chrome.google.com/webstore/detail/haskell-spotlight/npadgihccblidebeflijkcgfpklgalkj"
                   type="external"
                   openInNewTab={true}
-                  disabled
                 />
               ), (
                 <Link
