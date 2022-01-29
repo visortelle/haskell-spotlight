@@ -3,6 +3,10 @@ import Greeting from "./layout/Greeting";
 import s from './HomePage.module.css';
 import SectionHeader from './layout/SectionHeader';
 import SmallCard, { SmallCardsRow } from './layout/SmallCard';
+import welcomeIllustration from '!!raw-loader!../../illustrations/welcome.svg';
+import fastIllustration from '!!raw-loader!../../illustrations/fast.svg';
+import reliableIllustration from '!!raw-loader!../../illustrations/reliable.svg';
+import BigCard, { BigCardsRow } from './layout/BigCard';
 
 const screenName = 'HomePage';
 
@@ -15,8 +19,8 @@ const Home = () => {
         <div className={s.content}>
 
           <SectionHeader text='Why Haskell?' align='left' />
-          <SmallCardsRow>
-            <SmallCard
+          <BigCardsRow>
+            <BigCard
               title='Reliability'
               description='Advanced type system makes it possible to eliminate the wide class of bugs at compile-time. The pure nature allows to build parallel and concurrent programs much easier than in other languages.'
               link={{
@@ -25,9 +29,12 @@ const Home = () => {
                 type: 'external',
                 openInNewTab: false
               }}
+              iconFormat='svg'
+              icon={reliableIllustration}
+              iconSize='big'
             />
 
-            <SmallCard
+            <BigCard
               title='Performance'
               description='Haskell compiler can produce either native code or LLVM code of your choice. Its performance is at least on par with the fastest languages with garbage collection runtime.'
               link={{
@@ -36,9 +43,12 @@ const Home = () => {
                 type: 'external',
                 openInNewTab: false
               }}
+              iconFormat='svg'
+              icon={fastIllustration}
+              iconSize='big'
             />
 
-            <SmallCard
+            <BigCard
               title='Awesomeness'
               description='Haskell is incredibly productive and incredibly fun. It relies on mathematical foundations, allowing you to create incredibly powerful abstractions when needed.'
               link={{
@@ -47,8 +57,11 @@ const Home = () => {
                 type: 'external',
                 openInNewTab: false
               }}
+              iconFormat='svg'
+              icon={welcomeIllustration}
+              iconSize='big'
             />
-          </SmallCardsRow>
+          </BigCardsRow>
         </div>
       </div>
     </Layout>

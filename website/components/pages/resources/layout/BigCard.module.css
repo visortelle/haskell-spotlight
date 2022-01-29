@@ -4,7 +4,7 @@
   padding: 32rem;
   display: flex;
   justify-content: flex-start;
-  align-items: flex-start;
+  /* align-items: flex-start; */
   margin-right: 12rem;
   flex: 1;
 }
@@ -28,6 +28,11 @@
   height: 80rem;
 }
 
+.svgIconBig svg {
+  width: 200rem;
+  height: 200rem;
+}
+
 .title {
   margin: 18rem 0;
 }
@@ -45,6 +50,11 @@
   margin-bottom: 72rem;
 }
 
+.content {
+  flex: 1 1;
+  display: flex;
+  flex-direction: column;
+}
 .secondaryContent {
   display: flex;
   flex: 1;

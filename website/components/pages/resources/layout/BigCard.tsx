@@ -6,6 +6,7 @@ import Link, { LinkProps } from './Link';
 
 export type BigCardProps = {
   iconFormat: 'svg' | 'png' | 'react',
+  iconSize?: 'big' | 'small',
   icon: string | ReactNode,
   title: string,
   description: string,
@@ -17,14 +18,14 @@ export type BigCardProps = {
 const BigCard = (props: BigCardProps) => {
   let icon = null;
   if (props.iconFormat === 'svg') {
-    icon = (<div className={s.svgIcon}><SVGIcon svg={props.icon as string} /></div>);
+    icon = (<div className={props.iconSize === 'big' ? s.svgIconBig : s.svgIcon}><SVGIcon svg={props.icon as string} /></div>);
   } else if (props.iconFormat === 'react') {
     icon = props.icon
   }
 
   return (
     <div className={`${s.card} ${props.disabled ? s.cardDisabled : ''}`}>
-      <div className="content">
+      <div className={s.content}>
         <div className={s.icon}>{icon}</div>
         <h3 className={s.title}>
           {props.title}
