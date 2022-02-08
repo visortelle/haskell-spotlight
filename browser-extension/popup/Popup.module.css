@@ -69,3 +69,22 @@
 .kbdKeyActive {
   filter: grayscale(0);
 }
+
+.resetKeyBindingsButton {
+  text-align: center;
+  background-color: #5e5086;
+  color: #fff;
+  border-radius: 8px;
+  display: inline-flex;
+  margin: auto;
+  padding: 4px 8px;
+  filter: grayscale(1);
+  border-bottom: 6px solid #453a62;
+  border-right: 4px solid #453a62;
+  transition: var(--transition-short);
+}
+
+.resetKeyBindingsButton:hover {
+  cursor: pointer;
+  filter: grayscale(0);
+}

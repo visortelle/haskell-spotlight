@@ -61,7 +61,7 @@ export default () => {
       onKeyUp={handleKeyUp}
       onKeyDown={handleKeyDown}
     >
-      <div className={s.header}>Haskell Spotlight</div>
+      <div className={s.header}><a href="https://github.com/haskell-spotlight/haskell-spotlight">Haskell Spotlight &nbsp;⭐</a></div>
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: '1 1' }}>
         <div style={{ fontSize: '14px', textAlign: 'center', padding: '0 18px' }}>
           {state === 'awaitingForNewKeyBinding' && <span>Click on the area bellow to change hotkey.</span>}
@@ -91,13 +91,17 @@ export default () => {
           </div>
         )}
 
-        <a
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '12px 12px 32px 12px', fontSize: '16px', fontWeight: 'bold', color: '#5e5086' }}
-          href="https://github.com/haskell-spotlight/haskell-spotlight"
-          target="__blank"
+        <div
+          className={s.resetKeyBindingsButton}
+          onClick={async () => {
+            await k.setDefaultKeyBindings();
+            const kb = await k.readKeyBinding('toggleSpotlight');
+            setKeyBinding(kb);
+            setState('keyBindingUpdated');
+          }}
         >
-          ⭐️ github.com/haskell-spotlight/haskell-spotlight
-        </a>
+          Reset settings
+        </div>
       </div>
     </div>
   );
