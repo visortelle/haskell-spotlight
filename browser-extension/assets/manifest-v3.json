@@ -4,7 +4,7 @@
   "short_name": "Haskell Spotlight",
   "description": "Search on Hackage, Hoogle and more soon.",
   "homepage_url": "https://github.com/haskell-spotlight/haskell-spotlight",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "icons": { "192": "images/icon-192.png" },
   "content_scripts": [
     {
