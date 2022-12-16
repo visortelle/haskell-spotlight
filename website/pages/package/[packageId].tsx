@@ -24,13 +24,11 @@ export async function getStaticProps(props: GetStaticPropsContext): Promise<GetS
   if (pkg === null) {
     return {
       notFound: true,
-      revalidate: 10
     }
   }
 
   return {
     props: pkg,
-    revalidate: 180
   }
 }
 

@@ -23,7 +23,6 @@ export async function getStaticProps(props: GetStaticPropsContext): Promise<GetS
   if (pkg === null) {
     return {
       notFound: true,
-      revalidate: 10
     }
   }
 
@@ -31,7 +30,6 @@ export async function getStaticProps(props: GetStaticPropsContext): Promise<GetS
     props: {
       package: pkg,
     },
-    revalidate: 180
   }
 }
 

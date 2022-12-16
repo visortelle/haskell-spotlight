@@ -18,7 +18,6 @@ const Page: NextPage<DevelopmentEnvironmentPageProps> = () => {
 export async function getStaticProps(props: GetStaticPropsContext): Promise<GetStaticPropsResult<DevelopmentEnvironmentPageProps>> {
   return {
     props: {},
-    revalidate: 180
   }
 }
 
