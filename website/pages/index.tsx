@@ -1,17 +1,16 @@
 import { NextPage, GetStaticPropsResult } from 'next';
 import Head from 'next/head';
 import React from 'react';
-import HomePage from '../components/pages/resources/HomePage';
 
 const Page: NextPage = () => {
   return (
     <>
       <Head>
-        <title>HaskellSpot: The Haskell community’s home page</title>
-        <meta name="description" content="HaskellSpot: The Haskell community’s home page"></meta>
+        <title>VSCode Extension</title>
       </Head>
-
-      <HomePage />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+        <a style={{ fontSize: '24rem'}} href="https://marketplace.visualstudio.com/items?itemName=visortelle.haskell-spotlight">Haskell Spotlight VSCode extension</a>
+      </div>
     </>
   )
 }
