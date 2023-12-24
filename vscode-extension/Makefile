@@ -12,6 +12,10 @@ build: ## Build the project.
 	npm i
 	npm run build
 
+.PHONY: publish
+package: ## Publish to VSCode marketplace
+	npm run publish
+
 .PHONY: help
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
