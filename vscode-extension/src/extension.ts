@@ -25,7 +25,7 @@ function createPanel(context: vscode.ExtensionContext): vscode.WebviewPanel {
     }
   );
 
-  panel.webview.html = getWebviewContent(context);
+  panel.webview.html = getWebviewContent(context, panel.webview);
 
   return panel;
 }
@@ -37,13 +37,13 @@ function getColumn(): vscode.ViewColumn {
   // : undefined;
 }
 
-function getWebviewContent(context: vscode.ExtensionContext) {
+function getWebviewContent(context: vscode.ExtensionContext, webview: vscode.Webview) {
   const scriptPath = vscode.Uri.joinPath(
     context.extensionUri,
     "build",
     "webview.js"
   );
-  const scriptUri = scriptPath.with({ scheme: "vscode-resource" });
+  const scriptUri = webview.asWebviewUri(scriptPath);
   const nonce = getNonce();
 
   return `<!DOCTYPE html>
