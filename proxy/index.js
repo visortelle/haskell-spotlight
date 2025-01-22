@@ -4,7 +4,17 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const authorizationHeader = process.env.AUTHORIZATION_HEADER;
+const reqHeaders = {
+  'Authorization': process.env.AUTHORIZATION_HEADER,
+
+}
+
+const resHeaders = {
+  "Access-Control-Allow-Credentials": "true",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET,OPTIONS",
+  "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
+};
 
 // Enable access logs
 app.use((req, res, next) => {
@@ -26,9 +36,7 @@ app.use(
     pathRewrite: {
       '^/api/hackage': '',
     },
-    headers: {
-      Authorization: authorizationHeader,
-    },
+    headers: reqHeaders
   })
 );
 
@@ -41,11 +49,14 @@ app.use(
     pathRewrite: {
       '^/api/hoogle': '',
     },
-    headers: {
-      Authorization: authorizationHeader
-    }
+    headers: reqHeaders
   })
 );
+
+app.use((_, res, next) => {
+  res.set(resHeaders);
+  next();
+});
 
 // Start the server
 app.listen(PORT, () => {
