@@ -6,6 +6,17 @@ const PORT = process.env.PORT || 3000;
 
 const authorizationHeader = process.env.AUTHORIZATION_HEADER;
 
+// Enable access logs
+app.use((req, res, next) => {
+  const startTime = Date.now();
+  res.on('finish', () => {
+    const duration = Date.now() - startTime;
+    const log = `${req.ip} - - [${new Date().toISOString()}] \"${req.method} ${req.originalUrl} HTTP/${req.httpVersion}\" ${res.statusCode} ${res.get('Content-Length') || 0} - ${duration}ms`;
+    console.log(log);
+  });
+  next();
+});
+
 // Proxy for Hackage API
 app.use(
   '/api/hackage',
