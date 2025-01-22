@@ -10,7 +10,6 @@
   "headers": [
     {
       "source": "/(.*)",
-      "destination": "/",
       "headers": [
         {
           "key": "Access-Control-Allow-Credentials",
